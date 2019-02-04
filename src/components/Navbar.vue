@@ -162,6 +162,7 @@ export default class MainNavbar extends Vue {
     private small: boolean = false;
     private expanded: boolean = false;
     private subExpanded: boolean = false;
+    private resizeTimeout: number | undefined;
 
     private mounted() {
         this.updateActvieLink(this.$route);
@@ -256,7 +257,22 @@ export default class MainNavbar extends Vue {
         spacer.style.width = `${activeMainLink.getBoundingClientRect().left}px`;
     }
 
+    /**
+     * @description Window resize handler callback. Calls actual function via a
+     *              timeout to prevent a lot of activations in a small amount of time.
+     * @author DerZade
+     */
     private handleResize() {
+        if (this.resizeTimeout !== undefined) clearTimeout(this.resizeTimeout);
+
+        setTimeout(this.onResizeTimeout.bind(this), 100);
+    }
+
+    /**
+     * @description Actual window resize callback
+     * @author DerZade
+     */
+    private onResizeTimeout() {
         this.fixSubLinkOffset();
     }
 }
