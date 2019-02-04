@@ -10,8 +10,9 @@
             <img src="../assets/adlerkopp256.png" />
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
+                <span v-if="activeSubLink">{{activeSubLink.text}}</span>
             </div>
-            <div v-else>
+            <div v-else class="grad-nav--min1000">
                 <span>Gruppe Adler</span>
                 <span>Deutsche Arma3 Coop & TvT Community</span>
             </div>
@@ -59,6 +60,8 @@
 
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
+
+const SMALL_BREAKPOINT = 750;
 
 interface GradLink {
     text: string;
@@ -170,7 +173,7 @@ export default class MainNavbar extends Vue {
     }
 
     private updated() {
-        this.fixSubLinkOffset();
+        this.onResizeTimeout();
     }
 
     private beforeDestroy() {
@@ -214,7 +217,7 @@ export default class MainNavbar extends Vue {
     }
 
     /**
-     * @description Click handler of open button in small menu
+     * @description Click callback of open button in small menu
      * @author DerZade
      */
     private open() {
@@ -222,7 +225,7 @@ export default class MainNavbar extends Vue {
     }
 
     /**
-     * @description Click handler of close button in small menu
+     * @description Click callback of close button in small menu
      * @author DerZade
      */
     private close() {
@@ -232,7 +235,7 @@ export default class MainNavbar extends Vue {
     }
 
     /**
-     * @description Click handler of back button in small menu
+     * @description Click callback of back button in small menu
      * @author DerZade
      */
     private back() {
@@ -273,7 +276,16 @@ export default class MainNavbar extends Vue {
      * @author DerZade
      */
     private onResizeTimeout() {
-        this.fixSubLinkOffset();
+        if (window.innerWidth < SMALL_BREAKPOINT) {
+            this.small = true;
+        } else {
+            if (!this.small) {
+                this.$nextTick(() => this.fixSubLinkOffset());
+            } else {
+                this.small = false;
+            }
+        }
+
     }
 }
 </script>
@@ -297,6 +309,7 @@ export default class MainNavbar extends Vue {
     }
     &__link {
         height: 100%;
+        flex: none;
         box-sizing: border-box;
 
         font-size: 20px;
@@ -336,6 +349,7 @@ export default class MainNavbar extends Vue {
 
     &__header {
         height: 50px;
+        flex: none;
         font-size: 14px;
         display: flex;
         align-items: center;
@@ -355,7 +369,7 @@ export default class MainNavbar extends Vue {
     }
 
     &__sub-links {
-        flex-shrink: 0;
+        flex: none;
         display: flex;
         position: absolute;
         top: 80px;
@@ -367,6 +381,7 @@ export default class MainNavbar extends Vue {
     }
 
     &__small-menu-btn {
+        flex: none;
         cursor: pointer;
         height: 36px;
         width: 36px;
@@ -407,11 +422,17 @@ export default class MainNavbar extends Vue {
             }
         }
 
-        .grad-nav__header {
-            font-size: 20px;
-            span {
-                opacity: 1;
-            }
+        // .grad-nav__header {
+        //     font-size: 20px;
+        //     span {
+        //         opacity: 1;
+        //     }
+        // }
+    }
+
+    @media (max-width: 1000px) {
+        .grad-nav--min1000 {
+            display: none;
         }
     }
 
