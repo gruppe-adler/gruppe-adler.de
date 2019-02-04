@@ -33,6 +33,11 @@ export default new Router({
       component: () => import('./views/ueber-uns/Struktur.vue')
     },
     {
+      path: '/ueber-uns/eindruecke',
+      name: 'ueber-uns-eindruecke',
+      component: () => import('./views/ueber-uns/Eindruecke.vue')
+    },
+    {
       path: '/technik',
       name: 'technik',
       redirect: '/technik/server'

@@ -79,6 +79,10 @@ export default class MainNavbar extends Vue {
                 {
                     text: 'Struktur',
                     url: '/struktur'
+                },
+                {
+                    text: 'Eindrücke',
+                    url: '/eindruecke'
                 }
             ]
         },
