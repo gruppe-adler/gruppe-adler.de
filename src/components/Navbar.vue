@@ -1,6 +1,12 @@
 <template>
     <nav :class="[small ? 'grad-nav--small' : '', 'grad-nav ']">
-        <div class="grad-nav__header">
+        <div v-if="subExpanded" class="grad-nav__small-menu-btn" @click="back">
+            <svg width="9" height="9" viewBox="0 0 9 9">
+                <polygon points="0,1 1,0 9,8 8,9" style="fill:red;" />
+                <polygon points="9,1 8,0 0,8 1,9" style="fill:red;" />
+            </svg>
+        </div>
+        <div v-else class="grad-nav__header">
             <img src="../assets/adlerkopp256.png" />
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
@@ -10,33 +16,34 @@
                 <span>Deutsche Arma3 Coop & TvT Community</span>
             </div>
         </div>
-        <div v-if="small" class="grad-nav__small-menu-btn" @click="clickSmallMenuBtn">
-            <svg width="9" height="9" viewBox="0 0 9 9" v-if="expanded || subExpanded">
+        <div v-if="small" class="grad-nav__small-menu-btn">
+            <svg v-if="expanded || subExpanded" @click="close" width="9" height="9" viewBox="0 0 9 9" >
                 <polygon points="0,1 1,0 9,8 8,9" style="fill:white;" />
                 <polygon points="9,1 8,0 0,8 1,9" style="fill:white;" />
             </svg>
-            <svg width="9" height="9" viewBox="0 0 9 9" v-else>
+            <svg v-else @click="open" width="9" height="9" viewBox="0 0 9 9" >
                 <rect fill="#FFFFFF" width="9" height="1" x="0" y="0"></rect>
                 <rect fill="#FFFFFF" width="9" height="1" x="0" y="4"></rect>
                 <rect fill="#FFFFFF" width="9" height="1" x="0" y="8"></rect>
             </svg>
         </div>
-        <div class="grad-nav__links" v-if="!small || expanded">
+        <div v-if="!small || expanded" ref="main-links" class="grad-nav__links">
             <router-link 
                 v-for="link in links"
                 :key="link.url"
                 :class="[activeLink.url === link.url ?'grad-nav__link--active' : '', 'grad-nav__link']"
                 :to="!small ? link.url : ''"
                 tag="div"
-                @click.native.prevent="showSmallSubMenu(link)"
+                @click.native.prevent="mainLinkClicked(link)"
             >
                 {{link.text}}
             </router-link>
         </div>
-        <div class="grad-nav__sub-links" v-if="!small || subExpanded">
+        <div v-if="activeLink.sublinks != undefined && (!small || subExpanded)" class="grad-nav__sub-links">
             <div v-if="subExpanded" class="grad-nav__link grad-nav__link--active">
                 {{activeLink.text}}
             </div>
+            <div v-if="!small" ref="sub-links-spacer"></div>
             <router-link 
                 v-for="link in activeLink.sublinks"
                 :key="link.url"
@@ -158,8 +165,21 @@ export default class MainNavbar extends Vue {
 
     private mounted() {
         this.updateActvieLink(this.$route);
+        window.addEventListener('resize', this.handleResize);
     }
 
+    private updated() {
+        this.fixSubLinkOffset();
+    }
+
+    private beforeDestroy() {
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+    /**
+     * @description Update active link
+     * @author DerZade
+     */
     @Watch('$route')
     private updateActvieLink(to: any) {
         this.expanded = false;
@@ -170,30 +190,74 @@ export default class MainNavbar extends Vue {
 
         this.activeLink = this.links.find(l => l.url === url) || { text: 'ERR', url: ''};
         this.activeSubLink = (this.activeLink.sublinks || []).find(l => l.url === suburl) || { text: 'ERR', url: ''};
+
+        this.fixSubLinkOffset();
     }
 
-    private showSmallSubMenu(link: GradLink) {
+    /**
+     * @description Click handler of main links in small menu
+     * @author DerZade
+     */
+    private mainLinkClicked(link: GradLink) {
         if (!this.small) return;
 
         // go to clicked link if it hasn't any sub links
-        if (link.sublinks === null || Array.isArray(link.sublinks) && link.sublinks.length === 0) {
+        if (link.sublinks === undefined || Array.isArray(link.sublinks) && link.sublinks.length === 0) {
             this.$router.push(link.url);
             return;
         }
 
         this.activeLink = link;
-
         this.expanded = false;
         this.subExpanded = true;
     }
 
-    private clickSmallMenuBtn() {
-        this.expanded = (!this.subExpanded && !this.expanded);
-        this.subExpanded = false;
+    /**
+     * @description Click handler of open button in small menu
+     * @author DerZade
+     */
+    private open() {
+        this.expanded = true;
+    }
 
-        if (!this.expanded) {
-            this.updateActvieLink(this.$route);
-        }
+    /**
+     * @description Click handler of close button in small menu
+     * @author DerZade
+     */
+    private close() {
+        this.expanded = false;
+        this.subExpanded = false;
+        this.updateActvieLink(this.$route);
+    }
+
+    /**
+     * @description Click handler of back button in small menu
+     * @author DerZade
+     */
+    private back() {
+        this.updateActvieLink(this.$route);
+        this.expanded = true;
+    }
+
+    /**
+     * @description Sets width of spacer to align sub links with active main link
+     * @author DerZade
+     */
+    private fixSubLinkOffset() {
+        if (this.small) return;
+
+        // get left offset of active main link
+        const activeMainLink = (this.$refs['main-links'] as HTMLElement).querySelector('.grad-nav__link--active');
+        if (!activeMainLink) return;
+        const spacer = this.$refs['sub-links-spacer'] as HTMLElement;
+
+        // set width of spacer to offset of link
+        if (!spacer) return;
+        spacer.style.width = `${activeMainLink.getBoundingClientRect().left}px`;
+    }
+
+    private handleResize() {
+        this.fixSubLinkOffset();
     }
 }
 </script>
@@ -224,7 +288,7 @@ export default class MainNavbar extends Vue {
         align-items: center;
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
-        margin: 0px 15px;
+        margin: 0px 10px;
         padding: 0px 5px;
         opacity: 0.7;
         cursor: pointer;
@@ -275,8 +339,8 @@ export default class MainNavbar extends Vue {
     }
 
     &__sub-links {
+        flex-shrink: 0;
         display: flex;
-        justify-content: center;
         position: absolute;
         top: 80px;
         height: 48px;
@@ -290,7 +354,7 @@ export default class MainNavbar extends Vue {
         cursor: pointer;
         height: 36px;
         width: 36px;
-        margin-right: 32px;
+        margin: 0px 32px;
 
         svg {
             width: 100%;
