@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Navbar />
-        <img class="grad-background-image" src="./assets/image.jpg">
+        <Header />
 
         <router-view/>
     </div>
@@ -10,10 +10,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Navbar from '@/components/Navbar.vue';
+import Header from '@/components/Header.vue';
 
 @Component({
     components: {
-        Navbar
+        Navbar,
+        Header
     }
 })
 export default class App extends Vue {}
