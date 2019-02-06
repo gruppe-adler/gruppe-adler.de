@@ -30,7 +30,7 @@
                 </router-link>
             </div>
             <div v-if="activeLink.sublinks != undefined" class="grad-nav__sub-links">
-                <div ref="sub-links-spacer"></div>
+                <div ref="sub-links-spacer" style="transition: width 0.1s ease-in-out;"></div>
                 <router-link 
                     v-for="link in activeLink.sublinks"
                     :key="link.url"
@@ -275,6 +275,8 @@ $navbar-height: 80px;
         backdrop-filter: blur(10px);
 
         .grad-nav__link {
+            opacity: 0.5;
+            margin: 0px 10px;
             border-top: 2px solid transparent;
             border-bottom: 2px solid transparent;
         }
@@ -291,7 +293,7 @@ $navbar-height: 80px;
         flex: none;
         box-sizing: border-box;
         height: 100%;
-        margin: 0px 10px;
+        margin: 0px 15px;
         opacity: 0.7;
 
         border-top: 4px solid transparent;
