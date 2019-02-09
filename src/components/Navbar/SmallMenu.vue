@@ -61,7 +61,7 @@ export default class NavbarSmallMenu extends Vue {
 
 <style lang="scss" scoped>
 .grad-nav__small-menu {
-    position: absolute;
+    position: fixed;
     top: 80px;
     left: 0px;
     right: 0px; 
