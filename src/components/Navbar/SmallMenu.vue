@@ -1,21 +1,22 @@
 <template>
 <div class="grad-nav__small-menu">
     <template v-for="link in links">
-        <div 
+        <a 
+            
             v-if="!expandedLink || link == expandedLink"
             :key="link.url"
             :class="[activeLink.url === link.url ?'grad-nav--active' : '', expandedLink && expandedLink.url === link.url ?'grad-nav--expanded' : '']"
             @click="mainLinkClicked(link)"
         >
             {{link.text}}
-        </div>
+        </a>
         <template v-if="link == expandedLink">
             <router-link 
                 v-for="link in expandedLink.sublinks"
                 :key="link.url"
                 class="grad-nav--sub"
                 :to="expandedLink.url + link.url"
-                tag="div"
+                tag="a"
             >
                 {{link.text}}
             </router-link>
@@ -68,7 +69,12 @@ export default class NavbarSmallMenu extends Vue {
     bottom: 0px;
     background-color: black;
 
-    > div {
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    > a {
         cursor: pointer;
         align-items: center;
         display: flex;

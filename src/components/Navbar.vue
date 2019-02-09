@@ -24,7 +24,7 @@
                     :key="link.url"
                     :class="[activeLink.url === link.url ?'grad-nav--active' : '', 'grad-nav__link']"
                     :to="!small ? link.url : ''"
-                    tag="div"
+                    tag="a"
                 >
                     {{link.text}}
                 </router-link>
@@ -36,7 +36,7 @@
                     :key="link.url"
                     :class="[activeSubLink && activeSubLink.url === link.url ?'grad-nav--active' : '', 'grad-nav__link']"
                     :to="activeLink.url + link.url"
-                    tag="div"
+                    tag="a"
                 >
                     {{link.text}}
                 </router-link>
@@ -220,6 +220,11 @@ $navbar-height: 80px;
     right: 0px;
     z-index: 1000;
     transition: top .25s ease-in-out;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
     &.grad-nav--hidden {
         top: - $navbar-height;
