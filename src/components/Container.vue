@@ -24,7 +24,6 @@ export default class Container extends Vue {
 
     private mounted() {
         if (!this.headerColor) return;
-        console.log('set color to', this.headerColor);
         (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-color', this.headerColor);
     }
 
