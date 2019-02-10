@@ -40,6 +40,7 @@ $offset: 200px;
     overflow: hidden;
     box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
     font-size: 18px;
+    width: 100%;
 
     > * {
         padding: 0px 40px;

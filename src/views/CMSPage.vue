@@ -1,7 +1,7 @@
 <template>
     <Content v-if="page">
-        <template v-slot:left>
-            {{page.right}}
+        <template v-if="page.left" v-slot:left>
+            <div v-html="page.left"></div>
         </template>
         <template>
             <Container 
@@ -9,8 +9,8 @@
                 :key="c.id"
                 :headerColor="c.headerColor"
             > 
-                <template v-slot:header v-if="c.header">
-                    <span>{{c.header}}</span>
+                <template v-slot:header v-if="c.heading">
+                    <span>{{c.heading}}</span>
                     <img 
                         v-if="c.headerImage"
                         class="grad-container__header-image" 
@@ -20,16 +20,16 @@
                 <template v-slot:image  v-if="c.pinnedImage">
                     <img :src="c.pinnedImage">
                 </template>
-                <template  v-if="c.content">
-                    <div  v-html="c.content"></div>
+                <template v-if="c.content">
+                    <div v-html="c.content"></div>
                 </template>
                 <template v-slot:footer v-if="c.footer">
-                    <div  v-html="c.footer"></div>
+                    <div v-html="c.footer"></div>
                 </template>
             </Container>
         </template>
-        <template v-slot:right>
-            {{page.right}}
+        <template v-if="page.right" v-slot:right>
+            <div v-html="page.right"></div>
         </template>
     </Content>
     <Content v-else>
@@ -40,6 +40,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Container } from '@/models/Container';
 import { CMSPage } from '@/models/CMSPage';
+import ApiService from '@/ApiService';
 import Spinner from '@/components/Spinner.vue';
 
 @Component({
@@ -59,7 +60,9 @@ export default class CMSPageVue extends Vue {
 
     private fetchPageData() {
         this.page = null;
-        // TODO
+        ApiService.getPage(this.$route.path).then(res => {
+            this.page = res;
+        });
     }
 }
 </script>
