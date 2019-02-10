@@ -62,6 +62,10 @@ $offset: 200px;
 
         // background: rgba(240, 236, 232, 0.7);
         backdrop-filter: blur(40px);
+
+        &-image {
+            max-height: 70px;
+        }
     }
 
     &__image {

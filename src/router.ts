@@ -25,12 +25,12 @@ export default new Router({
     {
       path: '/ueber-uns/miteinander',
       name: 'ueber-uns-miteinander',
-      component: () => import('./views/ueber-uns/Miteinander.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/ueber-uns/struktur',
       name: 'ueber-uns-struktur',
-      component: () => import('./views/ueber-uns/Struktur.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/ueber-uns/eindruecke',
@@ -45,17 +45,17 @@ export default new Router({
     {
       path: '/technik/server',
       name: 'technik-server',
-      component: () => import('./views/technik/Server.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/technik/missionsbau',
       name: 'technik-missionsbau',
-      component: () => import('./views/technik/Missionsbau.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/technik/modding',
       name: 'technik-modding',
-      component: () => import('./views/technik/Modding.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/spielweise',
@@ -65,17 +65,17 @@ export default new Router({
     {
       path: '/spielweise/uebersicht',
       name: 'spielweise-uebersicht',
-      component: () => import('./views/spielweise/Uebersicht.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/spielweise/addons',
       name: 'spielweise-addons',
-      component: () => import('./views/spielweise/Addons.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/spielweise/missionen',
       name: 'spielweise-missionen',
-      component: () => import('./views/spielweise/Missionen.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/mitspielen',
@@ -85,17 +85,17 @@ export default new Router({
     {
       path: '/mitspielen/allgemeines',
       name: 'mitspielen-allgemeines',
-      component: () => import('./views/mitspielen/Allgemeines.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/mitspielen/checkliste',
       name: 'mitspielen-checkliste',
-      component: () => import('./views/mitspielen/Checkliste.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/mitspielen/kontakt',
       name: 'mitspielen-kontakt',
-      component: () => import('./views/mitspielen/Kontakt.vue')
+      component: () => import('./views/CMSPage.vue')
     },
     {
       path: '/forum',

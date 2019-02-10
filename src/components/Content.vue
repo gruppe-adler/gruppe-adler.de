@@ -25,6 +25,9 @@ $offset: 200px;
         z-index: 0;
         width: 800px;
         max-width: 100%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
     }
     
     &__left,
