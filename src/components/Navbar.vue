@@ -75,6 +75,7 @@ export default class Navbar extends Vue {
         this.updateActiveLink(this.$route);
         window.addEventListener('resize', this.handleResize);
         window.addEventListener('scroll', this.handleScroll);
+        setTimeout(this.fixSubLinkOffset, 100);
     }
 
     private updated() {

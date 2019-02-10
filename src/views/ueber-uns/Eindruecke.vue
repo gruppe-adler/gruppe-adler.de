@@ -8,6 +8,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Eindruecke extends Vue {}
+export default class UeberUnsEindruecke extends Vue {}
 </script>
 
