@@ -28,7 +28,10 @@ function detectIE() {
 }
 /* tslint:enable */
 
-if (!detectIE()) {
+if (detectIE()) {
+  const ieHint = document.getElementById('IEHint');
+  if (ieHint) ieHint.style.display = '';
+} else {
   const ieHint = document.getElementById('IEHint');
   if (ieHint) ieHint.remove();
 

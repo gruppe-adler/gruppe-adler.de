@@ -23,6 +23,7 @@
             </div>
         </noscript>
         <div id="IEHint" style="display: none;">
+                <!-- IE Hint is initially hidden to prevent two issues from pooping up when JS is disabled -->
                 <img src="<%= BASE_URL %>logo512.png">
                 <div>
                     <h1>Gerne würden wir Dir hier was anzeigen</h1>
@@ -40,10 +41,6 @@
                 </div>
             </div>
         </div>
-        <!-- IE Hint is initially hidden to prevent two issues from pooping up when JS is disabled -->
-        <script>
-            document.getElementById('IEHint').style.display = '';
-        </script>
         <div id="app"></div>
         <!-- built files will be auto injected -->
     </body>
