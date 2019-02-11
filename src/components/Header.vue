@@ -15,7 +15,7 @@
     background-size: cover;
     background-position: center;
     
-    height: 500px;
+    height: 450px;
     
 
     &__image {
@@ -23,10 +23,17 @@
     }
 
     &__logo {
-        max-width: 180px;
+        max-height: 162px;
         position: absolute;
         top: 100px;
         left: 10px;
+    }
+
+    @media(max-width: 1150px) {
+        height: 350px;
+        &__logo {
+            display: none;
+        }
     }
 }
 </style>

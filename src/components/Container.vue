@@ -39,11 +39,11 @@ $offset: 200px;
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
-    font-size: 18px;
+    font-size: 16px;
     width: 100%;
 
     > * {
-        padding: 0px 40px;
+        padding: 0px 36px;
     }
 
     &__header {
@@ -54,9 +54,9 @@ $offset: 200px;
         align-items: center;
         justify-content: space-between;
         
-        height: 80px;
+        height: 72px;
         
-        font-size: 24px;
+        font-size: 21px;
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
         color: rgba(0,0,0,0.5);
@@ -65,7 +65,9 @@ $offset: 200px;
         backdrop-filter: blur(40px);
 
         &-image {
-            max-height: 70px;
+            max-height: 45px;
+            filter: saturate(0%);
+            opacity: 0.4;
         }
     }
 
@@ -73,8 +75,8 @@ $offset: 200px;
         z-index: 0;
         position: relative;
         padding: 0px;
-        margin-top: -80px;
-        max-height: 400px;
+        margin-top: -72px;
+        max-height: 360px;
         overflow: hidden;
 
         > * {
@@ -84,11 +86,11 @@ $offset: 200px;
     }
 
     &__content {
-        padding-top: 40px;
-        padding-bottom: 20px;
+        margin-top: 36px;
+        margin-bottom: 18px;
 
         &:last-child {
-            padding-bottom: 40px;
+            margin-bottom: 36px;
         }
     }
 
@@ -96,7 +98,7 @@ $offset: 200px;
         display: flex;
         align-items: center;
 
-        height: 66px;
+        height: 60px;
         background: rgba(240, 236, 232, 0.7);
         backdrop-filter: blur(40px);
         color: #666666;
@@ -104,7 +106,7 @@ $offset: 200px;
 
 
     & + & {
-        margin-top: 32px;
+        margin-top: 30px;
     }
 }
 </style>

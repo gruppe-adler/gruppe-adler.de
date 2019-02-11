@@ -60,7 +60,7 @@ import NavClose from './Navbar/small-menu-btn/Close.vue';
 import SmallMenu from './Navbar/SmallMenu.vue';
 import { GradLink } from './Navbar/GradLink';
 
-const SMALL_BREAKPOINT = 750;
+const SMALL_BREAKPOINT = 710;
 
 @Component ({
     name: 'navbar',
@@ -211,7 +211,7 @@ export default class Navbar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-$navbar-height: 80px;
+$navbar-height: 72px;
 
 .grad-nav {
     height: $navbar-height;
@@ -241,18 +241,18 @@ $navbar-height: 80px;
     }
     
     &__header {
-        height: 50px;
+        height: 45px;
         flex: none;
         display: flex;
         align-items: center;
-        margin-left: 24px;
+        margin-left: 21px;
 
         img {
             margin-right: 8px;
             height: 100%;
         }
         span {
-            font-size: 14px;
+            font-size: 12px;
             display: block;
 
             &:nth-child(2) {
@@ -260,7 +260,7 @@ $navbar-height: 80px;
             }
 
             &:only-child {
-                font-size: 30px;
+                font-size: 27px;
             }
         }
     }
@@ -269,7 +269,7 @@ $navbar-height: 80px;
         display: flex;
         justify-content: flex-end;
         height: 100%;
-        font-size: 20px;
+        font-size: 18px;
 
         .grad-nav--active {
             opacity: 1;
@@ -278,8 +278,8 @@ $navbar-height: 80px;
     }
     &__sub-links {
         display: flex;
-        height: 48px;
-        font-size: 14px;
+        height: 43px;
+        font-size: 12px;
 
         position: absolute;
         top: $navbar-height;
@@ -308,7 +308,7 @@ $navbar-height: 80px;
         flex: none;
         box-sizing: border-box;
         height: 100%;
-        margin: 0px 15px;
+        margin: 0px 10px;
         opacity: 0.7;
 
         border-top: 4px solid transparent;
