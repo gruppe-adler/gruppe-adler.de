@@ -25,6 +25,7 @@ $offset: 200px;
         z-index: 0;
         width: 800px;
         max-width: 100%;
+        padding: 5px;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -36,6 +37,20 @@ $offset: 200px;
         margin: 40px;
         margin-top: $offset + 40px;
         color: rgba(0, 0, 0, 0.5);
+    }
+}
+@media (max-width: 1350px) {
+    .grad-content__main {
+        width: 600px;
+    }
+}
+@media (max-width: 1150px) {
+    .grad-content__main {
+        width: 800px;
+    }
+    .grad-content__left,
+    .grad-content__right {
+        display: none;
     }
 }
 </style>
