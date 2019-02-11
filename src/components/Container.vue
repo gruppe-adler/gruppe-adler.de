@@ -88,6 +88,7 @@ $offset: 200px;
     &__content {
         margin-top: 36px;
         margin-bottom: 18px;
+        line-height: 2em;
 
         &:last-child {
             margin-bottom: 36px;
