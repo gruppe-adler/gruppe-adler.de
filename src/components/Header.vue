@@ -1,6 +1,6 @@
 <template>
     <header class="grad-header">
-        <img class="grad-header__logo" src="@/assets/logo512.png" />
+        <img class="grad-header__logo" src="/logo512.png" />
     </header>
 </template>
 

@@ -11,7 +11,20 @@
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but gruppe-adler.de doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <div id="noJS" style="margin: 5vh 5vw; height: 90vh; width: 90vw; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+        <script>
+          document.getElementById('noJS').remove();
+        </script>
+        <div style="display: inline-block; margin: 0 5rem;">
+          <img src="<%= BASE_URL %>logo512.png" style="max-width: calc(100vw - 10rem);">
+        </div>
+        <div style="display: inline-block; text-align: center;">
+          <h1 style="font-family: Oswald, sans-serif">Gerne würden wir Dir hier was anzeigen</h1>
+          <p style="font-family: 'Source Sans Pro', sans-serif; font-size: 15pt;">
+            Aber es scheint so, als ob Du JavaScript nicht aktiviert hast.<br/>
+            Wenn Du fertig bist, lade diese Seite einfach neu.
+          </p>
+        </div>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
