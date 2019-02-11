@@ -43,7 +43,7 @@ export default class ApiService {
         return page;
     }
 
-    private static normalizeContainer(data: { 
+    private static normalizeContainer(data: {
                                                 heading: string,
                                                 content: string,
                                                 footer: string,
