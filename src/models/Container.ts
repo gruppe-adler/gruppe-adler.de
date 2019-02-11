@@ -1,4 +1,5 @@
 export interface Container {
+    id: number;
     heading?: string;
     content: string;
     footer?: string;

@@ -1,0 +1,86 @@
+<template>
+    <div class="grad-toc__conatiner" ref="grad-toc__conatiner">
+        <a
+            v-for="c in containers"
+            :class="[c.id == currentId ? 'grad-toc--active' : '']"
+            :key="c.id"
+            v-smooth-scroll="{ offset: -120 }"
+            :href="`#grad-container-${c.id}`"
+        >
+            {{c.heading}}
+        </a>
+    </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Container } from '@/models/Container';
+
+@Component
+export default class TableOfContents extends Vue {
+    @Prop() private containers?: Container[];
+    private currentId: number = -1;
+    private scrollTimeout?: number;
+
+    private mounted() {
+        window.addEventListener('scroll', this.handleScroll);
+        this.updateCurrentContainer();
+    }
+
+    private beforeDestroy() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    private handleScroll() {
+        if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = setTimeout(this.updateCurrentContainer, 200);
+    }
+
+    /**
+     * Finds the first container which is completely shown and sets it's id as this.currentId
+     */
+    private updateCurrentContainer() {
+        if (! this.containers) return;
+
+        for (const c of this.containers) {
+            const container = document.getElementById(`grad-container-${c.id}`);
+            if (container) {
+                const top = container.getBoundingClientRect().top;
+
+                if (top > 50) {
+                    this.currentId = c.id;
+                    return;
+                }
+            }
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.grad-toc {
+
+    &__conatiner {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 120px;
+
+        > a + a {
+            margin-top: 10px;
+        }
+
+        > a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+
+    &--active {
+        color: black;
+        font-weight: bold;
+    }
+}
+</style>
+

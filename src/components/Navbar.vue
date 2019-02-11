@@ -59,6 +59,7 @@ import NavMenu from './Navbar/small-menu-btn/Menu.vue';
 import NavClose from './Navbar/small-menu-btn/Close.vue';
 import SmallMenu from './Navbar/SmallMenu.vue';
 import { GradLink } from './Navbar/GradLink';
+import { Route } from 'vue-router';
 
 const SMALL_BREAKPOINT = 710;
 
@@ -95,7 +96,9 @@ export default class Navbar extends Vue {
     }
 
     @Watch('$route')
-    private routeChanged(to: any) {
+    private routeChanged(to: Route, from: Route) {
+        if (to.path === from.path) return;
+
         this.expanded = false;
         this.updateActiveLink(to);
     }

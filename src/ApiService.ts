@@ -41,6 +41,7 @@ export default class ApiService {
     }
 
     private static normalizeContainer(data: {
+                                                id: number,
                                                 heading: string,
                                                 content: string,
                                                 footer: string,
@@ -50,6 +51,7 @@ export default class ApiService {
                                             }): Container {
 
         return {
+            id: data.id,
             heading: data.heading ? data.heading : undefined,
             content: data.content ? data.content : '',
             footer: data.footer ? data.footer : undefined,

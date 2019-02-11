@@ -1,7 +1,7 @@
 <template>
     <Content v-if="page">
         <template v-if="page.left || page.toc" v-slot:left>
-            <div v-if="page.toc"></div>
+            <TableOfContents v-if="page.toc" :containers="page.containers" />
             <div v-else v-html="page.left"></div>
         </template>
         <template>
@@ -47,9 +47,11 @@ import { Container } from '@/models/Container';
 import { CMSPage } from '@/models/CMSPage';
 import ApiService from '@/ApiService';
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
+import TableOfContents from '@/components/CMSPage/TableOfContents.vue';
+import { Route } from 'vue-router';
 
 @Component({
-    components: { LoadingIndicator }
+    components: { LoadingIndicator, TableOfContents }
 })
 export default class CMSPageVue extends Vue {
     private page: CMSPage | null = null;
@@ -60,7 +62,9 @@ export default class CMSPageVue extends Vue {
     }
 
     @Watch('$route')
-    private routeChanged(to: any) {
+    private routeChanged(to: Route, from: Route) {
+        if (to.path === from.path) return;
+
         this.fetchPageData();
     }
 
