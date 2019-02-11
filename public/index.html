@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <title>Gruppe Adler</title>
-  </head>
-  <body>
-    <noscript>
-      <div id="noJS" style="margin: 5vh 5vw; height: 90vh; width: 90vw; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+        <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="<%= BASE_URL %>style.css">
+        <title>Gruppe Adler</title>
+    </head>
+    <body>
+        <noscript id="noJS">
+                <img src="<%= BASE_URL %>logo512.png">
+                <div>
+                    <h1>Gerne würden wir Dir hier was anzeigen</h1>
+                    <p>
+                        Aber es scheint so, als ob Du JavaScript nicht aktiviert hast.<br/>
+                        Wenn Du fertig bist, lade diese Seite einfach neu.
+                    </p>
+                </div>
+            </div>
+        </noscript>
+        <div id="IEHint" style="display: none;">
+                <img src="<%= BASE_URL %>logo512.png">
+                <div>
+                    <h1>Gerne würden wir Dir hier was anzeigen</h1>
+                    <p>
+                        Aber es scheint so, als ob Du Internet Explorer benutzt.<br/>
+                        Internet Explorer ist veraltet und hat große Sicherheitslücken.<br/>
+                    </p>    
+                    <p>
+                        Du solltest dringendst darüber nachdenken auf einen neueren Browser wie <a href="https://www.google.de/chrome">Chrome</a>, <a href="https://www.mozilla.org/firefox">Firefox</a> oder Edge umzusteigen.<br />
+                    </p>
+                    <p>
+                        In <a href="https://techcommunity.microsoft.com/t5/Windows-IT-Pro-Blog/The-perils-of-using-Internet-Explorer-as-your-default-browser/ba-p/331732">diesem Blog Post</a> erzählt Chris Jackson, einer Microsofts Experten für Cybersicherheit, welche Gefahren es birgt IE als Standardbrowser zu benutzen.<br />
+                        Weitere Quellen: <a href="https://www.nytimes.com/2004/08/12/technology/in-search-of-a-browser-that-banishes-clutter.html">The New York Times</a> 
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- IE Hint is initially hidden to prevent two issues from pooping up when JS is disabled -->
         <script>
-          document.getElementById('noJS').remove();
+            document.getElementById('IEHint').style.display = '';
         </script>
-        <div style="display: inline-block; margin: 0 5rem;">
-          <img src="<%= BASE_URL %>logo512.png" style="max-width: calc(100vw - 10rem);">
-        </div>
-        <div style="display: inline-block; text-align: center;">
-          <h1 style="font-family: Oswald, sans-serif">Gerne würden wir Dir hier was anzeigen</h1>
-          <p style="font-family: 'Source Sans Pro', sans-serif; font-size: 15pt;">
-            Aber es scheint so, als ob Du JavaScript nicht aktiviert hast.<br/>
-            Wenn Du fertig bist, lade diese Seite einfach neu.
-          </p>
-        </div>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+    </body>
 </html>
