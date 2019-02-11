@@ -2,8 +2,8 @@
     <div id="app">
         <Navbar />
         <Header />
-
         <router-view/>
+        <Footer />
     </div>
 </template>
 
@@ -11,11 +11,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Navbar from '@/components/Navbar.vue';
 import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
 @Component({
     components: {
         Navbar,
-        Header
+        Header,
+        Footer
     }
 })
 export default class App extends Vue {}
@@ -23,5 +25,10 @@ export default class App extends Vue {}
 
 <style lang="scss">
 @import url('~@/global.scss');
+
+// make the page min height 100vh
+#app > .grad-header + *  {
+    min-height: calc(100vh - 400px);
+}
 
 </style>

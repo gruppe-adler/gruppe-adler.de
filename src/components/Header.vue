@@ -17,7 +17,7 @@
     background-size: cover;
     background-position: center;
     
-    min-height: 500px;
+    height: 500px;
     
 
     &__image {
