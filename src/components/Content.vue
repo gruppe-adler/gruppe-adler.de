@@ -1,4 +1,4 @@
-<template>
+<template functional>
     <div class="grad-content">
         <aside class="grad-content__left">
             <slot name="left" />
@@ -25,7 +25,7 @@ $offset: 200px;
         z-index: 0;
         width: 800px;
         max-width: 100%;
-        padding: 5px;
+        padding: 0px 5px;
         align-items: center;
         display: flex;
         flex-direction: column;

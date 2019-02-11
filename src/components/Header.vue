@@ -1,8 +1,6 @@
 <template>
     <header class="grad-header">
-        <!-- <img class="grad-header__image" src="@/assets/image.jpg"> -->
-        <img class="grad-header__logo" src="@/assets/logo512.png">
-
+        <img class="grad-header__logo" src="@/assets/logo512.png" />
     </header>
 </template>
 
