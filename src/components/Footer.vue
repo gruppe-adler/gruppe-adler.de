@@ -14,7 +14,7 @@
         <div>
             <router-link 
                 class="grad-footer__link"
-                to="/datebschutzerklaerung"
+                to="/datenschutzerklaerung"
                 tag="a"
             >
                 DATENSCHUTZERKLÄRUNG

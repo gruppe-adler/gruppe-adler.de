@@ -102,6 +102,21 @@ export default new Router({
       component: () => import('./views/CMSPage.vue')
     },
     {
+      path: '/en',
+      name: 'en',
+      component: () => import('./views/CMSPage.vue')
+    },
+    {
+      path: '/datenschutzerklaerung',
+      name: 'datenschutzerklaerung',
+      component: () => import('./views/CMSPage.vue')
+    },
+    {
+      path: '/impressum',
+      name: 'impressum',
+      component: () => import('./views/CMSPage.vue')
+    },
+    {
       path: '/forum',
       name: 'forum',
       beforeEnter(to, from, next) {
