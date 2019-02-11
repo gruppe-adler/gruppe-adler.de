@@ -12,7 +12,6 @@ const directusClient = new DirectusSDK({
 
 export default class ApiService {
     public static async getPage(slug: string): Promise<CMSPage | null> {
-        console.log('fetching page info for', slug);
 
         let data;
         try {
@@ -37,8 +36,6 @@ export default class ApiService {
             left: data.left ? this.normalizeLeftRight(data.left) : undefined,
             right: data.right ? this.normalizeLeftRight(data.right) : undefined
         };
-
-        console.log(page);
 
         return page;
     }
