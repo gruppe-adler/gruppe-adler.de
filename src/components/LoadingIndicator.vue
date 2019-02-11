@@ -1,6 +1,6 @@
 <template>
-    <div class="grad-page__loader">
-        <Container> 
+    <div class="grad-loader">
+        <Container > 
             <template v-slot:header>
                 <Progress />
                 <span></span>
@@ -9,7 +9,7 @@
                 <div style="height: 300px;"></div>
             </template>
         </Container>
-        <div class="grad-page__loader-mask"></div>
+        <div class="grad-loader__mask"></div>
     </div>
 </template>
 
@@ -25,11 +25,11 @@ export default class LoadingIndicator extends Vue {}
 
 
 <style lang="scss" scoped>
-.grad-page__loader {
+.grad-loader {
     opacity: 1;
     width: 100%;
 
-    &-mask {
+    &__mask {
         width: calc(100% + 100px);
         height: 300px;
         position: relative;
