@@ -32,28 +32,17 @@
             <div v-html="page.right"></div>
         </template>
     </Content>
-    <Content v-else class="grad-page__loader">
-        <Container style="opactiy: 0.6;"> 
-            <template v-slot:header>
-                <span></span>
-                <Progress />
-            </template>
-            <template>
-                <div style="height: 300px;"></div>
-            </template>
-        </Container>
-        <div class="grad-page__loader-mask"></div>
-    </Content>
+    <LoadingIndicator v-else />
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Container } from '@/models/Container';
 import { CMSPage } from '@/models/CMSPage';
 import ApiService from '@/ApiService';
-import Progress from '@/components/Progress.vue';
+import LoadingIndicator from '@/components/LoadingIndicator.vue';
 
 @Component({
-    components: { Progress }
+    components: { LoadingIndicator }
 })
 export default class CMSPageVue extends Vue {
     private page: CMSPage | null = null;
@@ -75,18 +64,3 @@ export default class CMSPageVue extends Vue {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-
-.grad-page__loader {
-    opacity: 1;
-
-    &-mask {
-        width: calc(100% + 100px);
-        height: 300px;
-        position: relative;
-        top: -250px;
-        background-image: linear-gradient(transparent, #F0EEEC, #F0EEEC);
-    }
-}
-</style>
