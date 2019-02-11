@@ -17,11 +17,12 @@ $offset: 200px;
 
 .grad-content {
     margin-top: -$offset;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 0.5fr auto 0.5fr;
     margin-bottom: 100px;
 
     &__main {
+        flex: none;
         z-index: 0;
         width: 800px;
         max-width: 100%;
@@ -33,7 +34,7 @@ $offset: 200px;
     
     &__left,
     &__right {
-        flex-grow: 1;
+        flex-grow: 0;
         margin: 40px;
         margin-top: $offset + 40px;
         color: rgba(0, 0, 0, 0.5);
@@ -45,12 +46,16 @@ $offset: 200px;
     }
 }
 @media (max-width: 1150px) {
-    .grad-content__main {
-        width: 800px;
-    }
-    .grad-content__left,
-    .grad-content__right {
-        display: none;
+    .grad-content {
+        display: flex;
+        justify-content: center;
+        &__main {
+            width: 800px;
+        }
+        &__left,
+        &__right {
+            display: none;
+        }
     }
 }
 </style>

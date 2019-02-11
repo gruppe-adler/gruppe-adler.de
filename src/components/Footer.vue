@@ -68,6 +68,7 @@ export default class Footer extends Vue {
 
 <style lang="scss" scoped>
 .grad-footer {
+    margin-top: 50px;
     position: relative;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
