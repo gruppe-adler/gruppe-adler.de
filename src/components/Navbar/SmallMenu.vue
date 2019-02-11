@@ -22,6 +22,14 @@
             </router-link>
         </template>
     </template>
+    <router-link 
+        v-if="expandedLink == null"
+        to="/en"
+        tag="a"
+        :class="[$route.path === '/en' ?'grad-nav--active' : '', 'grad-nav__link']"
+    >
+        <img src="@/assets/en.png" />
+    </router-link>
 </div>
 </template>
 
@@ -62,6 +70,8 @@ export default class NavbarSmallMenu extends Vue {
 
 <style lang="scss" scoped>
 .grad-nav__small-menu {
+    user-select: all;
+    overflow: hidden;
     position: fixed;
     top: 80px;
     left: 0px;
@@ -94,6 +104,10 @@ export default class NavbarSmallMenu extends Vue {
             opacity: 1;
             font-size: 28px;
             line-height: 28px;
+        }
+
+        > img {
+            height: 1em;
         }
     }
 }

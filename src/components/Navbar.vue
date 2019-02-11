@@ -15,7 +15,7 @@
         <template v-if="small">
             <NavClose v-if="expanded" @click="close" />
             <NavMenu v-else @click="open" />
-            <SmallMenu v-if="expanded" :activeLink="activeLink" v-model="expandedLink" />
+            <SmallMenu v-show="expanded" :activeLink="activeLink" v-model="expandedLink" />
         </template>
         <template v-else>
             <div ref="main-links" class="grad-nav__links">
@@ -27,6 +27,13 @@
                     tag="a"
                 >
                     {{link.text}}
+                </router-link>
+                <router-link 
+                    to="/en"
+                    tag="a"
+                    :class="[$route.path === '/en' ?'grad-nav--active' : '', 'grad-nav__link']"
+                >
+                    <img src="@/assets/en.png" />
                 </router-link>
             </div>
             <div v-if="activeLink.sublinks != undefined" class="grad-nav__sub-links">
@@ -62,7 +69,7 @@ const SMALL_BREAKPOINT = 750;
 export default class Navbar extends Vue {
     private links: GradLink[] = require('./Navbar/links.json');
 
-    private activeLink: GradLink = { text: 'ERR', url: ''};
+    private activeLink: GradLink = { text: '', url: ''};
     private activeSubLink: GradLink | null = null;
     private small: boolean = false;
     private expanded: boolean = false;              // Indicates whether the main nav is shown (only in small)
@@ -107,7 +114,7 @@ export default class Navbar extends Vue {
         const url = `/${route.path.split('/')[1]}`;
         const suburl = `/${route.path.split('/')[2]}`;
 
-        this.activeLink = this.links.find(l => l.url === url) || { text: 'ERR', url: ''};
+        this.activeLink = this.links.find(l => l.url === url) || { text: '', url: ''};
         this.activeSubLink = (this.activeLink.sublinks || []).find(l => l.url === suburl) || null;
 
         this.fixSubLinkOffset();
@@ -186,6 +193,8 @@ export default class Navbar extends Vue {
      * @author DerZade
      */
     private handleScroll(event: Event) {
+        if (this.expanded) return;
+
         if (pageYOffset > this.pageYOffset) {
             // user scrolled down
             if (pageYOffset > 80) {
@@ -305,6 +314,16 @@ $navbar-height: 80px;
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
         padding: 0px 2px;
+
+        > img {
+            height: 1em;
+            // filter: saturate(0%);
+        }
+        &.grad-nav--active, &:hover {
+            > img {
+                filter: saturate(100%);
+            }
+        }
     }
     
     @media (max-width: 1000px) {
@@ -312,6 +331,7 @@ $navbar-height: 80px;
             display: none;
         }
     }
+
 
 }
 </style>
