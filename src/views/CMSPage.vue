@@ -1,12 +1,14 @@
 <template>
     <Content v-if="page">
-        <template v-if="page.left" v-slot:left>
-            <div v-html="page.left"></div>
+        <template v-if="page.left || page.toc" v-slot:left>
+            <div v-if="page.toc"></div>
+            <div v-else v-html="page.left"></div>
         </template>
         <template>
             <Container 
                 v-for="c in page.containers"
                 :key="c.id"
+                :id="`grad-container-${c.id}`"
                 :headerColor="c.headerColor"
             > 
                 <template v-slot:header v-if="c.heading">
@@ -32,7 +34,12 @@
             <div v-html="page.right"></div>
         </template>
     </Content>
-    <LoadingIndicator v-else />
+    <Content v-else>
+        <Error v-if="loadingError">
+            Scheint so als ob beim Laden der Seite etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
+        </Error>
+        <LoadingIndicator v-else />
+    </Content>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
@@ -46,6 +53,7 @@ import LoadingIndicator from '@/components/LoadingIndicator.vue';
 })
 export default class CMSPageVue extends Vue {
     private page: CMSPage | null = null;
+    private loadingError: boolean = false;
 
     private mounted() {
         this.fetchPageData();
@@ -58,8 +66,12 @@ export default class CMSPageVue extends Vue {
 
     private fetchPageData() {
         this.page = null;
+        this.loadingError = false;
+
         ApiService.getPage(this.$route.path).then(res => {
             this.page = res;
+        }).catch(err => {
+            this.loadingError = true;
         });
     }
 }

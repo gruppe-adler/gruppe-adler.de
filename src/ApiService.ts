@@ -27,7 +27,7 @@ export default class ApiService {
 
             data = response.data;
         } catch (err) {
-            return null;
+            throw err;
         }
 
         const page: CMSPage = {
