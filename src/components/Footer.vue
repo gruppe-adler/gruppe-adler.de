@@ -27,6 +27,7 @@
                 IMPRESSUM
             </router-link>
         </div>
+        <div class="grad-footer__copyright">© 2019 Gruppe Adler</div>
     </div>
 </template>
 
@@ -67,11 +68,12 @@ export default class Footer extends Vue {
 
 <style lang="scss" scoped>
 .grad-footer {
+    position: relative;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
     > * {
         margin: 0 50px;
-        margin-bottom: 50px;
+        padding-bottom: 50px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -99,7 +101,16 @@ export default class Footer extends Vue {
     }
     &__desc {
         margin: 20px;
+        padding-bottom: 0px;
         opacity: 0.5;
+    }
+    &__copyright {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        font-size: 0.7em;
+        opacity: 0.2;
+        padding-bottom: 2em;
     }
 }
 </style>
