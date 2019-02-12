@@ -1,43 +1,38 @@
 import { Container } from '@/models/Container';
-import DirectusSDK from '@directus/sdk-js';
 import { CMSPage } from './models/CMSPage';
 const API_URL = 'http://localhost:7000/';
 const PROJECT = '_';
-const directusClient = new DirectusSDK({
-  url: API_URL,
-  project: PROJECT
-});
 
 
 
 export default class ApiService {
     public static async getPage(slug: string): Promise<CMSPage | null> {
 
-        let data;
-        try {
-            const response = await directusClient.getItems('page', {
-                single: true,
-                filter: {
-                    slug: {
-                        eq: slug
-                    }
-                },
-                fields: '*, containers.*, containers.pinned_image.data.full_url, containers.header_image.data.full_url'
-            });
+        // let data;
+        // try {
+        //     const response = await directusClient.getItems('page', {
+        //         single: true,
+        //         filter: {
+        //             slug: {
+        //                 eq: slug
+        //             }
+        //         },
+        //         fields: '*, containers.*, containers.pinned_image.data.full_url, containers.header_image.data.full_url'
+        //     });
 
-            data = response.data;
-        } catch (err) {
-            throw err;
-        }
+        //     data = response.data;
+        // } catch (err) {
+        //     throw err;
+        // }
 
-        const page: CMSPage = {
-            toc: data.toc,
-            containers: data.containers ? data.containers.map(this.normalizeContainer) : [],
-            left: data.left ? this.normalizeLeftRight(data.left) : undefined,
-            right: data.right ? this.normalizeLeftRight(data.right) : undefined
-        };
+        // const page: CMSPage = {
+        //     toc: data.toc,
+        //     containers: data.containers ? data.containers.map(this.normalizeContainer) : [],
+        //     left: data.left ? this.normalizeLeftRight(data.left) : undefined,
+        //     right: data.right ? this.normalizeLeftRight(data.right) : undefined
+        // };
 
-        return page;
+        return new Promise((resolve, reject) => resolve({}));
     }
 
     private static normalizeContainer(data: {

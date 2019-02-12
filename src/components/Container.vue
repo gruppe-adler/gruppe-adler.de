@@ -9,7 +9,7 @@
         <div class="grad-container__content">
             <slot />
         </div>
-        <footer v-if="$slots.footer" class="grad-container__footer">
+        <footer v-if="$slots.footer && $slots.footer !== ''" class="grad-container__footer">
             <slot name="footer" />
         </footer>
     </article>
@@ -61,7 +61,7 @@ $offset: 200px;
         text-transform: uppercase;
         color: rgba(0,0,0,0.5);
 
-        // background: rgba(240, 236, 232, 0.7);
+        -webkit-backdrop-filter: blur(40px);
         backdrop-filter: blur(40px);
 
         &-image {
@@ -101,6 +101,7 @@ $offset: 200px;
 
         height: 60px;
         background: rgba(240, 236, 232, 0.7);
+        -webkit-backdrop-filter: blur(40px);
         backdrop-filter: blur(40px);
         color: #666666;
     }
