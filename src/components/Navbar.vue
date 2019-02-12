@@ -290,7 +290,9 @@ $navbar-height: 72px;
         right: 0px;
 
         background: linear-gradient(270deg, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.08) 100%);
-        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(40px);
+        backdrop-filter: blur(40px);
+
 
         .grad-nav__link {
             opacity: 0.5;

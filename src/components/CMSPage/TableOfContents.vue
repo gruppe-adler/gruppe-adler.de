@@ -78,7 +78,7 @@ export default class TableOfContents extends Vue {
     }
 
     &--active {
-        color: black;
+        color: black !important;
         font-weight: bold;
     }
 }
