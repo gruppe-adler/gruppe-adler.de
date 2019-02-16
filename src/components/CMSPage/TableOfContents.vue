@@ -19,8 +19,8 @@ import { Container } from '@/models/Container';
 @Component
 export default class TableOfContents extends Vue {
     @Prop() private containers?: Container[];
-    private currentId: number = -1;
-    private scrollTimeout?: number;
+    private currentId: string = '';
+    private scrollTimeout: number | null = null;
 
     private mounted() {
         window.addEventListener('scroll', this.handleScroll);
@@ -33,7 +33,7 @@ export default class TableOfContents extends Vue {
 
     private handleScroll() {
         if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
-        this.scrollTimeout = setTimeout(this.updateCurrentContainer, 200);
+        this.scrollTimeout = window.setTimeout(this.updateCurrentContainer, 200);
     }
 
     /**

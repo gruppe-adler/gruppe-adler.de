@@ -1,8 +1,7 @@
 <template>
     <Content v-if="page">
-        <template v-if="page.left || page.toc" v-slot:left>
-            <TableOfContents v-if="page.toc" :containers="page.containers" />
-            <div v-else v-html="page.left"></div>
+        <template v-if="page.toc" v-slot:left>
+            <TableOfContents :containers="page.containers" />
         </template>
         <template>
             <Container 
@@ -29,9 +28,6 @@
                     <div v-html="c.footer"></div>
                 </template>
             </Container>
-        </template>
-        <template v-if="page.right" v-slot:right>
-            <div v-html="page.right"></div>
         </template>
     </Content>
     <Content v-else>
@@ -75,6 +71,7 @@ export default class CMSPageVue extends Vue {
         ApiService.getPage(this.$route.path).then(res => {
             this.page = res;
         }).catch(err => {
+            console.error(err);
             this.loadingError = true;
         });
     }
