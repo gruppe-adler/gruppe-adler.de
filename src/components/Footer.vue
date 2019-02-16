@@ -28,6 +28,13 @@
             </router-link>
         </div>
         <div class="grad-footer__copyright">© 2019 Gruppe Adler</div>
+        <router-link 
+                class="grad-footer__login"
+                to="/login"
+                tag="a"
+            >
+                LOGIN
+        </router-link>
     </div>
 </template>
 
@@ -105,6 +112,7 @@ export default class Footer extends Vue {
         padding-bottom: 0px;
         opacity: 0.5;
     }
+    &__login,
     &__copyright {
         position: absolute;
         bottom: 0px;
@@ -112,6 +120,12 @@ export default class Footer extends Vue {
         font-size: 0.7em;
         opacity: 0.2;
         padding-bottom: 2em;
+    }
+    &__login {
+        left: auto;
+        right: 0px;
+        text-decoration: none;
+        color: black;
     }
 }
 </style>

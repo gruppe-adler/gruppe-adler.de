@@ -121,6 +121,11 @@ export default new Router({
       component: () => import('./views/CMSPage.vue')
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/Login.vue')
+    },
+    {
       path: '/forum',
       name: 'forum',
       beforeEnter(to, from, next) {
