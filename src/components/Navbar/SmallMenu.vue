@@ -28,7 +28,7 @@
         tag="a"
         :class="[$route.path === '/en' ?'grad-nav--active' : '', 'grad-nav__link']"
     >
-        <img src="@/assets/en.png" />
+        <img src="@/assets/en.png" alt="english" />
     </router-link>
 </div>
 </template>

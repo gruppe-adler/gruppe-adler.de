@@ -19,7 +19,7 @@
                     />
                 </template>
                 <template v-slot:image  v-if="c.pinnedImage">
-                    <img :src="c.pinnedImage">
+                    <img :src="c.pinnedImage" alt="pinned-image">
                 </template>
                 <template v-if="c.content">
                     <div v-html="c.content"></div>

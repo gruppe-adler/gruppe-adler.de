@@ -8,7 +8,7 @@
                 :key="item.url"
                 class="grad-footer__link"
             >
-                <img :src="`/footer/${item.image}.png`" />
+                <img :src="`/footer/${item.image}.png`" :alt="item.image" />
             </a>
         </div>
         <div>

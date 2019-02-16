@@ -1,6 +1,10 @@
 <template>
     <header class="grad-header">
-        <img class="grad-header__logo" src="/logo512.png" />
+        <picture class="grad-header__logo"  alt="logo">
+            <source srcset="/logo192.webp" type="image/webp">
+            <source srcset="/logo192.png" type="image/png"> 
+            <img class="grad-header__logo" src="/logo192.png" alt="logo" />
+        </picture>
     </header>
 </template>
 
@@ -10,7 +14,7 @@
     position: relative;
     z-index: 0;
     background-color: transparent;
-    background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%),  url('~@/assets/image2.jpg');
+    background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%), url('~@/assets/header.webp');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -35,6 +39,10 @@
             display: none;
         }
     }
+}
+
+.no-webp .grad-header {
+    background-image: url('~@/assets/header.jpg');
 }
 </style>
 

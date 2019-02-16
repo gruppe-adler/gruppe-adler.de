@@ -2,7 +2,11 @@
     <nav :class="['grad-nav', navShown ? '' : 'grad-nav--hidden']">
         <NavBack v-if="expandedLink" @click="back" />
         <div v-else class="grad-nav__header">
-            <img src="../assets/adlerkopp256.png" />
+            <picture alt="adlerkopp">
+                <source srcset="../assets/adlerkopp48.webp" type="image/webp">
+                <source srcset="../assets/adlerkopp48.png" type="image/png"> 
+                <img src="../assets/adlerkopp48.png" alt="adlerkopp" />
+            </picture>
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
                 <span v-if="activeSubLink">{{activeSubLink.text}}</span>
@@ -33,7 +37,7 @@
                     tag="a"
                     :class="[$route.path === '/en' ?'grad-nav--active' : '', 'grad-nav__link']"
                 >
-                    <img src="@/assets/en.png" />
+                    <img src="@/assets/en.png" alt="english" />
                 </router-link>
             </div>
             <div v-if="activeLink.sublinks != undefined" class="grad-nav__sub-links">
