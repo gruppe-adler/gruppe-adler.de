@@ -1,62 +1,64 @@
-import { Container } from '@/models/Container';
+import { ApiResPage } from '@/models/api-response/Page';
+import { ApiResContainer } from '@/models/api-response/Container';
 import { CMSPage } from './models/CMSPage';
-const API_URL = 'http://localhost:7000/';
-const PROJECT = '_';
+import rp from 'request-promise-native';
+const API_URL = 'http://localhost:1337/';
+const API_TOKEN = '0bda3db60d372e9c90ffdeddc4098c';
 
 
 
 export default class ApiService {
     public static async getPage(slug: string): Promise<CMSPage | null> {
 
-        // let data;
-        // try {
-        //     const response = await directusClient.getItems('page', {
-        //         single: true,
-        //         filter: {
-        //             slug: {
-        //                 eq: slug
-        //             }
-        //         },
-        //         fields: '*, containers.*, containers.pinned_image.data.full_url, containers.header_image.data.full_url'
-        //     });
-
-        //     data = response.data;
-        // } catch (err) {
-        //     throw err;
-        // }
-
-        // const page: CMSPage = {
-        //     toc: data.toc,
-        //     containers: data.containers ? data.containers.map(this.normalizeContainer) : [],
-        //     left: data.left ? this.normalizeLeftRight(data.left) : undefined,
-        //     right: data.right ? this.normalizeLeftRight(data.right) : undefined
-        // };
-
-        return new Promise((resolve, reject) => resolve({}));
-    }
-
-    private static normalizeContainer(data: {
-                                                id: number,
-                                                heading: string,
-                                                content: string,
-                                                footer: string,
-                                                header_color: string,
-                                                header_image: { data: { full_url: string } },
-                                                pinned_image: { data: { full_url: string } }
-                                            }): Container {
-
-        return {
-            id: data.id,
-            heading: data.heading ? data.heading : undefined,
-            content: data.content ? data.content : '',
-            footer: data.footer ? data.footer : undefined,
-            headerColor: data.header_color ? data.header_color : undefined,
-            headerImage: data.header_image ? data.header_image.data.full_url : undefined,
-            pinnedImage: data.pinned_image ? data.pinned_image.data.full_url : undefined
+        let response = { total: 0, entries: [] };
+        const rpOptions = {
+            method: 'POST',
+            uri: `${API_URL}api/collections/get/page`,
+            headers: {
+                'Authorization': `Bearer ${API_TOKEN}`,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                filter: {
+                    slug
+                },
+                fields: {
+                    toc: 1,
+                    containers: 1
+                },
+                populate: 1
+            })
         };
+
+        try {
+            response = JSON.parse(await rp(rpOptions));
+        } catch (err) {
+            throw err;
+        }
+
+        if (response.total === 0) throw new Error(`Page '${slug}' was not found`);
+
+        const page = response.entries[0] as ApiResPage;
+        page.containers = page.containers.map(c => {
+            c.id = c._id;
+            c.pinnedImage = this.normalizeImage(c.pinnedImage);
+            c.headerImage = this.normalizeImage(c.headerImage);
+
+            return c;
+        });
+
+        return page as CMSPage;
     }
 
-    private static normalizeLeftRight(data: {content: string}): string {
-        return data.content;
+    private static normalizeImage(response: any): string {
+        if (Array.isArray(response)) return '';
+        response = response as { path: string };
+
+        let path = response.path;
+        if (path.match(/^\/.*/i)) {
+            path = `${API_URL}${path.substr(1)}`;
+        }
+
+        return path;
     }
 }

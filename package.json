@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "register-service-worker": "^1.5.2",
+    "request-promise-native": "^1.0.5",
     "vue": "^2.6.4",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
@@ -16,6 +17,7 @@
     "vue2-smooth-scroll": "^1.0.4"
   },
   "devDependencies": {
+    "@types/request-promise-native": "^1.0.15",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-pwa": "^3.4.0",
     "@vue/cli-plugin-typescript": "^3.4.0",
