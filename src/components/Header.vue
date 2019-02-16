@@ -1,9 +1,9 @@
 <template>
     <header class="grad-header">
         <picture class="grad-header__logo"  alt="logo">
-            <source srcset="/logo192.webp" type="image/webp">
-            <source srcset="/logo192.png" type="image/png"> 
-            <img class="grad-header__logo" src="/logo192.png" alt="logo" />
+            <source srcset="@/assets/logo192.webp" type="image/webp">
+            <source srcset="@/assets/logo192.png" type="image/png"> 
+            <img class="grad-header__logo" src="@/assets/logo192.png" alt="logo" />
         </picture>
     </header>
 </template>
