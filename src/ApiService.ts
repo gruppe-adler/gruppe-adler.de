@@ -1,7 +1,9 @@
 import { ApiResPage } from '@/models/api-response/Page';
 import { CMSPage } from './models/CMSPage';
 import rp from 'request-promise-native';
+import { BlogPost } from './models/blog/BlogPost';
 import { Container } from './models/Container';
+import { Tweet } from './models/blog/Tweet';
 const API_URL = 'http://localhost:1337/';
 const API_TOKEN = '0bda3db60d372e9c90ffdeddc4098c';
 
@@ -57,7 +59,11 @@ export default class ApiService {
         };
     }
 
-    
+    public static async getTweets(): Promise<Tweet[]> {
+        return [];
+    }
+    public static async getBlogPosts(): Promise<BlogPost[]> {
+        return [];
     }
 
     public static normalizeImage(response: any): string {
