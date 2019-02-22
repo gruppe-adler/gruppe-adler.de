@@ -137,6 +137,11 @@ export default new Router({
       beforeEnter(to, from, next) {
         window.location.href = 'https://wiki.gruppe-adler.de';
       }
+    },
+    {
+      path: '/cms-content-preview/container',
+      name: '/cms-content-preview/container',
+      component: () => import('./views/cms-content-preview/Container.vue')
     }
   ]
 });
