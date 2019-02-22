@@ -24,10 +24,11 @@ $offset: 200px;
     z-index: 1;
 
     &__main {
+        box-sizing: border-box;
         flex: none;
         z-index: 0;
         width: 800px;
-        max-width: calc(100vw - 10px);
+        max-width: calc(100% - 10px);
         padding: 0px 5px;
         align-items: center;
         display: flex;
