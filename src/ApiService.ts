@@ -1,5 +1,4 @@
 import { ApiResPage } from '@/models/api-response/Page';
-import { ApiResContainer } from '@/models/api-response/Container';
 import { CMSPage } from './models/CMSPage';
 import rp from 'request-promise-native';
 const API_URL = 'http://localhost:1337/';
@@ -50,11 +49,15 @@ export default class ApiService {
         return page as CMSPage;
     }
 
-    private static normalizeImage(response: any): string {
+    public static normalizeImage(response: any): string {
         if (Array.isArray(response)) return '';
         response = response as { path: string };
 
         let path = response.path;
+
+        if (!path) return '';
+
+        // if path starts with a '/' it is probably a relative path
         if (path.match(/^\/.*/i)) {
             path = `${API_URL}${path.substr(1)}`;
         }
