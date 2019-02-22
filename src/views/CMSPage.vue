@@ -13,12 +13,12 @@
                 <template v-slot:header v-if="c.heading">
                     <span>{{c.heading}}</span>
                     <img 
-                        v-if="c.headerImage"
+                        v-if="c.headerImage !== ''"
                         class="grad-container__header-image" 
                         :src="c.headerImage"
                     />
                 </template>
-                <template v-slot:image  v-if="c.pinnedImage">
+                <template v-slot:image  v-if="c.pinnedImage !== ''">
                     <img :src="c.pinnedImage" alt="pinned-image">
                 </template>
                 <template v-if="c.content">

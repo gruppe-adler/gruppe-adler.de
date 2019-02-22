@@ -1,6 +1,7 @@
 import { ApiResPage } from '@/models/api-response/Page';
 import { CMSPage } from './models/CMSPage';
 import rp from 'request-promise-native';
+import { Container } from './models/Container';
 const API_URL = 'http://localhost:1337/';
 const API_TOKEN = '0bda3db60d372e9c90ffdeddc4098c';
 
@@ -38,15 +39,25 @@ export default class ApiService {
         if (response.total === 0) throw new Error(`Page '${slug}' was not found`);
 
         const page = response.entries[0] as ApiResPage;
-        page.containers = page.containers.map(c => {
-            c.id = c._id;
-            c.pinnedImage = this.normalizeImage(c.pinnedImage);
-            c.headerImage = this.normalizeImage(c.headerImage);
-
-            return c;
+        const containers: Container[] = page.containers.map(c => {
+            return {
+                id: c._id,
+                heading: c.heading,
+                content: c.content,
+                footer: c.footer,
+                headerColor: c.headerColor,
+                headerImage: this.normalizeImage(c.headerImage),
+                pinnedImage: this.normalizeImage(c.pinnedImage)
+            } as Container;
         });
 
-        return page as CMSPage;
+        return {
+            toc: page.toc,
+            containers
+        };
+    }
+
+    
     }
 
     public static normalizeImage(response: any): string {
