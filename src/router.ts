@@ -1,6 +1,5 @@
 import Vue from 'vue';
-import Router, {Route} from 'vue-router';
-import Home from './views/Home.vue';
+import Router, { Route } from 'vue-router';
 
 Vue.use(Router);
 
@@ -23,7 +22,7 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: () => import('./views/Home.vue')
     },
     {
       path: '/ueber-uns',

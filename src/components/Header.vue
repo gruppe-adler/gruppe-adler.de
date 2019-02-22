@@ -8,6 +8,12 @@
     </header>
 </template>
 
+<script>
+import './Header/modernizr-webp.js';
+
+export default {};
+</script>
+
 <style lang="scss" scoped>
 .grad-header {
     margin-top: 40px;
