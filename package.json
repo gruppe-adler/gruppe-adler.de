@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "grapheme-splitter": "^1.0.4",
     "register-service-worker": "^1.5.2",
     "request-promise-native": "^1.0.5",
     "vue": "^2.6.4",
@@ -24,6 +25,7 @@
     "@vue/cli-service": "^3.4.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
+    "twitter-d": "^0.2.1",
     "typescript": "^3.0.0",
     "vue-template-compiler": "^2.6.4"
   }

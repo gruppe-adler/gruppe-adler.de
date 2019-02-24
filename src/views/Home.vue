@@ -52,19 +52,20 @@ export default class HomeVue extends Vue {
     }
 
     private async fetchBlogData() {
-        this.tweets = [];
         this.blogPosts = [];
+        this.tweets = [];
         this.loadingError = false;
 
         try {
-            this.tweets = await ApiService.getTweets();
+            this.blogPosts = await ApiService.getBlogPosts();
         } catch (err) {
             console.error(err);
             this.loadingError = true;
+            return;
         }
 
         try {
-            this.blogPosts = await ApiService.getBlogPosts();
+            this.tweets = await ApiService.getTweets();
         } catch (err) {
             console.error(err);
             this.loadingError = true;
@@ -74,7 +75,7 @@ export default class HomeVue extends Vue {
     private get blogEntries(): BlogEntry[] {
         let arr: BlogEntry[] = [];
         arr = arr.concat(this.blogPosts).concat(this.tweets);
-        return arr.sort((a, b) => a.date.getTime() - b.date.getTime());
+        return arr.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
 
     private isBlogPost(entry: BlogEntry): boolean {

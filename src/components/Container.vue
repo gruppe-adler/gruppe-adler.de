@@ -86,6 +86,7 @@ $offset: 200px;
     }
 
     &__content {
+        color: #666666;
         margin-top: 36px;
         margin-bottom: 18px;
         line-height: 2em;
