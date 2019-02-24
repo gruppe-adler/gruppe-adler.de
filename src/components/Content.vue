@@ -24,7 +24,6 @@ $offset: 200px;
     z-index: 1;
 
     &__main {
-        box-sizing: border-box;
         flex: none;
         z-index: 0;
         width: 800px;

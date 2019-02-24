@@ -3,7 +3,7 @@ import { CMSPage } from './models/CMSPage';
 import rp from 'request-promise-native';
 import { BlogPost } from './models/blog/BlogPost';
 import { Container } from './models/Container';
-import { Tweet, Retweet } from './models/blog/Tweet';
+import { Tweet, Retweet, TweetMedia } from './models/blog/Tweet';
 import {
     Status as ApiResTweet,
     Entities as TweetEntities,
@@ -80,19 +80,58 @@ export default class ApiService {
             throw err;
         }
 
-        const tweets: Tweet[] = response.map(tweet => {
+        const tweets: Tweet[] = response.map(mainTweet => {
 
-            const author: TwitterUser = {
-                username: tweet.user.screen_name,
-                displayName: tweet.user.name,
-                picture: tweet.user.profile_image_url_https
+            // author of main tweet
+            const mainAuthor: TwitterUser = {
+                username: mainTweet.user.screen_name,
+                displayName: mainTweet.user.name,
+                picture: mainTweet.user.profile_image_url_https
             };
 
-            if (tweet.retweeted_status) {
-                // api response for retweeted tweet
-                const retweetedStatus: ApiResTweet = tweet.retweeted_status;
+            // media of main tweet
+            let mainMedia: TweetMedia[] = [];
+            if (mainTweet.extended_entities && mainTweet.extended_entities.media) {
+                mainMedia = mainTweet.extended_entities.media.map(m => {
+                    return {
+                        id: m.id,
+                        url: m.media_url_https,
+                        target: m.expanded_url
+                    };
+                });
+            }
+
+            // content of main tweet
+            let mainCaption = this.enrichTwitterCaption(mainTweet.full_text, mainTweet.entities);
+
+            // quoted_status and retweeted_status both contain the tweet that was retweeted with the
+            // only difference being that the parent tweet of quoted_status will contain a own comment
+            // and parent of retweeted_status is just a retweet of that status without any extra comment
+            let retweetedStatus: ApiResTweet|null = null;
+            if (mainTweet.quoted_status) {
+                retweetedStatus = mainTweet.quoted_status;
+            } else if (mainTweet.retweeted_status) {
+                retweetedStatus = mainTweet.retweeted_status;
+
+                mainCaption = ''; // full_text of main tweet will just contain part of the retweeted full_text
+            }
+
+            if (retweetedStatus) {
+
+                // retweeted media
+                let retweetedMedia: TweetMedia[] = [];
+                if (retweetedStatus.extended_entities && retweetedStatus.extended_entities.media) {
+                    retweetedMedia = retweetedStatus.extended_entities.media.map(m => {
+                        return {
+                            id: m.id,
+                            url: m.media_url_https,
+                            target: m.expanded_url
+                        };
+                    });
+                }
 
                 const retweetedTweet = new Tweet({
+                    media: retweetedMedia,
                     date: new Date(retweetedStatus.created_at),
                     caption: this.enrichTwitterCaption(retweetedStatus.full_text, retweetedStatus.entities),
                     author: {
@@ -102,40 +141,27 @@ export default class ApiService {
                     }
                 });
 
+                // media of retweeted tweet will also appear in media of main tweet and we don't like that shit ^^
+                // so remove everything from main tweet media, which already is in retweeted status
+                mainMedia = mainMedia.filter(photo => {
+                    return retweetedMedia.findIndex(retweetedPhoto => retweetedPhoto.id === photo.id) === -1;
+                });
+
                 return new Retweet({
-                    date: new Date(tweet.created_at),
-                    caption: '',
-                    author,
+                    date: new Date(mainTweet.created_at),
+                    caption: mainCaption,
+                    media: mainMedia,
+                    author: mainAuthor,
                     tweet: retweetedTweet
                 });
             }
 
-            if (tweet.quoted_status) {
-                // api response for retweeted tweet
-                const quotedStatus: ApiResTweet = tweet.quoted_status;
-
-                const retweetedTweet = new Tweet({
-                    date: new Date(quotedStatus.created_at),
-                    caption: this.enrichTwitterCaption(quotedStatus.full_text, quotedStatus.entities),
-                    author: {
-                        username: quotedStatus.user.screen_name,
-                        displayName: quotedStatus.user.name,
-                        picture: quotedStatus.user.profile_image_url_https
-                    }
-                });
-
-                return new Retweet({
-                    date: new Date(tweet.created_at),
-                    caption: this.enrichTwitterCaption(tweet.full_text, tweet.entities),
-                    author,
-                    tweet: retweetedTweet
-                });
-            }
-
+            // tweet is just regular tweet
             return new Tweet({
-                date: new Date(tweet.created_at),
-                caption: this.enrichTwitterCaption(tweet.full_text, tweet.entities),
-                author
+                date: new Date(mainTweet.created_at),
+                caption: mainCaption,
+                media: mainMedia,
+                author: mainAuthor
             });
         });
 
@@ -192,6 +218,10 @@ export default class ApiService {
         return [];
     }
 
+    /**
+     * @param {any} response Image response
+     * @returns {string} Complete image url
+     */
     public static normalizeImage(response: any): string {
         if (Array.isArray(response)) return '';
         response = response as { path: string };
@@ -257,7 +287,7 @@ export default class ApiService {
                 entity = entity as HashtagEntity;
                 text = [
                     pre,
-                    `<a href="https://twitter.com/hashtag/${entity.text}?src=hash">`,
+                    `<a target="_blank" href="https://twitter.com/hashtag/${entity.text}?src=hash">`,
                     mid,
                     '</a>',
                     post
@@ -271,12 +301,24 @@ export default class ApiService {
 
             if (e.type === 'urls') {
                 entity = entity as UrlEntity;
-                text = [pre, `<a href="${entity.expanded_url}">`, mid, '</a>', post].join('');
+                text = [
+                    pre,
+                    `<a target="_blank" href="${entity.expanded_url}">`,
+                    mid,
+                    '</a>',
+                    post
+                ].join('');
             }
 
             if (e.type === 'user_mentions') {
                 entity = entity as UserMentionEntity;
-                text = [pre, `<a href="https://twitter.com/${entity.screen_name}">`, mid, '</a>', post].join('');
+                text = [
+                    pre,
+                    `<a target="_blank" href="https://twitter.com/${entity.screen_name}">`,
+                    mid,
+                    '</a>',
+                    post
+                ].join('');
             }
 
         });
