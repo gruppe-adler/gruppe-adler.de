@@ -119,7 +119,7 @@ export default class Navbar extends Vue {
      */
     private updateActiveLink(route: any) {
         const url = `/${route.path.split('/')[1]}`;
-        const suburl = `/${route.path.split('/')[2]}`;
+        const suburl = route.path.replace(new RegExp(`^${url}`, 'i'), '');
 
         this.activeLink = this.links.find(l => l.url === url) || { text: '', url: ''};
         this.activeSubLink = (this.activeLink.sublinks || []).find(l => l.url === suburl) || null;

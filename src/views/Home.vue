@@ -26,7 +26,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import BlogPostVue from '@/components/Blog/BlogPost.vue';
 import TweetVue from '@/components/Blog/Tweet.vue';
@@ -35,7 +36,7 @@ import { BlogEntry } from '@/models/blog/BlogEntry';
 import { BlogPost, BLOG_POST_TYPE } from '@/models/blog/BlogPost';
 import { Tweet } from '@/models/blog/Tweet';
 import { EVENT_REPORT_TYPE } from '@/models/blog/EventReport';
-import { MOD_PACK_UPDATE_TYPE } from '@/models/blog/ModpackUpdate';
+import { MODSET_UPDATE_TYPE } from '@/models/blog/ModpackUpdate';
 
 import ApiService from '@/ApiService';
 
@@ -46,6 +47,7 @@ export default class HomeVue extends Vue {
     private loadingError: boolean = false;
     private tweets: Tweet[] = [];
     private blogPosts: BlogPost[] = [];
+    private blogEntries: BlogEntry[] = [];
 
     private mounted() {
         this.fetchBlogData();
@@ -70,16 +72,48 @@ export default class HomeVue extends Vue {
             console.error(err);
             this.loadingError = true;
         }
+
+        this.updateBlogEntries();
     }
 
-    private get blogEntries(): BlogEntry[] {
+    @Watch('$route')
+    private routeChanged(to: Route, from: Route) {
+        if (to.path === from.path) return;
+
+        this.updateBlogEntries();
+    }
+
+    private updateBlogEntries() {
         let arr: BlogEntry[] = [];
-        arr = arr.concat(this.blogPosts).concat(this.tweets);
-        return arr.sort((a, b) => b.date.getTime() - a.date.getTime());
+        const path = this.$route.path.replace(/^\/home/i, '');
+
+        if (path === '') {
+            arr = arr.concat(this.blogPosts).concat(this.tweets);
+        } else if (path === '/tweets') {
+            arr = this.tweets;
+        } else {
+            // @ts-ignore
+            const filteredType = {
+                '/allgemeines': BLOG_POST_TYPE,
+                '/events': EVENT_REPORT_TYPE,
+                '/modset': MODSET_UPDATE_TYPE
+            }[path.toLowerCase()];
+
+            if (!filteredType) {
+                console.log(path.toLowerCase());
+                this.blogEntries = [];
+                return;
+            }
+
+            arr = this.blogPosts.filter(x => x.type === filteredType);
+        }
+
+        // set sorted arr as entries
+        this.blogEntries = arr.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
 
     private isBlogPost(entry: BlogEntry): boolean {
-        return (entry.type in [BLOG_POST_TYPE, EVENT_REPORT_TYPE, MOD_PACK_UPDATE_TYPE]);
+        return (entry.type in [BLOG_POST_TYPE, EVENT_REPORT_TYPE, MODSET_UPDATE_TYPE]);
     }
 }
 </script>

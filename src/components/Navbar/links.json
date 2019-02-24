@@ -1,7 +1,29 @@
 [
     {
         "text": "Home",
-        "url": "/home"
+        "url": "/home",
+        "sublinks": [
+            {
+                "text": "Alles",
+                "url": ""
+            },
+            {
+                "text": "Allgemeines",
+                "url": "/allgemeines"
+            },
+            {
+                "text": "Events",
+                "url": "/events"
+            },
+            {
+                "text": "Modset",
+                "url": "/modset"
+            },
+            {
+                "text": "Tweets",
+                "url": "/tweets"
+            }
+        ]
     },
     {
         "text": "Über uns",

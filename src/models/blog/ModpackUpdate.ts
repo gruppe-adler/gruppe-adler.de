@@ -1,10 +1,10 @@
 import { BlogPost } from './BlogPost';
 import { ForumUser } from './ForumUser';
 
-export const MOD_PACK_UPDATE_TYPE = 'ModPackUpdate';
+export const MODSET_UPDATE_TYPE = 'ModsetUpdate';
 
-export class ModPackUpdate extends BlogPost {
-    public type: string = MOD_PACK_UPDATE_TYPE;
+export class ModsetUpdate extends BlogPost {
+    public type: string = MODSET_UPDATE_TYPE;
     public changes: ModChange[];
 
     constructor({ id, heading, content, pinnedImage, tags, author, date, published, changes }: {

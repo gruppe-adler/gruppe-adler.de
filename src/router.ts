@@ -25,6 +25,26 @@ export default new Router({
       component: () => import('./views/Home.vue')
     },
     {
+      path: '/home/tweets',
+      name: 'home-tweets',
+      component: () => import('./views/Home.vue')
+    },
+    {
+      path: '/home/allgemeines',
+      name: 'home-allgemeines',
+      component: () => import('./views/Home.vue')
+    },
+    {
+      path: '/home/events',
+      name: 'home-events',
+      component: () => import('./views/Home.vue')
+    },
+    {
+      path: '/home/modset',
+      name: 'home-modset',
+      component: () => import('./views/Home.vue')
+    },
+    {
       path: '/ueber-uns',
       name: 'ueber-uns',
       redirect: '/ueber-uns/miteinander'
