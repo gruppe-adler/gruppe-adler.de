@@ -1,9 +1,9 @@
 <template>
     <BlogEntry headerColor="#1DA1F2" class="grad-tweet">
         <template v-slot:date>{{date}}</template>
-        <template v-slot:heading>@{{model.author.username}}</template>
+        <template v-slot:heading><a target="_blank" :href="`https://twitter.com/${model.author.username}`">@{{model.author.username}}</a></template>
         <template v-slot:tags><span>Twitter</span></template>
-        <template v-slot:author><img :src="model.author.picture" /></template>
+        <template v-slot:author><a target="_blank" :href="`https://twitter.com/${model.author.username}`"><img :src="model.author.picture" /></a></template>
         <template>
             <div class="grad-tweet__media" v-if="model.media.length > 0">
                 <a 
@@ -71,12 +71,6 @@ export default class TweetVue extends Vue {
 <style lang="scss">
 .grad-tweet {
 
-    a {
-        color: #1DA1F2;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
     &__media {
         border-radius: 10px;
         margin-bottom: 10px;
@@ -104,6 +98,15 @@ export default class TweetVue extends Vue {
 
     &__retweet-author {
         font-weight: bold;
+    }
+
+    .grad-container__content,
+    .grad-container__footer {
+        a {
+            color: #1DA1F2;
+            text-decoration: none;
+            font-weight: bold;
+        }
     }
 
     .grad-container__header {

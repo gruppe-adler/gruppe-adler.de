@@ -99,7 +99,7 @@ export function parseDate(date: Date): string {
         align-items: center;
         display: flex;
         margin-left: 10px;
-        > img {
+        img {
             border-radius: 50%;
             height: 36px;
             width: 36px;
