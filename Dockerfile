@@ -16,8 +16,6 @@ COPY . .
 
 # Build project
 ENV NODE_ENV production
-ENV NODE_ENV production
-ENV IS_DOCKER true
 RUN npm run build
 
 # Move built files to own directory
