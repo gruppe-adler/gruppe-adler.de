@@ -1,9 +1,7 @@
 {
     "public": "dist",
-    "rewrites": [
-        { 
-            "source": "/home",
-            "destination": "/index.html"
-        }
-    ]
+    "rewrites": [{
+        "source": "**",
+        "destination": "/index.html"
+    }]
 }
