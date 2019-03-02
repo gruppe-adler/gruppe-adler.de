@@ -1,4 +1,4 @@
-import { BlogEntry } from './Blogentry';
+import { BlogEntry } from './BlogEntry';
 import { TwitterUser } from './TwitterUser';
 
 export const TWEET_TYPE = 'Tweet';

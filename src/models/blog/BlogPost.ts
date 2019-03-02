@@ -1,4 +1,4 @@
-import { BlogEntry } from './Blogentry';
+import { BlogEntry } from './BlogEntry';
 import { ForumUser } from './ForumUser';
 
 export const BLOG_POST_TYPE = 'BlogPost';
