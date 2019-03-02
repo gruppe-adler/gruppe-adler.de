@@ -15,8 +15,8 @@ import {
 import GraphemeSplitter from 'grapheme-splitter';
 import { TwitterUser } from './models/blog/TwitterUser';
 
-const CMS_URL  = process.env.IS_DOCKER ? 'http://cms/' : 'https://cms.gruppe-adler.de/';
-const API_URL  = process.env.IS_DOCKER ? 'http://api/' : 'https://api.gruppe-adler.de/';
+const CMS_URL = 'http://cms.gruppe-adler.de/';
+const API_URL = 'http://api.gruppe-adler.de/';
 const CMS_TOKEN = 'acacff37c21c30b6e6569e958fa7be';
 
 
