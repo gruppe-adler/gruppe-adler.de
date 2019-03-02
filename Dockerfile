@@ -14,12 +14,6 @@ RUN npm ci
 # Bundle app source
 COPY . .
 
-# Test
-RUN ls .
-RUN ls ./src
-RUN ls ./src/models
-RUN ls ./src/models/blog
-
 # Build project
 ENV NODE_ENV production
 RUN npm run build
