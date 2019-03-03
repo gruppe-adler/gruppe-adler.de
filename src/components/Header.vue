@@ -18,7 +18,7 @@ export default {};
     position: relative;
     z-index: 0;
     background-color: transparent;
-    background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%), url('~@/assets/header.webp');
+    background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%), url('~@/assets/header.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
