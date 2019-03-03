@@ -155,13 +155,19 @@ export default class TweetVue extends Vue {
 
 // show text of retweet below the media
 @media (max-width: 650px) {
-    .grad-tweet .grad-container__footer {
-        flex-direction: column;
+    .grad-tweet {
+        .grad-container__header {
+            background-image: none;
+        }
 
-        .grad-tweet__media {
-            width: auto;
-            max-width: 100%;
-            margin-right: 0px;
+        .grad-container__footer {
+            flex-direction: column;
+
+            .grad-tweet__media {
+                width: auto;
+                max-width: 100%;
+                margin-right: 0px;
+            }
         }
     }
 }
