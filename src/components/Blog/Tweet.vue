@@ -47,7 +47,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Tweet, RETWEET_TYPE } from '@/models/blog/Tweet';
-import BlogEntryVue, {parseDate} from './BlogEntry.vue';
+import BlogEntryVue, { parseDate } from './BlogEntry.vue';
 
 @Component({
     components: { BlogEntry: BlogEntryVue }

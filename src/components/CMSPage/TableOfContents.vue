@@ -42,6 +42,7 @@ export default class TableOfContents extends Vue {
     private updateCurrentContainer() {
         if (! this.containers) return;
 
+        // itereate all containers and find the one first one which is more than 50px from top of screen
         for (const c of this.containers) {
             const container = document.getElementById(`grad-container-${c.id}`);
             if (container) {

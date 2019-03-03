@@ -36,7 +36,7 @@ export default class BlogEntry extends Vue {
     @Prop() private headerColor?: string;
 }
 
-const DAYS = ['Sonntag', 'Montag', 'Dienstag', 'Mittowch', 'Donnerstag', 'Freitag', 'Samstag'];
+const DAYS = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 export function parseDate(date: Date): string {
     const addZero = (num: number): string => {
         return `${num < 10 ? '0' : ''}${num}`;
