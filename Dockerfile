@@ -32,7 +32,7 @@ RUN rm -rf ./app
 WORKDIR /usr/src/app
 
 # Install serve globally
-RUN npm i -g serve@10.1.2
+RUN npm i -g serve@10.1.1
 
 EXPOSE 80
 
