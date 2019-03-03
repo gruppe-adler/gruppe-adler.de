@@ -1,9 +1,7 @@
 <template>
     <header class="grad-header">
         <picture class="grad-header__logo"  alt="logo">
-            <source srcset="@/assets/logo192.webp" type="image/webp">
-            <source srcset="@/assets/logo192.png" type="image/png"> 
-            <img class="grad-header__logo" src="@/assets/logo192.png" alt="logo" />
+            <img class="grad-header__logo" src="@/assets/logo192.svg" alt="logo" />
         </picture>
     </header>
 </template>
@@ -33,7 +31,7 @@ export default {};
     }
 
     &__logo {
-        max-height: 162px;
+        height: 162px;
         position: absolute;
         top: 100px;
         left: 10px;

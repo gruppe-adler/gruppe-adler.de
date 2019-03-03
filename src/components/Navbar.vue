@@ -3,9 +3,7 @@
         <NavBack v-if="expandedLink" @click="back" />
         <div v-else class="grad-nav__header">
             <picture alt="adlerkopp">
-                <source srcset="@/assets/adlerkopp48.webp" type="image/webp">
-                <source srcset="@/assets/adlerkopp48.png" type="image/png"> 
-                <img src="@/assets/adlerkopp48.png" alt="adlerkopp" />
+                <img src="@/assets/adlerkopp48.svg" alt="adlerkopp" />
             </picture>
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
@@ -256,7 +254,7 @@ $navbar-height: 72px;
 
         img {
             margin-right: 8px;
-            height: 100%;
+            height: 50px;
         }
         span {
             font-size: 12px;

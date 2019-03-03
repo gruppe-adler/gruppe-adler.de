@@ -8,7 +8,7 @@
                 :key="item.url"
                 class="grad-footer__link"
             >
-                <img :src="`/footer/${item.image}.png`" :alt="item.image" />
+                <img :src="`/footer/${item.image}.svg`" :alt="item.image" />
             </a>
         </div>
         <div>
@@ -96,6 +96,7 @@ export default class Footer extends Vue {
         opacity: 0.5;
 
         img {
+            min-height: 20px;
             max-height: 30px;
             filter: saturate(0%);
         }
