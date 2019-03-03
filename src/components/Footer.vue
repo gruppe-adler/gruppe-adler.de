@@ -95,8 +95,7 @@ export default class Footer extends Vue {
         opacity: 0.5;
 
         img {
-            min-height: 20px;
-            max-height: 30px;
+            height: 30px;
             filter: saturate(0%);
         }
 
