@@ -104,7 +104,6 @@ export default class TweetVue extends Vue {
     .grad-container__footer {
         a {
             color: #1DA1F2;
-            text-decoration: none;
             font-weight: bold;
         }
     }

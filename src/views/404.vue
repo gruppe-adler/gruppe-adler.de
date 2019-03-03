@@ -12,7 +12,6 @@
 <style lang="scss" scoped>
 .grad-back {
     color: #d18d1f;
-    text-decoration: none;
     opacity: 0.9;
 
     &:hover {

@@ -90,7 +90,6 @@ export default class Footer extends Vue {
     &__link {
         margin: 20px;
         flex: none;
-        text-decoration: none;
         color: black;
         cursor: pointer;
         opacity: 0.5;
@@ -124,7 +123,6 @@ export default class Footer extends Vue {
     &__login {
         left: auto;
         right: 0px;
-        text-decoration: none;
         color: black;
     }
 }

@@ -239,7 +239,6 @@ $navbar-height: 72px;
     transition: top .25s ease-in-out;
 
     a {
-        text-decoration: none;
         color: inherit;
     }
 
