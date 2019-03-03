@@ -32,8 +32,8 @@ RUN rm -rf ./app
 WORKDIR /usr/src/app
 
 # Install serve globally
-RUN npm i -g serve@9.6.0
+RUN npm i -g serve@10.1.2
 
 EXPOSE 80
 
-ENTRYPOINT [ "serve", "-l", "80" ]
+ENTRYPOINT [ "serve", "-s", "-l", "80" ]
