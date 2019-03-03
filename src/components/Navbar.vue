@@ -3,7 +3,7 @@
         <NavBack v-if="expandedLink" @click="back" />
         <div v-else class="grad-nav__header">
             <picture alt="adlerkopp">
-                <img src="@/assets/adlerkopp48.svg" alt="adlerkopp" />
+                <img src="@/assets/adlerkopp.svg" alt="adlerkopp" />
             </picture>
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
