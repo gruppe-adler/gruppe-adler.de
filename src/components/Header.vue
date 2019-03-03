@@ -1,14 +1,10 @@
 <template>
     <header class="grad-header">
-        <picture class="grad-header__logo"  alt="logo">
-            <img class="grad-header__logo" src="@/assets/logo192.svg" alt="logo" />
-        </picture>
+        <img class="grad-header__logo" src="/logo.svg" alt="logo" />
     </header>
 </template>
 
 <script>
-import './Header/modernizr-webp.js';
-
 export default {};
 </script>
 
@@ -44,12 +40,4 @@ export default {};
         }
     }
 }
-
-.no-webp .grad-header {
-    background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%), url('~@/assets/header.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
 </style>
-

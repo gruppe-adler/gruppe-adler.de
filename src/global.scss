@@ -7,6 +7,12 @@ html, body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+::selection,
+::-moz-selection {
+    background: #d18d1f;
+    color: white;
+}
+
 p {
     margin: 0 0;
 }

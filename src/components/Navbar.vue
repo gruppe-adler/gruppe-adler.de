@@ -2,9 +2,7 @@
     <nav :class="['grad-nav', navShown ? '' : 'grad-nav--hidden']">
         <NavBack v-if="expandedLink" @click="back" />
         <div v-else class="grad-nav__header">
-            <picture alt="adlerkopp">
-                <img src="@/assets/adlerkopp.svg" alt="adlerkopp" />
-            </picture>
+            <img src="@/assets/adlerkopp.svg" alt="adlerkopp" />
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
                 <span v-if="activeSubLink">{{activeSubLink.text}}</span>

@@ -18,6 +18,7 @@ body {
 #noJS img,
 #IEHint img {
     max-width: calc(100vw - 10rem);
+    width: 500px;
 }
 #noJS h1,
 #IEHint h1 {
@@ -27,4 +28,10 @@ body {
 #noJS h1,
 #IEHint h1 {
     font-family: 'Oswald', sans-serif;
+}
+
+#noJS a,
+#IEHint a {
+    color: #d18d1f;
+    text-decoration: underline;
 }
