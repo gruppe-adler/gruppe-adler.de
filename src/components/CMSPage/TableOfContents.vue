@@ -73,7 +73,6 @@ export default class TableOfContents extends Vue {
         > a {
             display: block;
             color: inherit;
-            text-decoration: none;
             cursor: pointer;
         }
     }
