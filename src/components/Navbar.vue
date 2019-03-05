@@ -217,6 +217,7 @@ export default class Navbar extends Vue {
 $navbar-height: 72px;
 
 .grad-nav {
+    user-select: none;
     height: $navbar-height;
     display: flex;
     justify-content: space-between;
