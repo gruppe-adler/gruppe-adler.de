@@ -18,9 +18,16 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    new RegExp('https://(cms|api)\.dev\.gruppe-adler\.de/(.*)', 'i'),
+    /https:\/\/(?:cms|api)\.dev\.gruppe-adler\.de/i,
     workbox.strategies.networkFirst({
-        cacheName: 'api',
+        cacheName: 'api/cms',
+    }),
+);
+
+workbox.routing.registerRoute(
+    /\.(?:html|js|css)$/i,
+    workbox.strategies.networkFirst({
+        cacheName: 'main',
     }),
 );
 
