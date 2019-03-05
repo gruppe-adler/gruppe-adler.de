@@ -4,7 +4,7 @@ workbox.setConfig({
 
 workbox.precaching.precacheAndRoute([]);
 
-workbox.routing.registerNavigationRoute('/index.html');
+workbox.routing.registerNavigationRoute('/');
 
 workbox.routing.registerRoute(
     /\.(?:png|gif|jpg|jpeg|svg)$/,
