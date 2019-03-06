@@ -1,4 +1,4 @@
-export interface ApiResContainer {
+export interface CmsContainer {
     heading: string;
     content: string;
     footer: string;

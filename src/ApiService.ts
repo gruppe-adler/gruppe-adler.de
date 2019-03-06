@@ -1,5 +1,5 @@
-import { ApiResPage } from '@/models/api-response/Page';
-import { CMSPage } from './models/CMSPage';
+import { CmsPage } from '@/models/cms/Page';
+import { Page } from './models/Page';
 import rp from 'request-promise-native';
 import { BlogPost } from './models/blog/BlogPost';
 import { Container } from './models/Container';
@@ -51,7 +51,7 @@ export default class ApiService {
 
         if (response.total === 0) throw new Error(`Page '${slug}' was not found`);
 
-        const page = response.entries[0] as ApiResPage;
+        const page = response.entries[0] as CmsPage;
         const containers: Container[] = page.containers.map(c => {
             return {
                 id: c._id,

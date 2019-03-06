@@ -1,6 +1,6 @@
 import { Container } from '@/models/Container';
 
-export interface CMSPage {
+export interface Page {
     toc: boolean;
     containers: Container[];
 }

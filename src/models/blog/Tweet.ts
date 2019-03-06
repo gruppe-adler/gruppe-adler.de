@@ -5,12 +5,23 @@ export const TWEET_TYPE = 'Tweet';
 export const RETWEET_TYPE = 'ReTweet';
 
 
+export interface TweetMedia {
+    id: number;
+    url: string;
+    target: string;
+}
+
 interface TweetArguments {
     date: Date;
     caption: string;
     author: TwitterUser;
     media: TweetMedia[];
 }
+
+interface RetweetArguments extends TweetArguments {
+    tweet: Tweet;
+}
+
 export class Tweet implements BlogEntry {
     public type: string = TWEET_TYPE;
     public date: Date;
@@ -26,20 +37,6 @@ export class Tweet implements BlogEntry {
     }
 }
 
-export interface TweetMedia {
-    id: number;
-    url: string;
-    target: string;
-}
-
-
-interface RetweetArguments {
-    date: Date;
-    caption: string;
-    author: TwitterUser;
-    media: TweetMedia[];
-    tweet: Tweet;
-}
 export class Retweet extends Tweet {
     public type: string = RETWEET_TYPE;
     public retweetedTweet: Tweet;
