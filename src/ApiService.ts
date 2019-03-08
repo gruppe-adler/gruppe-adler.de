@@ -21,7 +21,15 @@ const CMS_TOKEN = 'acacff37c21c30b6e6569e958fa7be';
 
 
 export default class ApiService {
-    public static async getPage(slug: string): Promise<CMSPage | null> {
+
+    /**
+     * @async
+     * @description Retrieves a page (incl. all of its containers) from the CMS api
+     * @author DerZade
+     * @param {string} slug Page Slug
+     * @returns {Promise<Page>} Page object or null if page does not exist in CMS
+     */
+    public static async getPage(slug: string): Promise<Page> {
 
         let response = { total: 0, entries: [] };
         const rpOptions = {
@@ -52,6 +60,8 @@ export default class ApiService {
         if (response.total === 0) throw new Error(`Page '${slug}' was not found`);
 
         const page = response.entries[0] as CmsPage;
+
+        // map response containers
         const containers: Container[] = page.containers.map(c => {
             return {
                 id: c._id,
@@ -61,7 +71,7 @@ export default class ApiService {
                 headerColor: c.headerColor,
                 headerImage: this.normalizeImage(c.headerImage),
                 pinnedImage: this.normalizeImage(c.pinnedImage)
-            } as Container;
+            };
         });
 
         return {
@@ -70,6 +80,12 @@ export default class ApiService {
         };
     }
 
+    /**
+     * @async
+     * @description Retrieves the last tweets
+     * @author DerZade
+     * @returns {Promise<Tweet[]>} Tweets
+     */
     public static async getTweets(): Promise<Tweet[]> {
 
         let response: ApiResTweet[];
@@ -166,58 +182,20 @@ export default class ApiService {
 
         return tweets;
     }
+
+    /**
+     * @async
+     * @description Retrieves blog posts from CMS API
+     * @author DerZade
+     * @returns {Promise<BlogPost[]>} BlogPosts
+     */
     public static async getBlogPosts(): Promise<BlogPost[]> {
-
-        // let response = { total: 0, entries: [] };
-        // const rpOptions = {
-        //     method: 'POST',
-        //     uri: `${CMS_URL}api/collections/get/page`,
-        //     headers: {
-        //         'Authorization': `Bearer ${CMS_TOKEN}`,
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         filter: {
-        //             slug
-        //         },
-        //         fields: {
-        //             toc: 1,
-        //             containers: 1
-        //         },
-        //         populate: 1
-        //     })
-        // };
-
-        // try {
-        //     response = JSON.parse(await rp(rpOptions));
-        // } catch (err) {
-        //     throw err;
-        // }
-
-        // if (response.total === 0) throw new Error(`Page '${slug}' was not found`);
-
-        // const page = response.entries[0] as ApiResPage;
-        // const containers: Container[] = page.containers.map(c => {
-        //     return {
-        //         id: c._id,
-        //         heading: c.heading,
-        //         content: c.content,
-        //         footer: c.footer,
-        //         headerColor: c.headerColor,
-        //         headerImage: this.normalizeImage(c.headerImage),
-        //         pinnedImage: this.normalizeImage(c.pinnedImage)
-        //     } as Container;
-        // });
-
-        // return {
-        //     toc: page.toc,
-        //     containers
-        // };
 
         return [];
     }
 
     /**
+     * Normalizes image response from CMS api
      * @param {any} response Image response
      * @returns {string} Complete image url
      */
@@ -294,6 +272,7 @@ export default class ApiService {
             }
 
             if (e.type === 'media') {
+                // media url will be just discarded
                 entity = entity as MediaEntity;
                 text = [pre, post].join('');
             }
