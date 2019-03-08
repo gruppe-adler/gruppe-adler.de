@@ -40,7 +40,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Container } from '@/models/Container';
-import { CMSPage } from '@/models/CMSPage';
+import { Page } from '@/models/Page';
 import ApiService from '@/ApiService';
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import TableOfContents from '@/components/CMSPage/TableOfContents.vue';
@@ -50,7 +50,7 @@ import { Route } from 'vue-router';
     components: { LoadingIndicator, TableOfContents }
 })
 export default class CMSPageVue extends Vue {
-    private page: CMSPage | null = null;
+    private page: Page | null = null;
     private loadingError: boolean = false;
 
     private mounted() {

@@ -11,14 +11,14 @@ export interface TweetMedia {
     target: string;
 }
 
-interface TweetArguments {
+interface TweetConstructorArguments {
     date: Date;
     caption: string;
     author: TwitterUser;
     media: TweetMedia[];
 }
 
-interface RetweetArguments extends TweetArguments {
+interface RetweetConstructorArguments extends TweetConstructorArguments {
     tweet: Tweet;
 }
 
@@ -29,7 +29,7 @@ export class Tweet implements BlogEntry {
     public author: TwitterUser;
     public media: TweetMedia[];
 
-    constructor({ date, caption, author, media }: TweetArguments) {
+    constructor({ date, caption, author, media }: TweetConstructorArguments) {
         this.date = date;
         this.caption = caption;
         this.author = author;
@@ -41,7 +41,7 @@ export class Retweet extends Tweet {
     public type: string = RETWEET_TYPE;
     public retweetedTweet: Tweet;
 
-    constructor({ date, caption, author, tweet, media }: RetweetArguments) {
+    constructor({ date, caption, author, tweet, media }: RetweetConstructorArguments) {
         super({date, caption, author, media});
         this.retweetedTweet = tweet;
     }

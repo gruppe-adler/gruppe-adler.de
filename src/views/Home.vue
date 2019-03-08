@@ -35,8 +35,8 @@ import TweetVue from '@/components/Blog/Tweet.vue';
 import { BlogEntry } from '@/models/blog/BlogEntry';
 import { BlogPost, BLOG_POST_TYPE } from '@/models/blog/BlogPost';
 import { Tweet } from '@/models/blog/Tweet';
-import { EVENT_REPORT_TYPE } from '@/models/blog/EventReport';
-import { MODSET_UPDATE_TYPE } from '@/models/blog/ModpackUpdate';
+import { EVENT_REPORT_TYPE } from '@/models/blog/BlogPostEvent';
+import { MOD_UPDATE_TYPE } from '@/models/blog/BlogPostModset';
 
 import ApiService from '@/ApiService';
 
@@ -96,7 +96,7 @@ export default class HomeVue extends Vue {
             const filteredType = {
                 '/allgemeines': BLOG_POST_TYPE,
                 '/events': EVENT_REPORT_TYPE,
-                '/modset': MODSET_UPDATE_TYPE
+                '/modset': MOD_UPDATE_TYPE
             }[path.toLowerCase()];
 
             if (!filteredType) {
@@ -113,7 +113,7 @@ export default class HomeVue extends Vue {
     }
 
     private isBlogPost(entry: BlogEntry): boolean {
-        return (entry.type in [BLOG_POST_TYPE, EVENT_REPORT_TYPE, MODSET_UPDATE_TYPE]);
+        return (entry.type in [BLOG_POST_TYPE, EVENT_REPORT_TYPE, MOD_UPDATE_TYPE]);
     }
 }
 </script>
