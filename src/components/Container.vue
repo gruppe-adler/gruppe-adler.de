@@ -61,8 +61,8 @@ $offset: 200px;
         text-transform: uppercase;
         color: rgba(0,0,0,0.5);
 
-        -webkit-backdrop-filter: blur(40px);
-        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
 
         &-image {
             max-height: 45px;
@@ -98,8 +98,8 @@ $offset: 200px;
         padding-top: 18px;
         padding-bottom: 19px;
         background: rgba(240, 236, 232, 0.7);
-        -webkit-backdrop-filter: blur(40px);
-        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
         color: #666666;
     }
 
