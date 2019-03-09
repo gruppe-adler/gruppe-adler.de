@@ -113,7 +113,7 @@ export default class HomeVue extends Vue {
     }
 
     private isBlogPost(entry: BlogEntry): boolean {
-        return (entry.type in [BLOG_POST_TYPE, EVENT_REPORT_TYPE, MOD_UPDATE_TYPE]);
+        return [BLOG_POST_TYPE, EVENT_REPORT_TYPE, MOD_UPDATE_TYPE].includes(entry.type);
     }
 }
 </script>

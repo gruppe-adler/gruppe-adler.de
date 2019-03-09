@@ -1,15 +1,16 @@
 import { BlogPost, BlogPostConstructorArgs } from './BlogPost';
-import { ForumUser } from './ForumUser';
 
 export const MOD_UPDATE_TYPE = 'modset';
 
 export interface BlogPostModsetConstructorArgs extends BlogPostConstructorArgs {
     changes: BlogPostModsetChange[];
+    hint: string;
 }
 
 export class BlogPostModset extends BlogPost {
     public type: string = MOD_UPDATE_TYPE;
     public changes: BlogPostModsetChange[];
+    public hint: string;
 
     constructor({id,
         heading,
@@ -19,17 +20,19 @@ export class BlogPostModset extends BlogPost {
         author,
         date,
         published,
-        changes
+        changes,
+        hint
     }: BlogPostModsetConstructorArgs) {
         super({ id, heading, content, pinnedImage, tags, author, date, published });
         this.changes = changes;
+        this.hint = hint;
     }
 }
 
 export enum BlogPostModsetChangeType {
-    'added',
-    'updated',
-    'removed'
+    added = 'added',
+    updated = 'updated',
+    removed = 'removed'
 }
 
 export interface BlogPostModsetChange {

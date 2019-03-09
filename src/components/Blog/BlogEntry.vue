@@ -19,6 +19,9 @@
                 </span>
             </div>
         </template>
+        <template v-slot:image>
+            <slot name="image" />
+        </template>
         <template>
             <slot />
         </template>

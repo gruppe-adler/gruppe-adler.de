@@ -87,7 +87,7 @@ $offset: 200px;
 
     &__content {
         color: #666666;
-        margin-top: 36px;
+        margin-top: 18px;
         margin-bottom: 18px;
         line-height: 2em;
 
@@ -99,8 +99,9 @@ $offset: 200px;
     &__footer {
         display: flex;
         align-items: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
 
-        height: 60px;
         background: rgba(240, 236, 232, 0.7);
         -webkit-backdrop-filter: blur(40px);
         backdrop-filter: blur(40px);

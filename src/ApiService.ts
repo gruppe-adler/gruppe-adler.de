@@ -1,7 +1,8 @@
 import { CmsPage } from '@/models/cms/Page';
+import { CmsBlogPost, CmsBlogPostType } from '@/models/cms/BlogPost';
 import { Page } from './models/Page';
 import rp from 'request-promise-native';
-import { BlogPost } from './models/blog/BlogPost';
+import { BlogPost, BlogPostConstructorArgs } from './models/blog/BlogPost';
 import { Container } from './models/Container';
 import { Tweet, Retweet, TweetMedia } from './models/blog/Tweet';
 import {
@@ -14,6 +15,8 @@ import {
 } from 'twitter-d';
 import GraphemeSplitter from 'grapheme-splitter';
 import { TwitterUser } from './models/blog/TwitterUser';
+import { BlogPostEvent, BlogPostEventMedia } from './models/blog/BlogPostEvent';
+import { BlogPostModset, BlogPostModsetChange } from './models/blog/BlogPostModset';
 
 const CMS_URL = 'https://cms.dev.gruppe-adler.de/';
 const API_URL = 'https://api.dev.gruppe-adler.de/';
@@ -187,11 +190,111 @@ export default class ApiService {
      * @async
      * @description Retrieves blog posts from CMS API
      * @author DerZade
+     * @param {number} skip How much blog posts to skip
      * @returns {Promise<BlogPost[]>} BlogPosts
      */
-    public static async getBlogPosts(): Promise<BlogPost[]> {
+    public static async getBlogPosts(skip: number = 0): Promise<BlogPost[]> {
 
-        return [];
+        let response = { total: 0, entries: [] };
+        const rpOptions = {
+            method: 'POST',
+            uri: `${CMS_URL}api/collections/get/blogpost`,
+            headers: {
+                'Authorization': `Bearer ${CMS_TOKEN}`,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                filter: {
+                    published: true
+                },
+                fields: {
+                    author: 1,
+                    heading: 1,
+                    content: 1,
+                    pinnedImage: 1,
+                    date: 1,
+                    data: 1,
+                    type: 1,
+                    tags: 1,
+                    published: 1
+                },
+                populate: 1,
+                limit: 10,
+                skip
+            })
+        };
+
+        try {
+            response = JSON.parse(await rp(rpOptions));
+        } catch (err) {
+            throw err;
+        }
+
+        const cmsBlogPosts: CmsBlogPost[] = response.entries;
+
+        const blogPosts: BlogPost[] = cmsBlogPosts.map((post: CmsBlogPost) => {
+
+            // properties needed for every type of blogpost
+            const generalArgs: BlogPostConstructorArgs = {
+                id: post._id,
+                heading: post.heading,
+                content: post.content,
+                pinnedImage: this.normalizeImage(post.pinnedImage),
+                tags: post.tags,
+                author: post.author,
+                date: new Date(post.date),
+                published: post.published
+            };
+
+            // modset blogpost
+            if (post.type === CmsBlogPostType.modset) {
+
+                let changes: BlogPostModsetChange[] = [];
+                let hint: string = '';
+
+                if (post.data !== '') {
+                    changes = post.data.changes as BlogPostModsetChange[];
+                    hint = post.data.hint || '';
+                }
+
+                return new BlogPostModset({
+                    changes,
+                    hint,
+                    ...generalArgs
+                });
+            }
+
+            // event blogpost
+            if (post.type === CmsBlogPostType.event) {
+                let data: {
+                    participants: number,
+                    externalParticipants: number,
+                    images: BlogPostEventMedia[],
+                    videos: BlogPostEventMedia[]
+                };
+
+                if (post.data === '') {
+                    post.data = {};
+                }
+
+                data = Object.assign(post.data, {
+                    participants: -1,
+                    externalParticipants: -1,
+                    images: [],
+                    videos: []
+                });
+
+                return new BlogPostEvent({
+                    ...generalArgs,
+                    ...data
+                });
+            }
+
+            // normal blogpost
+            return new BlogPost(generalArgs);
+        });
+
+        return blogPosts;
     }
 
     /**
