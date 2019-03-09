@@ -27,7 +27,7 @@ $offset: 200px;
         flex: none;
         z-index: 0;
         width: 800px;
-        max-width: calc(100% - 10px);
+        max-width: calc(100% - 20px);
         padding: 0px 5px;
         align-items: center;
         display: flex;
