@@ -90,18 +90,13 @@ $offset: 200px;
         margin-top: 18px;
         margin-bottom: 18px;
         line-height: 2em;
-
-        &:last-child {
-            margin-bottom: 36px;
-        }
     }
 
     &__footer {
         display: flex;
         align-items: center;
-        padding-top: 20px;
-        padding-bottom: 20px;
-
+        padding-top: 18px;
+        padding-bottom: 19px;
         background: rgba(240, 236, 232, 0.7);
         -webkit-backdrop-filter: blur(40px);
         backdrop-filter: blur(40px);

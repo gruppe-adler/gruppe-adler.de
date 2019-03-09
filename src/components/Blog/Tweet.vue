@@ -116,20 +116,12 @@ export default class TweetVue extends Vue {
         background-size: 5%;
     }
 
-    .grad-container__content {
-        margin-top: 18px;
-
-        .grad-tweet__media img {
+    .grad-container__content .grad-tweet__media img {
             max-height: 250px;
-        }
-
     }
 
     .grad-container__footer {
-        padding-top: 20px;
-        padding-bottom: 20px;
         padding-left: 60px;
-        height: auto;
         display: flex;
         position: relative;
         line-height: 2em;
