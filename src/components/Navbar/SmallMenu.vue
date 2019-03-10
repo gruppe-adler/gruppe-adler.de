@@ -84,9 +84,6 @@ export default class NavbarSmallMenu extends Vue {
 
     a {
         user-select: none;
-        color: inherit;
-        text-decoration: none;
-        font-weight: inherit;
     }
 
     > a {

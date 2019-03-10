@@ -31,10 +31,10 @@ export default class Container extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
-$offset: 200px;
-
+<style lang="scss">
 .grad-container {
+    $offset: 200px;
+
     background-color: white;
     border-radius: 4px;
     overflow: hidden;
@@ -90,10 +90,17 @@ $offset: 200px;
         margin-top: 18px;
         margin-bottom: 18px;
         line-height: 2em;
-        
+
         > div {
             width: 100%;
         }
+
+        a {
+            color: #2F80ED;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
     }
 
     &__footer {

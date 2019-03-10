@@ -235,12 +235,6 @@ $navbar-height: 72px;
     z-index: 1000;
     transition: top .25s ease-in-out;
 
-    a {
-        color: inherit;
-        text-decoration: none;
-        font-weight: inherit;
-    }
-
     &.grad-nav--hidden {
         top: - $navbar-height;
     }
