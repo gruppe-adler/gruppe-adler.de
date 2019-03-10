@@ -87,7 +87,7 @@ export default class HomeVue extends Vue {
         let arr: BlogEntry[] = [];
         const path = this.$route.path.replace(/^\/home/i, '');
 
-        if (path === '') {
+        if (path === '/alles') {
             arr = arr.concat(this.blogPosts).concat(this.tweets);
         } else if (path === '/tweets') {
             arr = this.tweets;

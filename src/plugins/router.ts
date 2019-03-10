@@ -19,11 +19,15 @@ export default new Router({
     },
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/home/alles'
     },
     {
       path: '/home',
-      name: 'home',
+      redirect: '/home/alles'
+    },
+    {
+      path: '/home/alles',
+      name: 'home-alles',
       component: () => import('@/views/Home.vue')
     },
     {
