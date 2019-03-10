@@ -90,6 +90,10 @@ $offset: 200px;
         margin-top: 18px;
         margin-bottom: 18px;
         line-height: 2em;
+        
+        > div {
+            width: 100%;
+        }
     }
 
     &__footer {
@@ -101,8 +105,11 @@ $offset: 200px;
         -webkit-backdrop-filter: blur(5px);
         backdrop-filter: blur(5px);
         color: #666666;
-    }
 
+        > div {
+            width: 100%;
+        }
+    }
 
     & + & {
         margin-top: 30px;
