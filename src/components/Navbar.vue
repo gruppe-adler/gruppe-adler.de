@@ -19,15 +19,33 @@
         </template>
         <template v-else>
             <div ref="main-links" class="grad-nav__links">
-                <router-link 
-                    v-for="link in links"
-                    :key="link.url"
-                    class="grad-nav__link"
-                    :to="!small ? link.url : ''"
-                    tag="a"
-                >
-                    {{link.text}}
-                </router-link>
+                <template v-for="link in links">
+                    <div 
+                        :key="link.url"
+                        class="grad-nav__link-wrapper"
+                    >
+                        <router-link 
+                            class="grad-nav__link"
+                            :to="link.url"
+                            tag="a"
+                        >
+                            {{link.text}}
+                        </router-link>
+                        <template v-if="link.sublinks">
+                            <div :class="['grad-nav__sub-links', (activeLink.url === link.url) ? 'grad-nav--active': '']">
+                                <router-link 
+                                    v-for="sublink in link.sublinks"
+                                    :key="sublink.url"
+                                    class="grad-nav__link"
+                                    :to="link.url + sublink.url"
+                                    tag="a"
+                                >
+                                    {{sublink.text}}
+                                </router-link>
+                            </div>
+                        </template>
+                    </div>
+                </template>
                 <router-link 
                     to="/en"
                     tag="a"
@@ -36,17 +54,8 @@
                     <img src="@/assets/en.png" alt="english" />
                 </router-link>
             </div>
-            <div class="grad-nav__sub-links">
-                <div ref="sub-links-spacer" style="transition: width 0.1s ease-in-out;"></div>
-                <router-link 
-                    v-for="link in activeLink.sublinks"
-                    :key="link.url"
-                    class="grad-nav__link"
-                    :to="activeLink.url + link.url"
-                    tag="a"
-                >
-                    {{link.text}}
-                </router-link>
+            <div class="grad-nav__sub-link-bar" v-if="activeSubLink">
+                <span>{{activeSubLink.text}}</span>
             </div>
         </template>
     </nav>
@@ -83,11 +92,11 @@ export default class Navbar extends Vue {
         this.updateActiveLink(this.$route);
         window.addEventListener('resize', this.handleResize);
         window.addEventListener('scroll', this.handleScroll);
-        setTimeout(this.fixSubLinkOffset, 100);
     }
 
     private updated() {
         this.onResizeTimeout();
+        this.$nextTick(this.fixSubLinksOffset);
     }
 
     private beforeDestroy() {
@@ -119,8 +128,6 @@ export default class Navbar extends Vue {
 
         this.activeLink = this.links.find(l => l.url === url) || { text: '', url: ''};
         this.activeSubLink = (this.activeLink.sublinks || []).find(l => l.url === suburl) || null;
-
-        this.fixSubLinkOffset();
     }
 
     /**
@@ -148,23 +155,6 @@ export default class Navbar extends Vue {
     }
 
     /**
-     * @description Sets width of spacer to align sub links with active main link
-     * @author DerZade
-     */
-    private fixSubLinkOffset() {
-        if (this.small) return;
-
-        // get left offset of active main link
-        const activeMainLink = (this.$refs['main-links'] as HTMLElement).querySelector('.grad-nav--active');
-        if (!activeMainLink) return;
-
-        // set width of spacer to offset of link
-        const spacer = this.$refs['sub-links-spacer'] as HTMLElement;
-        if (!spacer) return;
-        spacer.style.width = `${activeMainLink.getBoundingClientRect().left}px`;
-    }
-
-    /**
      * @description Window resize handler callback. Calls actual function via a
      *              timeout to prevent a lot of activations in a small amount of time.
      * @author DerZade
@@ -183,11 +173,7 @@ export default class Navbar extends Vue {
         if (window.innerWidth < SMALL_BREAKPOINT) {
             this.small = true;
         } else {
-            if (!this.small) {
-                this.$nextTick(() => this.fixSubLinkOffset());
-            } else {
-                this.small = false;
-            }
+            this.small = false;
         }
     }
 
@@ -208,6 +194,31 @@ export default class Navbar extends Vue {
             this.navShown = true;
         }
         this.pageYOffset = pageYOffset;
+    }
+
+    /**
+     * @description Prevents sublinks to clip outside the right window border
+     * @author DerZade
+     */
+    private fixSubLinksOffset() {
+        if (this.small) return;
+
+        // find all sub link containers
+        const subLinkContainers: NodeListOf<Element> = document.querySelectorAll(".grad-nav__sub-links");
+
+        // get the right edge of the sub-link bar
+        const subLinkBar = document.querySelector(".grad-nav__sub-link-bar");
+        if (!subLinkBar) return;
+        const maxRight = subLinkBar.getBoundingClientRect().right;
+
+        for (const child of subLinkContainers) {
+            const elem = child as HTMLElement;
+            const right = elem.getBoundingClientRect().right;
+
+            if (right > maxRight) {
+                elem.style.left = `${maxRight - right}px`;
+            }
+        }
     }
 
 }
@@ -270,12 +281,29 @@ $navbar-height: 72px;
         height: 100%;
         font-size: 18px;
 
-        .grad-nav--active {
+        .grad-nav--active { // active link in main links
             opacity: 1;
             border-top-color: #D18D1F;
         }
+
+        > .grad-nav__link-wrapper {
+            position: relative;
+
+            // &:hover .grad-nav__sub-links.grad-nav--active,
+            &:hover .grad-nav__sub-links {
+                // hovering wrapper will show its sub links
+                visibility: initial !important;
+            }
+        }
+
+        &:hover .grad-nav__sub-links.grad-nav--active {
+            // when user hovers any link -> hide sub links of active link
+            visibility: hidden;
+        }
     }
     &__sub-links {
+        z-index: 1;
+        visibility: hidden;
         display: flex;
         height: 43px;
         font-size: 12px;
@@ -283,22 +311,21 @@ $navbar-height: 72px;
         position: absolute;
         top: $navbar-height;
         left: 0px;
-        right: 0px;
-
-        background: linear-gradient(270deg, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.08) 100%);
-        -webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
-
 
         .grad-nav__link {
-            opacity: 0.5;
+            opacity: 0.7;
             margin: 0px 10px;
             border-top: 2px solid transparent;
             border-bottom: 2px solid transparent;
         }
-        .grad-nav--active {
+
+        .grad-nav--active { // active sub link
             opacity: 1;
             border-bottom-color: white;
+        }
+
+        &.grad-nav--active { // show sublinks from active link by default
+            visibility: initial;
         }
     }
 
@@ -318,12 +345,6 @@ $navbar-height: 72px;
 
         > img {
             height: 1em;
-            // filter: saturate(0%);
-        }
-        &.grad-nav--active, &:hover {
-            > img {
-                filter: saturate(100%);
-            }
         }
     }
     
@@ -333,6 +354,23 @@ $navbar-height: 72px;
         }
     }
 
+    &__sub-link-bar {
+        font-size: 21px;
+        padding-left: 36px;
+        display: flex;
+        align-items: center;
+        
+        z-index: 0;
 
+        position: absolute;
+        height: 43px;
+        top: $navbar-height;
+        left: 0px;
+        right: 0px;
+
+        background: linear-gradient(270deg, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.08) 100%);
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+    }
 }
 </style>
