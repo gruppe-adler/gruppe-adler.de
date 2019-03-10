@@ -22,7 +22,7 @@
                 <router-link 
                     v-for="link in links"
                     :key="link.url"
-                    :class="[activeLink.url === link.url ?'grad-nav--active' : '', 'grad-nav__link']"
+                    class="grad-nav__link"
                     :to="!small ? link.url : ''"
                     tag="a"
                 >
@@ -31,17 +31,17 @@
                 <router-link 
                     to="/en"
                     tag="a"
-                    :class="[$route.path === '/en' ?'grad-nav--active' : '', 'grad-nav__link']"
+                    class="grad-nav__link"
                 >
                     <img src="@/assets/en.png" alt="english" />
                 </router-link>
             </div>
-            <div v-if="activeLink.sublinks != undefined" class="grad-nav__sub-links">
+            <div class="grad-nav__sub-links">
                 <div ref="sub-links-spacer" style="transition: width 0.1s ease-in-out;"></div>
                 <router-link 
                     v-for="link in activeLink.sublinks"
                     :key="link.url"
-                    :class="[activeSubLink && activeSubLink.url === link.url ?'grad-nav--active' : '', 'grad-nav__link']"
+                    class="grad-nav__link"
                     :to="activeLink.url + link.url"
                     tag="a"
                 >

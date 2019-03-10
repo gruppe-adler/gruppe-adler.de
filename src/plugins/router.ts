@@ -5,6 +5,8 @@ Vue.use(Router);
 
 export default new Router({
   mode: 'history',
+  linkActiveClass: 'grad-nav--active',
+  linkExactActiveClass: '',
   base: process.env.BASE_URL,
   scrollBehavior(to: Route, from: Route, savedPosition) {
     if (to.path === from.path) return;

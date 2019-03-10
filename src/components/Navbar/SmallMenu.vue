@@ -1,15 +1,18 @@
 <template>
 <div class="grad-nav__small-menu">
     <template v-for="link in links">
-        <a 
-            
+        <router-link  
             v-if="!expandedLink || link == expandedLink"
+            :to="link.url"
+            tag="a"
+            class="grad-nav__link"
             :key="link.url"
-            :class="[activeLink.url === link.url ?'grad-nav--active' : '', expandedLink && expandedLink.url === link.url ?'grad-nav--expanded' : '']"
-            @click="mainLinkClicked(link)"
+            event=""
+            :class="[expandedLink && expandedLink.url === link.url ?'grad-nav--expanded' : '']"
+            @click.native="mainLinkClicked(link)"
         >
             {{link.text}}
-        </a>
+        </router-link >
         <template v-if="link == expandedLink">
             <router-link 
                 v-for="link in expandedLink.sublinks"
@@ -26,7 +29,7 @@
         v-if="expandedLink == null"
         to="/en"
         tag="a"
-        :class="[$route.path === '/en' ?'grad-nav--active' : '', 'grad-nav__link']"
+        class="grad-nav__link"
     >
         <img src="@/assets/en.png" alt="english" />
     </router-link>
@@ -81,6 +84,9 @@ export default class NavbarSmallMenu extends Vue {
 
     a {
         user-select: none;
+        color: inherit;
+        text-decoration: none;
+        font-weight: inherit;
     }
 
     > a {
@@ -94,7 +100,7 @@ export default class NavbarSmallMenu extends Vue {
         border-left: 4px solid transparent;
         opacity: 0.7;
 
-        &.grad-nav--active {
+        &.grad-nav__link.grad-nav--active {
             border-color: #D18D1F;
             opacity: 1;
         }
