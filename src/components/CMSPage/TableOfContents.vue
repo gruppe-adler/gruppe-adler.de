@@ -1,5 +1,5 @@
 <template>
-    <div class="grad-toc__conatiner" ref="grad-toc__conatiner">
+    <div class="grad-toc__container">
         <a
             v-for="c in containers"
             :class="[c.id == currentId ? 'grad-toc--active' : '']"
@@ -61,7 +61,7 @@ export default class TableOfContents extends Vue {
 <style lang="scss" scoped>
 .grad-toc {
 
-    &__conatiner {
+    &__container {
         position: -webkit-sticky;
         position: sticky;
         top: 120px;
