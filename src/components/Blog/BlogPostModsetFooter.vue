@@ -41,6 +41,7 @@ export default class BlogPostModsetFooterVue extends Vue {
     &__hint {
         color: #8F1167;
         display: flex;
+        align-items: center;
         font-weight: bold;
         padding-bottom: 40px;
 
