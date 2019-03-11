@@ -66,6 +66,11 @@ export default new Router({
       component: () => import('@/views/CMSPage.vue')
     },
     {
+      path: '/ueber-uns/historie',
+      name: 'ueber-uns-historie',
+      component: () => import('@/views/CMSPage.vue')
+    },
+    {
       path: '/ueber-uns/eindruecke',
       name: 'ueber-uns-eindruecke',
       component: () => import('@/views/ueber-uns/Eindruecke.vue')

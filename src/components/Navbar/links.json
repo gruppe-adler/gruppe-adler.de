@@ -38,6 +38,10 @@
                 "url": "/struktur"
             },
             {
+                "text": "Historie",
+                "url": "/historie"
+            },
+            {
                 "text": "Eindrücke",
                 "url": "/eindruecke"
             }
