@@ -204,10 +204,10 @@ export default class Navbar extends Vue {
         if (this.small) return;
 
         // find all sub link containers
-        const subLinkContainers: NodeListOf<Element> = document.querySelectorAll(".grad-nav__sub-links");
+        const subLinkContainers: NodeListOf<Element> = document.querySelectorAll('.grad-nav__sub-links');
 
         // get the right edge of the sub-link bar
-        const subLinkBar = document.querySelector(".grad-nav__sub-link-bar");
+        const subLinkBar = document.querySelector('.grad-nav__sub-link-bar');
         if (!subLinkBar) return;
         const maxRight = subLinkBar.getBoundingClientRect().right;
 
