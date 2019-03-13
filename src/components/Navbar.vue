@@ -281,6 +281,10 @@ $navbar-height: 72px;
         height: 100%;
         font-size: 18px;
 
+        .grad-nav__link:hover {
+            opacity: 1;
+        }
+
         .grad-nav--active { // active link in main links
             opacity: 1;
             border-top-color: #D18D1F;
@@ -317,6 +321,10 @@ $navbar-height: 72px;
             margin: 0px 10px;
             border-top: 2px solid transparent;
             border-bottom: 2px solid transparent;
+        }
+
+        .grad-nav__link:hover {
+            opacity: 1;
         }
 
         .grad-nav--active { // active sub link
