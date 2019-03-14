@@ -1,6 +1,6 @@
 <template>
     <nav :class="['grad-nav', navShown ? '' : 'grad-nav--hidden']">
-        <NavBack v-if="expandedLink" @click="back" />
+        <NavBack v-if="small && expandedLink" @click="back" />
         <div v-else class="grad-nav__header">
             <img src="@/assets/adlerkopp.svg" alt="adlerkopp" />
             <div v-if="small">
@@ -18,7 +18,7 @@
             <SmallMenu v-show="expanded" :activeLink="activeLink" v-model="expandedLink" />
         </template>
         <template v-else>
-            <div ref="main-links" class="grad-nav__links">
+            <div class="grad-nav__links">
                 <template v-for="link in links">
                     <div 
                         :key="link.url"

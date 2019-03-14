@@ -1,39 +1,41 @@
 <template>
-<div class="grad-nav__small-menu">
-    <template v-for="link in links">
-        <router-link  
-            v-if="!expandedLink || link == expandedLink"
-            :to="link.url"
-            tag="a"
-            class="grad-nav__link"
-            :key="link.url"
-            event=""
-            :class="[expandedLink && expandedLink.url === link.url ?'grad-nav--expanded' : '']"
-            @click.native="mainLinkClicked(link)"
-        >
-            {{link.text}}
-        </router-link >
-        <template v-if="link == expandedLink">
-            <router-link 
-                v-for="link in expandedLink.sublinks"
-                :key="link.url"
-                class="grad-nav--sub"
-                :to="expandedLink.url + link.url"
+    <transition-group name="small-menu" tag="div" class="grad-nav__small-menu">
+        <template v-for="link in links">
+            <router-link  
+                v-show="!expandedLink || link == expandedLink"
+                :to="link.url"
                 tag="a"
+                class="grad-nav__link"
+                :key="link.url"
+                event=""
+                :class="[expandedLink && expandedLink.url === link.url ?'grad-nav--expanded' : '']"
+                @click.native="mainLinkClicked(link)"
             >
                 {{link.text}}
-            </router-link>
+            </router-link >
+            <template v-if="link.sublinks">
+                <router-link 
+                    v-for="sublink in link.sublinks"
+                    v-show="link == expandedLink"
+                    :key="link.url + sublink.url"
+                    class="grad-nav--sub"
+                    :to="link.url + link.url"
+                    tag="a"
+                >
+                    {{sublink.text}}
+                </router-link>
+            </template>
         </template>
-    </template>
-    <router-link 
-        v-if="expandedLink == null"
-        to="/en"
-        tag="a"
-        class="grad-nav__link"
-    >
-        <img src="@/assets/en.png" alt="english" />
-    </router-link>
-</div>
+        <router-link 
+            v-if="expandedLink == null"
+            key="/en"
+            to="/en"
+            tag="a"
+            class="grad-nav__link"
+        >
+            <img src="@/assets/en.png" alt="english" />
+        </router-link>
+    </transition-group>
 </template>
 
 <script lang="ts">
@@ -87,6 +89,8 @@ export default class NavbarSmallMenu extends Vue {
     }
 
     > a {
+        display: block;
+        overflow-y: hidden;
         cursor: pointer;
         align-items: center;
         display: flex;
@@ -111,7 +115,23 @@ export default class NavbarSmallMenu extends Vue {
         > img {
             height: 1em;
         }
+
+        
+        &.small-menu-enter-active, 
+        &.small-menu-leave-active {
+        transition: all 0.15s;
+        }
+        &.small-menu-enter, 
+        &.small-menu-leave-to {
+            height: 0px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            opacity: 0;
+        }
     }
 }
+
 </style>
 
