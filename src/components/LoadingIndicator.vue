@@ -28,13 +28,14 @@ export default class LoadingIndicator extends Vue {}
 .grad-loader {
     opacity: 1;
     width: 100%;
+    position: relative;
 
     &__mask {
-        width: calc(100% + 100px);
-        height: 300px;
-        position: relative;
-        top: -250px;
         left: -50px;
+        right: -50px;
+        height: 300px;
+        top: 200px;
+        position: absolute;
         background-image: linear-gradient(transparent, #F0EEEC, #F0EEEC, #F0EEEC);
     }
 }
