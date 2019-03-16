@@ -12,7 +12,8 @@ export class BlogPostModset extends BlogPost {
     public changes: BlogPostModsetChange[];
     public hint: string;
 
-    constructor({id,
+    constructor({
+        id,
         heading,
         content,
         pinnedImage,

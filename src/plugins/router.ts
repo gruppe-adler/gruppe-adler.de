@@ -1,7 +1,29 @@
 import Vue from 'vue';
 import Router, { Route } from 'vue-router';
+import ErrorVue from '@/components/Error.vue';
+import LoadingIndicatorVue from '@/components/LoadingIndicator.vue';
 
 Vue.use(Router);
+
+const AsyncCMSPage = () => import(
+  /* webpackChunkName: "cms-page" */
+  /* webpackMode: "lazy-once" */
+  '@/views/CMSPage.vue'
+);
+const AsyncHome = () => import(
+  /* webpackChunkName: "cms-page" */
+  /* webpackMode: "lazy-once" */
+  '@/views/Home.vue'
+  );
+const Async404 = () => import(
+  /* webpackChunkName: "404" */
+  '@/views/404.vue'
+);
+const AsyncEindruecke = () => import(
+  /* webpackChunkName: "Eindruecke" */
+  '@/views/ueber-uns/Eindruecke.vue'
+);
+
 
 export default new Router({
   mode: 'history',
@@ -15,7 +37,7 @@ export default new Router({
   routes: [
     {
       path: '*',
-      component: () => import('@/views/404.vue')
+      component: Async404
     },
     {
       path: '/',
@@ -27,152 +49,123 @@ export default new Router({
     },
     {
       path: '/home/alles',
-      name: 'home-alles',
-      component: () => import('@/views/Home.vue')
+      component: AsyncHome
     },
     {
       path: '/home/tweets',
-      name: 'home-tweets',
-      component: () => import('@/views/Home.vue')
+      component: AsyncHome
     },
     {
       path: '/home/allgemeines',
-      name: 'home-allgemeines',
-      component: () => import('@/views/Home.vue')
+      component: AsyncHome
     },
     {
       path: '/home/events',
-      name: 'home-events',
-      component: () => import('@/views/Home.vue')
+      component: AsyncHome
     },
     {
       path: '/home/modset',
-      name: 'home-modset',
-      component: () => import('@/views/Home.vue')
+      component: AsyncHome
     },
     {
       path: '/ueber-uns',
-      name: 'ueber-uns',
       redirect: '/ueber-uns/miteinander'
     },
     {
       path: '/ueber-uns/miteinander',
-      name: 'ueber-uns-miteinander',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/ueber-uns/struktur',
-      name: 'ueber-uns-struktur',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/ueber-uns/historie',
-      name: 'ueber-uns-historie',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/ueber-uns/eindruecke',
-      name: 'ueber-uns-eindruecke',
-      component: () => import('@/views/ueber-uns/Eindruecke.vue')
+      component: AsyncEindruecke
     },
     {
       path: '/technik',
-      name: 'technik',
       redirect: '/technik/server'
     },
     {
       path: '/technik/server',
-      name: 'technik-server',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/technik/missionsbau',
-      name: 'technik-missionsbau',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/technik/modding',
-      name: 'technik-modding',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/spielweise',
-      name: 'spielweise',
       redirect: '/spielweise/uebersicht'
     },
     {
       path: '/spielweise/uebersicht',
-      name: 'spielweise-uebersicht',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/spielweise/addons',
-      name: 'spielweise-addons',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/spielweise/missionen',
-      name: 'spielweise-missionen',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/mitspielen',
-      name: 'mitspielen',
       redirect: '/mitspielen/allgemeines'
     },
     {
       path: '/mitspielen/allgemeines',
-      name: 'mitspielen-allgemeines',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/mitspielen/checkliste',
-      name: 'mitspielen-checkliste',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/mitspielen/kontakt',
-      name: 'mitspielen-kontakt',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/en',
-      name: 'en',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/datenschutzerklaerung',
-      name: 'datenschutzerklaerung',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/impressum',
-      name: 'impressum',
-      component: () => import('@/views/CMSPage.vue')
+      component: AsyncCMSPage
     },
     {
       path: '/login',
-      name: 'login',
-      component: () => import('@/views/Login.vue')
+      component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
     },
     {
       path: '/forum',
-      name: 'forum',
       beforeEnter(to, from, next) {
         window.location.href = 'https://forum.gruppe-adler.de';
       }
     },
     {
       path: '/wiki',
-      name: 'wiki',
       beforeEnter(to, from, next) {
         window.location.href = 'https://wiki.gruppe-adler.de';
       }
     },
     {
       path: '/cms-content-preview/container',
-      name: '/cms-content-preview/container',
-      component: () => import('@/views/cms-content-preview/Container.vue')
+      component: () => import(/* webpackChunkName: "content-preview" */'@/views/cms-content-preview/Container.vue')
     }
   ]
 });
