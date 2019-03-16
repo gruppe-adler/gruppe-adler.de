@@ -54,8 +54,8 @@
                     <img src="@/assets/en.png" alt="english" />
                 </router-link>
             </div>
-            <div class="grad-nav__sub-link-bar" v-if="activeSubLink">
-                <span>{{activeSubLink.text}}</span>
+            <div class="grad-nav__sub-link-bar">
+                <span v-if="activeSubLink">{{activeSubLink.text}}</span>
             </div>
         </template>
     </nav>
