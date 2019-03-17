@@ -5,26 +5,55 @@ import LoadingIndicatorVue from '@/components/LoadingIndicator.vue';
 
 Vue.use(Router);
 
-const AsyncCMSPage = () => import(
-  /* webpackChunkName: "cms-page" */
-  /* webpackMode: "lazy-once" */
-  '@/views/CMSPage.vue'
-);
-const AsyncHome = () => import(
-  /* webpackChunkName: "cms-page" */
-  /* webpackMode: "lazy-once" */
-  '@/views/Home.vue'
-  );
-const Async404 = () => import(
-  /* webpackChunkName: "404" */
-  '@/views/404.vue'
-);
-const AsyncEindruecke = () => import(
-  /* webpackChunkName: "Eindruecke" */
-  '@/views/ueber-uns/Eindruecke.vue'
-);
+const AsyncCMSPage = () => ({
+  component: import(
+    /* webpackChunkName: "cms-page" */
+    /* webpackMode: "lazy-once" */
+    '@/views/CMSPage.vue'
+  ),
+  loading: LoadingIndicatorVue,
+  error: ErrorVue,
+  delay: 200,
+  timeout: 10000
+});
 
+const AsyncHome = () => ({
+  component: import(
+    /* webpackChunkName: "home" */
+    /* webpackMode: "lazy-once" */
+    '@/views/Home.vue'
+  ),
+  loading: LoadingIndicatorVue,
+  error: ErrorVue,
+  delay: 200,
+  timeout: 10000
+});
 
+const AsyncEindruecke = () => ({
+  component: import(
+    /* webpackChunkName: "Eindruecke" */
+    /* webpackMode: "lazy-once" */
+    '@/views/ueber-uns/Eindruecke.vue'
+  ),
+  loading: LoadingIndicatorVue,
+  error: ErrorVue,
+  delay: 200,
+  timeout: 10000
+});
+
+const Async404 = () => ({
+  component: import(
+    /* webpackChunkName: "404" */
+    /* webpackMode: "lazy-once" */
+    '@/views/404.vue'
+  ),
+  loading: LoadingIndicatorVue,
+  error: ErrorVue,
+  delay: 200,
+  timeout: 10000
+});
+
+// @ts-ignore
 export default new Router({
   mode: 'history',
   linkActiveClass: 'grad-nav--active',
