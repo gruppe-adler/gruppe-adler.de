@@ -8,7 +8,7 @@ Vue.use(Router);
 const AsyncCMSPage = () => ({
   component: import(
     /* webpackChunkName: "cms-page" */
-    /* webpackMode: "lazy-once" */
+    /* webpackMode: "lazy" */
     '@/views/CMSPage.vue'
   ),
   loading: LoadingIndicatorVue,
@@ -20,7 +20,7 @@ const AsyncCMSPage = () => ({
 const AsyncHome = () => ({
   component: import(
     /* webpackChunkName: "home" */
-    /* webpackMode: "lazy-once" */
+    /* webpackMode: "lazy" */
     '@/views/Home.vue'
   ),
   loading: LoadingIndicatorVue,
@@ -32,7 +32,7 @@ const AsyncHome = () => ({
 const AsyncEindruecke = () => ({
   component: import(
     /* webpackChunkName: "Eindruecke" */
-    /* webpackMode: "lazy-once" */
+    /* webpackMode: "lazy" */
     '@/views/ueber-uns/Eindruecke.vue'
   ),
   loading: LoadingIndicatorVue,
@@ -44,7 +44,7 @@ const AsyncEindruecke = () => ({
 const Async404 = () => ({
   component: import(
     /* webpackChunkName: "404" */
-    /* webpackMode: "lazy-once" */
+    /* webpackMode: "lazy" */
     '@/views/404.vue'
   ),
   loading: LoadingIndicatorVue,
