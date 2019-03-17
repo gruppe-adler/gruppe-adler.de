@@ -16,6 +16,7 @@ interface TweetConstructorArguments {
     caption: string;
     author: TwitterUser;
     media: TweetMedia[];
+    id: string;
 }
 
 interface RetweetConstructorArguments extends TweetConstructorArguments {
@@ -25,11 +26,13 @@ interface RetweetConstructorArguments extends TweetConstructorArguments {
 export class Tweet implements BlogEntry {
     public type: string = TWEET_TYPE;
     public date: Date;
+    public id: string;
     public caption: string;
     public author: TwitterUser;
     public media: TweetMedia[];
 
-    constructor({ date, caption, author, media }: TweetConstructorArguments) {
+    constructor({ date, caption, author, media, id }: TweetConstructorArguments) {
+        this.id = id;
         this.date = date;
         this.caption = caption;
         this.author = author;
@@ -41,8 +44,8 @@ export class Retweet extends Tweet {
     public type: string = RETWEET_TYPE;
     public retweetedTweet: Tweet;
 
-    constructor({ date, caption, author, tweet, media }: RetweetConstructorArguments) {
-        super({date, caption, author, media});
+    constructor({ date, caption, author, tweet, media, id }: RetweetConstructorArguments) {
+        super({date, caption, author, media, id});
         this.retweetedTweet = tweet;
     }
 }

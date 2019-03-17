@@ -17,8 +17,8 @@ export interface BlogPostConstructorArgs {
 export class BlogPost implements BlogEntry {
     public type: string = BLOG_POST_TYPE;
     public date: Date;
-
     public id: string;
+
     public heading?: string;
     public content: string;
     public pinnedImage?: string;
