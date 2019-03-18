@@ -1,7 +1,7 @@
 <template>
     <nav :class="['grad-nav', navShown ? '' : 'grad-nav--hidden']">
         <NavBack v-if="small && expandedLink" @click="back" />
-        <div v-else class="grad-nav__header">
+        <div v-else class="grad-nav__header" @click="$router.push('/')">
             <img src="@/assets/adlerkopp.svg" alt="adlerkopp" />
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
@@ -252,6 +252,7 @@ $navbar-height: 72px;
     
     &__header {
         height: 45px;
+        cursor: pointer;
         flex: none;
         display: flex;
         align-items: center;
