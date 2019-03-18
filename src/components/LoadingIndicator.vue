@@ -1,6 +1,6 @@
 <template>
     <div class="grad-loader">
-        <Container > 
+        <Container v-show="timeoutDone"> 
             <template v-slot:header>
                 <Progress />
                 <span></span>
@@ -16,11 +16,17 @@
 <script lang="ts">
 import Progress from '@/components/LoadingIndicator/Progress.vue';
 import { Component, Vue } from 'vue-property-decorator';
+import { setTimeout } from 'timers';
 
 @Component({
     components: { Progress }
 })
-export default class LoadingIndicator extends Vue {}
+export default class LoadingIndicator extends Vue {
+    private timeoutDone: boolean = false;
+    private mounted() {
+        setTimeout(() => this.timeoutDone = true, 200);
+    }
+}
 </script>
 
 
