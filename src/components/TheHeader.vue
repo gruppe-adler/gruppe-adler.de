@@ -4,10 +4,6 @@
     </header>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style lang="scss" scoped>
 .grad-header {
     margin-top: 40px;

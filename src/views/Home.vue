@@ -21,7 +21,7 @@
             <Error v-if="loadingError">
                 Scheint so als ob beim Laden der Blogposts etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
             </Error>
-            <LoadingIndicator v-else />
+            <Loader v-else />
         </template>
     </Content>
 </div>
@@ -30,7 +30,6 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
-import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import BlogPostVue from '@/components/Blog/BlogPost.vue';
 import TweetVue from '@/components/Blog/Tweet.vue';
 
@@ -43,7 +42,7 @@ import { MOD_UPDATE_TYPE } from '@/models/blog/BlogPostModset';
 import ApiService from '@/ApiService';
 
 @Component({
-    components: { LoadingIndicator, BlogPost: BlogPostVue, Tweet: TweetVue }
+    components: { BlogPost: BlogPostVue, Tweet: TweetVue }
 })
 export default class HomeVue extends Vue {
     private loadingError: boolean = false;

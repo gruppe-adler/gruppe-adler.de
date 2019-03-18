@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router, { Route } from 'vue-router';
 import ErrorVue from '@/components/Error.vue';
-import LoadingIndicatorVue from '@/components/LoadingIndicator.vue';
+import Loader from '@/components/Loader.vue';
 
 Vue.use(Router);
 
@@ -11,7 +11,7 @@ const AsyncCMSPage = () => ({
     /* webpackMode: "lazy" */
     '@/views/CMSPage.vue'
   ),
-  loading: LoadingIndicatorVue,
+  loading: Loader,
   error: ErrorVue,
   delay: 200,
   timeout: 10000
@@ -23,7 +23,7 @@ const AsyncHome = () => ({
     /* webpackMode: "lazy" */
     '@/views/Home.vue'
   ),
-  loading: LoadingIndicatorVue,
+  loading: Loader,
   error: ErrorVue,
   delay: 200,
   timeout: 10000
@@ -35,7 +35,7 @@ const AsyncEindruecke = () => ({
     /* webpackMode: "lazy" */
     '@/views/ueber-uns/Eindruecke.vue'
   ),
-  loading: LoadingIndicatorVue,
+  loading: Loader,
   error: ErrorVue,
   delay: 200,
   timeout: 10000
@@ -47,7 +47,7 @@ const Async404 = () => ({
     /* webpackMode: "lazy" */
     '@/views/404.vue'
   ),
-  loading: LoadingIndicatorVue,
+  loading: Loader,
   error: ErrorVue,
   delay: 200,
   timeout: 10000

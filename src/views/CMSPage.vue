@@ -34,7 +34,7 @@
         <Error v-if="loadingError">
             Scheint so als ob beim Laden der Seite etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
         </Error>
-        <LoadingIndicator v-else />
+        <Loader v-else />
     </Content>
 </template>
 <script lang="ts">
@@ -42,12 +42,11 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Container } from '@/models/Container';
 import { Page } from '@/models/Page';
 import ApiService from '@/ApiService';
-import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import TableOfContents from '@/components/CMSPage/TableOfContents.vue';
 import { Route } from 'vue-router';
 
 @Component({
-    components: { LoadingIndicator, TableOfContents }
+    components: { TableOfContents }
 })
 export default class CMSPageVue extends Vue {
     private page: Page | null = null;

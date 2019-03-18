@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts">
-import Progress from '@/components/LoadingIndicator/Progress.vue';
+import Progress from '@/components/Loader/Progress.vue';
 import { Component, Vue } from 'vue-property-decorator';
 import { setTimeout } from 'timers';
 
 @Component({
     components: { Progress }
 })
-export default class LoadingIndicator extends Vue {
+export default class Loader extends Vue {
     private timeoutDone: boolean = false;
     private mounted() {
         setTimeout(() => this.timeoutDone = true, 200);
