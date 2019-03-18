@@ -2,18 +2,20 @@
 <div>
     <Content>
         <template v-if="blogEntries.length > 0">
-            <template v-for="(entry, index) in blogEntries">
-                <BlogPost 
-                    v-if="isBlogPost(entry)"
-                    :model="entry"
-                    :key="index"
-                />
-                <Tweet
-                    v-else
-                    :model="entry"
-                    :key="index"
-                />
-            </template>
+            <transition-group name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper">
+                <template v-for="entry in blogEntries">
+                    <BlogPost 
+                        v-if="isBlogPost(entry)"
+                        :model="entry"
+                        :key="`blogpost-${entry.id}`"
+                    />
+                    <Tweet
+                        v-else
+                        :model="entry"
+                        :key="`tweet-${entry.id}`"
+                    />
+                </template>
+            </transition-group>
         </template>
         <template v-else>
             <Error v-if="loadingError">
@@ -118,3 +120,9 @@ export default class HomeVue extends Vue {
 }
 </script>
 
+
+<style lang="scss" scoped>
+.grad-blog-wrapper {
+    width: 100%;
+}
+</style>

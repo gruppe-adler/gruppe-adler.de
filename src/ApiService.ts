@@ -100,6 +100,8 @@ export default class ApiService {
 
         const tweets: Tweet[] = response.map(mainTweet => {
 
+            const mainId: string = mainTweet.id_str;
+
             // author of main tweet
             const mainAuthor: TwitterUser = {
                 username: mainTweet.user.screen_name,
@@ -136,6 +138,8 @@ export default class ApiService {
 
             if (retweetedStatus) {
 
+                const retweetedId = retweetedStatus.id_str;
+
                 // retweeted media
                 let retweetedMedia: TweetMedia[] = [];
                 if (retweetedStatus.extended_entities && retweetedStatus.extended_entities.media) {
@@ -149,6 +153,7 @@ export default class ApiService {
                 }
 
                 const retweetedTweet = new Tweet({
+                    id: retweetedId,
                     media: retweetedMedia,
                     date: new Date(retweetedStatus.created_at),
                     caption: this.enrichTwitterCaption(retweetedStatus.full_text, retweetedStatus.entities),
@@ -169,6 +174,7 @@ export default class ApiService {
                     date: new Date(mainTweet.created_at),
                     caption: mainCaption,
                     media: mainMedia,
+                    id: mainId,
                     author: mainAuthor,
                     tweet: retweetedTweet
                 });
@@ -179,6 +185,7 @@ export default class ApiService {
                 date: new Date(mainTweet.created_at),
                 caption: mainCaption,
                 media: mainMedia,
+                id: mainId,
                 author: mainAuthor
             });
         });

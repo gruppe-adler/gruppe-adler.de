@@ -12,14 +12,14 @@
                 @click.native="mainLinkClicked(link)"
             >
                 {{link.text}}
-            </router-link >
+            </router-link>
             <template v-if="link.sublinks">
                 <router-link 
                     v-for="sublink in link.sublinks"
                     v-show="link == expandedLink"
                     :key="link.url + sublink.url"
                     class="grad-nav--sub"
-                    :to="link.url + link.url"
+                    :to="link.url + sublink.url"
                     tag="a"
                 >
                     {{sublink.text}}
