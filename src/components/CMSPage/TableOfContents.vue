@@ -37,7 +37,7 @@ export default class TableOfContents extends Vue {
     }
 
     /**
-     * Finds the first container which is completely shown and sets it's id as this.currentId
+     * Find the first container which is completely shown and sets it's id as this.currentId
      */
     private updateCurrentContainer() {
         if (! this.containers) return;

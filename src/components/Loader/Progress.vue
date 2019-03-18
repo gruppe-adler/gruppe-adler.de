@@ -1,14 +1,6 @@
 <template functional>
-<div class="grad-progress">
-</div>
+<div class="grad-progress"></div>
 </template>
-
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-
-@Component
-export default class Progress extends Vue {}
-</script>
 
 <style lang="scss" scoped>
 .grad-progress {

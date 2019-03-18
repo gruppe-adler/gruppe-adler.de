@@ -30,7 +30,6 @@ export default class Container extends Vue {
 }
 </script>
 
-
 <style lang="scss">
 .grad-container {
     $offset: 200px;

@@ -24,6 +24,8 @@ import { setTimeout } from 'timers';
 export default class Loader extends Vue {
     private timeoutDone: boolean = false;
     private mounted() {
+        // show loader only after 200ms to prevent "flashing" of
+        // the loader for normal (< 200ms) loading times
         setTimeout(() => this.timeoutDone = true, 200);
     }
 }

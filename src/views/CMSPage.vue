@@ -63,16 +63,20 @@ export default class CMSPageVue extends Vue {
         this.fetchPageData();
     }
 
-    private fetchPageData() {
+    /**
+     * @description Fetch new cms page data
+     * @author DerZade
+     */
+    private async fetchPageData() {
         this.page = null;
         this.loadingError = false;
 
-        ApiService.getPage(this.$route.path).then(res => {
-            this.page = res;
-        }).catch(err => {
+        try {
+            this.page = await ApiService.getPage(this.$route.path);
+        } catch (err) {
             console.error(err);
             this.loadingError = true;
-        });
+        }
     }
 }
 </script>

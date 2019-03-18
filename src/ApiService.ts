@@ -305,7 +305,8 @@ export default class ApiService {
     }
 
     /**
-     * Normalizes image response from CMS api
+     * @description Normalizes image response from CMS api
+     * @author DerZade
      * @param {any} response Image response
      * @returns {string} Complete image url
      */
@@ -326,7 +327,8 @@ export default class ApiService {
     }
 
     /**
-     * Enriches text with links to user mentions or hashtags
+     * @description Enriches text with links to user mentions or hashtags
+     * @author DerZade
      * @param {string} text Text
      * @param {TweetEntities} entries Entries to add to the text
      * @returns {string} Enriched text
