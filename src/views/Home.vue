@@ -17,12 +17,10 @@
                 </template>
             </transition-group>
         </template>
-        <template v-else>
-            <Error v-if="loadingError">
-                Scheint so als ob beim Laden der Blogposts etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
-            </Error>
-            <Loader v-else />
-        </template>
+        <Loader v-if="loading && !loadingError" />
+        <Error v-if="loadingError">
+            Scheint so als ob beim Laden der Blogposts etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
+        </Error>
     </Content>
 </div>
 </template>
@@ -46,35 +44,15 @@ import ApiService from '@/ApiService';
 })
 export default class HomeVue extends Vue {
     private loadingError: boolean = false;
+    private loading: boolean = true;
     private tweets: Tweet[] = [];
     private blogPosts: BlogPost[] = [];
     private blogEntries: BlogEntry[] = [];
 
     private mounted() {
         this.fetchBlogData();
-    }
 
-    private async fetchBlogData() {
-        this.blogPosts = [];
-        this.tweets = [];
-        this.loadingError = false;
-
-        try {
-            this.blogPosts = await ApiService.getBlogPosts();
-        } catch (err) {
-            console.error(err);
-            this.loadingError = true;
-            return;
-        }
-
-        try {
-            this.tweets = await ApiService.getTweets();
-        } catch (err) {
-            console.error(err);
-            this.loadingError = true;
-        }
-
-        this.updateBlogEntries();
+        window.addEventListener('scroll', this.handleScroll);
     }
 
     @Watch('$route')
@@ -84,15 +62,56 @@ export default class HomeVue extends Vue {
         this.updateBlogEntries();
     }
 
+    /**
+     * @description Fetches blog data (incl. tweets and posts)
+     * @author DerZade
+     */
+    private async fetchBlogData() {
+        this.loading = true;
+        this.loadingError = false;
+
+        // fetch blog posts
+        let newBlogPosts: BlogPost[] = [];
+        try {
+            newBlogPosts = await ApiService.getBlogPosts(this.blogPosts.length, this.isLoggedIn);
+        } catch (err) {
+            console.error(err);
+            this.loadingError = true;
+        }
+        this.blogPosts = [ ...this.blogPosts, ...newBlogPosts ];
+
+        // fetch tweets
+        const oldestTweet: Tweet = this.tweets[this.tweets.length - 1];
+        const oldestTweetId = oldestTweet && oldestTweet.id;
+        let newTweets: Tweet[] = [];
+        try {
+            newTweets = await ApiService.getTweets(oldestTweetId);
+        } catch (err) {
+            console.error(err);
+            this.loadingError = true;
+        }
+        this.tweets = [ ...this.tweets, ...newTweets ];
+
+        this.updateBlogEntries();
+        this.loading = false;
+    }
+
+    /**
+     * @description Populates this.blogEntries with blogposts/tweets acc. to applied filter
+     * @author DerZade
+     */
     private updateBlogEntries() {
         let arr: BlogEntry[] = [];
         const path = this.$route.path.replace(/^\/home/i, '');
 
         if (path === '/alles') {
+            // route /alles should include blogposts as well as tweets
             arr = arr.concat(this.blogPosts).concat(this.tweets);
         } else if (path === '/tweets') {
+            // route /tweets should just include tweets
             arr = this.tweets;
         } else {
+            // other routes include a subset of just blogposts
             // @ts-ignore
             const filteredType = {
                 '/allgemeines': BLOG_POST_TYPE,
@@ -101,7 +120,6 @@ export default class HomeVue extends Vue {
             }[path.toLowerCase()];
 
             if (!filteredType) {
-                console.log(path.toLowerCase());
                 this.blogEntries = [];
                 return;
             }
@@ -109,12 +127,42 @@ export default class HomeVue extends Vue {
             arr = this.blogPosts.filter(x => x.type === filteredType);
         }
 
-        // set sorted arr as entries
+        // sort arr and set as entries
         this.blogEntries = arr.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
 
+
+    /**
+     * @description Check whether blogentry is blogpost
+     * @author DerZade
+     * @param {BlogEntry} entry Blog entry to examine
+     * @returns {boolean} Entry is blogpost?
+     */
     private isBlogPost(entry: BlogEntry): boolean {
         return [BLOG_POST_TYPE, EVENT_REPORT_TYPE, MOD_UPDATE_TYPE].includes(entry.type);
+    }
+
+    /**
+     * @description Check if user is logged in
+     * @author DerZade
+     * @returns {boolean} User logged in?
+     */
+    private get isLoggedIn(): boolean {
+        // @ts-ignore
+        return this.$root.isLoggedIn() || false;
+    }
+
+    /**
+     * @description Scroll event callback. Initiates fetching data when user has reached bottom of page
+     * @author DerZade
+     */
+    private handleScroll(): void {
+        const bottomOfWindow: boolean = document.documentElement.scrollTop + window.innerHeight + 100
+                                    > document.documentElement.offsetHeight;
+
+        if (!bottomOfWindow || this.loading) return;
+
+        this.fetchBlogData();
     }
 }
 </script>
@@ -123,5 +171,9 @@ export default class HomeVue extends Vue {
 <style lang="scss" scoped>
 .grad-blog-wrapper {
     width: 100%;
+}
+
+.grad-blog-wrapper + .grad-loader {
+    margin-top: 30px;
 }
 </style>

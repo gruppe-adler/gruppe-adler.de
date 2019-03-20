@@ -87,13 +87,16 @@ export default class ApiService {
      * @async
      * @description Retrieves the last tweets
      * @author DerZade
+     * @param {string} maxId MaxId to pass th twitter api (see twitter api GET statuses/user_timeline parameters max_id)
+     * (https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline.html)
      * @returns {Promise<Tweet[]>} Tweets
      */
-    public static async getTweets(): Promise<Tweet[]> {
+    public static async getTweets(maxId: string = ''): Promise<Tweet[]> {
 
+        const params = maxId !== '' ? `?max_id=${maxId}` : '';
         let response: ApiResTweet[];
         try {
-            response = JSON.parse(await rp(`${API_URL}twitter/feed`));
+            response = JSON.parse(await rp(`${API_URL}twitter/feed${params}`));
         } catch (err) {
             throw err;
         }
@@ -190,7 +193,8 @@ export default class ApiService {
             });
         });
 
-        return tweets;
+        // return tweets without the one specified in maxId
+        return tweets.filter(t => t.id !== maxId);
     }
 
     /**
@@ -198,9 +202,10 @@ export default class ApiService {
      * @description Retrieves blog posts from CMS API
      * @author DerZade
      * @param {number} skip How much blog posts to skip
+     * @param {boolean} drafts include drafts
      * @returns {Promise<BlogPost[]>} BlogPosts
      */
-    public static async getBlogPosts(skip: number = 0): Promise<BlogPost[]> {
+    public static async getBlogPosts(skip: number = 0, drafts: boolean = false): Promise<BlogPost[]> {
 
         let response = { total: 0, entries: [] };
         const rpOptions = {
@@ -211,9 +216,7 @@ export default class ApiService {
                 'content-type': 'application/json'
             },
             body: JSON.stringify({
-                filter: {
-                    published: true
-                },
+                filter: drafts ? {} : { published: true },
                 fields: {
                     author: 1,
                     heading: 1,
@@ -238,6 +241,8 @@ export default class ApiService {
         }
 
         const cmsBlogPosts: CmsBlogPost[] = response.entries;
+
+        if (cmsBlogPosts.length === 0) return [];
 
         const blogPosts: BlogPost[] = cmsBlogPosts.map((post: CmsBlogPost) => {
 
