@@ -2,7 +2,7 @@
 <div>
     <Content>
         <template v-if="blogEntries.length > 0">
-            <transition-group name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper">
+            <transition-group name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
                 <template v-for="entry in blogEntries">
                     <BlogPost 
                         v-if="isBlogPost(entry)"
@@ -48,6 +48,7 @@ export default class HomeVue extends Vue {
     private tweets: Tweet[] = [];
     private blogPosts: BlogPost[] = [];
     private blogEntries: BlogEntry[] = [];
+    private scrollTimeout: number | null = null;
 
     private mounted() {
         this.fetchBlogData();
@@ -153,14 +154,29 @@ export default class HomeVue extends Vue {
     }
 
     /**
-     * @description Scroll event callback. Initiates fetching data when user has reached bottom of page
+     * @description Scroll event callback. Calls function to check wether bottom of page hase been reached via a timeout
      * @author DerZade
      */
     private handleScroll(): void {
-        const bottomOfWindow: boolean = document.documentElement.scrollTop + window.innerHeight + 100
-                                    > document.documentElement.offsetHeight;
+        if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = window.setTimeout(this.checkIfBottom, 200);
+    }
 
-        if (!bottomOfWindow || this.loading) return;
+    /**
+     * @description Checks wether bottom of page hase been reached and  initiates fetching new posts
+     * @author DerZade
+     */
+    private checkIfBottom(): void {
+        if (this.loading) return;
+
+        const wrapper: Vue = this.$refs.wrapper as Vue;
+
+        if (!wrapper) return;
+
+        const wrapperBottom: number = wrapper.$el.getBoundingClientRect().bottom;
+        const bottomOfWindow: boolean = window.innerHeight + 100 > wrapperBottom;
+
+        if (!bottomOfWindow) return;
 
         this.fetchBlogData();
     }
