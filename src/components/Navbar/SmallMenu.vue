@@ -75,7 +75,6 @@ export default class NavbarSmallMenu extends Vue {
 
 <style lang="scss" scoped>
 .grad-nav__small-menu {
-    user-select: all;
     overflow: hidden;
     position: fixed;
     top: 72px;
@@ -84,9 +83,6 @@ export default class NavbarSmallMenu extends Vue {
     bottom: 0px;
     background-color: black;
 
-    a {
-        user-select: none;
-    }
 
     > a {
         display: block;

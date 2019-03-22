@@ -32,7 +32,7 @@
                             {{link.text}}
                         </router-link>
                         <template v-if="link.sublinks">
-                            <div :class="['grad-nav__sub-links', (activeLink.url === link.url) ? 'grad-nav--active': '']">
+                            <div class="grad-nav__sub-links">
                                 <router-link 
                                     v-for="sublink in link.sublinks"
                                     :key="sublink.url"
@@ -276,60 +276,6 @@ $navbar-height: 72px;
         }
     }
 
-    &__links {
-        display: flex;
-        justify-content: flex-end;
-        height: 100%;
-        font-size: 18px;
-
-        .grad-nav--active { // active link in main links
-            opacity: 1;
-            border-top-color: #D18D1F;
-        }
-
-        > .grad-nav__link-wrapper {
-            position: relative;
-
-            // &:hover .grad-nav__sub-links.grad-nav--active,
-            &:hover .grad-nav__sub-links {
-                // hovering wrapper will show its sub links
-                visibility: initial !important;
-            }
-        }
-
-        &:hover .grad-nav__sub-links.grad-nav--active {
-            // when user hovers any link -> hide sub links of active link
-            visibility: hidden;
-        }
-    }
-    &__sub-links {
-        z-index: 1;
-        visibility: hidden;
-        display: flex;
-        height: 43px;
-        font-size: 12px;
-
-        position: absolute;
-        top: $navbar-height;
-        left: 0px;
-
-        .grad-nav__link {
-            opacity: 0.7;
-            margin: 0px 10px;
-            border-top: 2px solid transparent;
-            border-bottom: 2px solid transparent;
-        }
-
-        .grad-nav--active { // active sub link
-            opacity: 1;
-            border-bottom-color: white;
-        }
-
-        &.grad-nav--active { // show sublinks from active link by default
-            visibility: initial;
-        }
-    }
-
     &__link {
         cursor: pointer;
         display: flex;
@@ -352,10 +298,57 @@ $navbar-height: 72px;
             opacity: 1;
         }
     }
-    
-    @media (max-width: 1000px) {
-        .grad-nav--min1000 {
-            display: none;
+
+    &__links {
+        display: flex;
+        justify-content: flex-end;
+        height: 100%;
+        font-size: 18px;
+
+
+        > .grad-nav__link-wrapper {
+            position: relative;
+
+            > .grad-nav__link.grad-nav--active { // active link in main links
+                opacity: 1;
+                border-top-color: #D18D1F;
+            }
+
+            &:hover .grad-nav__sub-links {
+                // hovering wrapper will show its sub links
+                visibility: initial !important;
+            }
+        }
+
+        &:hover .grad-nav--active + .grad-nav__sub-links {
+            // when user hovers any link -> hide sub links of active link
+            visibility: hidden;
+        }
+    }
+
+    &__sub-links {
+        z-index: 1;
+        visibility: hidden;
+        display: flex;
+        height: 43px;
+        font-size: 12px;
+
+        position: absolute;
+        top: $navbar-height;
+        left: 0px;
+
+        .grad-nav__link {
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+
+            &.grad-nav--active { // active sub link
+                opacity: 1;
+                border-bottom-color: white;
+            }
+        }
+
+        .grad-nav--active + & { // show sublinks from active link by default
+            visibility: initial;
         }
     }
 
@@ -377,5 +370,12 @@ $navbar-height: 72px;
         -webkit-backdrop-filter: blur(5px);
         backdrop-filter: blur(5px);
     }
+    
+    @media (max-width: 1000px) {
+        .grad-nav--min1000 {
+            display: none;
+        }
+    }
+
 }
 </style>
