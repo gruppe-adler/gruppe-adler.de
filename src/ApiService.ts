@@ -285,16 +285,14 @@ export default class ApiService {
                     videos: BlogPostEventMedia[]
                 };
 
-                if (post.data === '') {
-                    post.data = {};
-                }
+                if (post.data === '') post.data = {};
 
-                data = Object.assign(post.data, {
-                    participants: -1,
-                    externalParticipants: -1,
+                data = Object.assign({
+                    participants: 0,
+                    externalParticipants: 0,
                     images: [],
                     videos: []
-                });
+                }, post.data);
 
                 return new BlogPostEvent({
                     ...generalArgs,
