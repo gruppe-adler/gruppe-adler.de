@@ -18,6 +18,7 @@
             </transition-group>
         </template>
         <Loader v-if="loading && !loadingError" />
+        <a v-if="!loading && !loadingError" key="load-more" class="grad-blog__load-more" @click="fetchBlogData">Mehr laden</a>
         <Error v-if="loadingError">
             Scheint so als ob beim Laden der Blogposts etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
         </Error>
@@ -53,7 +54,7 @@ export default class HomeVue extends Vue {
     private mounted() {
         this.fetchBlogData();
 
-        window.addEventListener('scroll', this.handleScroll);
+        // window.addEventListener('scroll', this.handleScroll);
     }
 
     @Watch('$route')
@@ -187,9 +188,25 @@ export default class HomeVue extends Vue {
 <style lang="scss" scoped>
 .grad-blog-wrapper {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .grad-blog-wrapper + .grad-loader {
     margin-top: 30px;
+}
+
+.grad-blog__load-more {
+    cursor: pointer;
+    margin-top: 50px;
+    font-size: 1.1em;
+    font-weight: bold;
+    opacity: 0.7;
+    color: #D18D1F;
+
+    &:hover {
+        opacity: 1;
+    }
 }
 </style>
