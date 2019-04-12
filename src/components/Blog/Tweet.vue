@@ -2,7 +2,13 @@
     <BlogEntry headerColor="#1DA1F2" class="grad-tweet">
         <template v-slot:date>{{date}}</template>
         <template v-slot:heading><a target="_blank" :href="`https://twitter.com/${model.author.username}`">@{{model.author.username}}</a></template>
-        <template v-slot:tags><span>Twitter</span></template>
+        <template v-slot:tags>
+            <span>
+                <a target="_blank" :href="`https://twitter.com/${model.author.username}/status/${model.id}`">
+                    Twitter
+                </a>
+            </span>
+        </template>
         <template v-slot:author><a target="_blank" :href="`https://twitter.com/${model.author.username}`"><img :src="model.author.picture" /></a></template>
         <template>
             <div class="grad-tweet__media" v-if="model.media.length > 0">
