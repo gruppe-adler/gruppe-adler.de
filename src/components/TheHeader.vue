@@ -4,6 +4,13 @@
     </header>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component
+export default class Header extends Vue {}
+</script>
+
 <style lang="scss" scoped>
 .grad-header {
     margin-top: 40px;
