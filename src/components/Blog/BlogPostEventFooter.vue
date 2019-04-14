@@ -19,6 +19,8 @@
             <a 
                 v-for="(m, i) in model.images"
                 :key="i"
+                :href="m.url"
+                target="_blank"
                 class="grad-event-blogpost__media-item"
             >
                 <i class="material-icons">photo_library</i>
@@ -29,6 +31,8 @@
             <a
                 v-for="(m, i) in model.images"
                 :key="i"
+                :href="m.url"
+                target="_blank"
                 class="grad-event-blogpost__media-item"
             >
                 <i class="material-icons">play_circle_filled</i>
@@ -36,8 +40,6 @@
             </a>
         </div>
     </div>
-    <!-- <p v-for="i in model.images" :key="`${i.label}-${i.image}`">{{model.images}}</p> -->
-    <!-- <p>{{model.videos}}</p> -->
 </div>
 </template>
 
