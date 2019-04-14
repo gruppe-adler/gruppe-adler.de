@@ -41,6 +41,18 @@ const AsyncEindruecke = () => ({
   timeout: 10000
 });
 
+const AsyncWriteBlogPost = () => ({
+  component: import(
+    /* webpackChunkName: "Eindruecke" */
+    /* webpackMode: "lazy" */
+    '@/views/WriteBlogpost.vue'
+  ),
+  loading: Loader,
+  error: ErrorVue,
+  delay: 200,
+  timeout: 10000
+});
+
 const Async404 = () => ({
   component: import(
     /* webpackChunkName: "404" */
@@ -79,6 +91,10 @@ export default new Router({
     {
       path: '/home/alles',
       component: AsyncHome
+    },
+    {
+      path: '/blog/write',
+      component: AsyncWriteBlogPost
     },
     {
       path: '/home/tweets',
