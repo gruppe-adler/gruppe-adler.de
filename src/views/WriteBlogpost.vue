@@ -1,30 +1,46 @@
 <template>
 <Content>
-    <BlogEntry 
-        :class="['grad-blogpost', `grad-blogpost--${model.type}`]"
-    > 
-        <template v-slot:date>{{date}}</template>
-        <template v-slot:heading>
-            <input class="grad-blogpost-write__heading" type="text" v-model="model.heading" />
-        </template>
-        <template v-slot:tags>
-            <span class="grad-blogpost-write__add-tag">+</span>
-            <span v-for="t in model.tags" :key="t">{{t}}</span>
-        </template>
-        <template v-slot:author><img :src="model.author.picture" /></template>
-        <template v-slot:image >
-            <img v-if="model.pinnedImage" :src="model.pinnedImage" alt="pinned-image">
-            <div v-else class="grad-blogpost-write__image-placeholder">
-                <i class="material-icons">photo</i>
-            </div>
-        </template>
-        <template>
-            <div v-html="model.content"></div>
-        </template>
-        <!-- <template v-slot:footer v-if="footerComponent">
-            <component :is="footerComponent" :model="model"></component>
-        </template> -->
-    </BlogEntry>
+    <template v-if="model">
+        <section class="grad-write-blogpost__type">
+            <select>
+                <option>Modset</option>
+                <option>Event</option>
+                <option>Allgemein</option>
+            </select>
+        </section>
+        <BlogEntry 
+            :class="['grad-blogpost', `grad-blogpost--${model.type}`]"
+        > 
+            <template v-slot:date>
+                <span class="grad-write-blogpost__date">{{date}}</span>
+            </template>
+            <template v-slot:heading>
+                <input class="grad-write-blogpost__heading" type="text" v-model="model.heading" />
+            </template>
+            <template v-slot:tags>
+                <span class="grad-write-blogpost__add-tag">+</span>
+                <span v-for="t in model.tags" :key="t">{{t}}</span>
+            </template>
+            <template v-slot:author><img :src="model.author.picture" /></template>
+            <template v-slot:image >
+                <img v-if="model.pinnedImage" :src="model.pinnedImage" alt="pinned-image">
+                <div v-else class="grad-write-blogpost__image-placeholder">
+                    <i class="material-icons">photo</i>
+                </div>
+            </template>
+            <template>
+                <div v-html="model.content"></div>
+            </template>
+            <!-- <template v-slot:footer v-if="footerComponent">
+                <component :is="footerComponent" :model="model"></component>
+            </template> -->
+        </BlogEntry>
+        <section class="grad-write-blogpost__bottom-buttons">
+            <button @click="publish"><i class="material-icons">publish</i> Veröffentlichen</button>
+            <button @click="save"><i class="material-icons">save</i> Speichern</button>
+        </section>
+    </template>
+    <Loader v-else />
 </Content>
 </template>
 
@@ -39,31 +55,54 @@ import { BlogPost } from '../models/blog/BlogPost';
     }
 })
 export default class WriteBlogPost extends Vue {
-    private model: BlogPost = new BlogPost({
-        id: 'meh',
-        heading: 'meh',
-        content: '',
-        pinnedImage: '',
-        tags: [],
-        author: {
-            picture: '',
-            username: 'meh',
-            uid: 3,
-            iconBgColor: '#D18D1F',
-            iconText: 'U'
-        },
-        date: new Date(),
-        published: true
-    });
+    private model: BlogPost|null = null;
+
+    private mounted() {
+        this.model = new BlogPost({
+            id: '',
+            heading: '',
+            content: '',
+            pinnedImage: '',
+            tags: [],
+            author: {
+                picture: '',
+                username: 'User',
+                uid: 3,
+                iconBgColor: '#D18D1F',
+                iconText: 'U'
+            },
+            date: new Date(),
+            published: false
+        });
+    }
+
 
     private get date() {
+        if (! this.model) return '';
+
         return parseDate(this.model.date);
+    }
+
+    /**
+     * @description Click callback of save button
+     * @author DerZade
+     */
+    private save() {
+        // TODO
+    }
+
+    /**
+     * @description Click callback of publish button
+     * @author DerZade
+     */
+    private publish() {
+        // TODO
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.grad-blogpost-write {
+.grad-write-blogpost {
     &__heading {
         font-size: inherit;
         font-family: inherit;
@@ -115,6 +154,37 @@ export default class WriteBlogPost extends Vue {
             font-size: 3.5em;
             color: #777777;
         }
+    }
+
+    &__date {
+        opacity: 0.8;
+        cursor: pointer;
+        transition: opacity .1s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+
+    &__type,
+    &__bottom-buttons {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+
+        > button,
+        > select {
+            margin: 10px 0px;
+        }
+
+        * + * {
+            margin-left: 10px !important;
+        }
+    }
+    
+    &__type {
+        justify-content: flex-start;
     }
 }
 </style>
