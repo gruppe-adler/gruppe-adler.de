@@ -5,10 +5,10 @@
             <span v-if="model.externalParticipants > 0"> und {{model.externalParticipants}} externe Gäste</span>
         </p>
         <div>
-            <div v-for="(p, i) in model.participants" :key="i"></div>
+            <div v-for="(p, i) in model.participants" :key="`participants-${i}`"></div>
             <div 
                 v-for="(p, i) in model.externalParticipants"
-                :key="i"
+                :key="`external-participants-${i}`"
                 class="grad-event-blogpost__participants--external"
             ></div>
         </div>
@@ -18,7 +18,7 @@
         <div>
             <a 
                 v-for="(m, i) in model.images"
-                :key="i"
+                :key="`image-${i}`"
                 :href="m.url"
                 target="_blank"
                 class="grad-event-blogpost__media-item"
@@ -29,8 +29,8 @@
         </div>
         <div>
             <a
-                v-for="(m, i) in model.images"
-                :key="i"
+                v-for="(m, i) in model.videos"
+                :key="`video-${i}`"
                 :href="m.url"
                 target="_blank"
                 class="grad-event-blogpost__media-item"
