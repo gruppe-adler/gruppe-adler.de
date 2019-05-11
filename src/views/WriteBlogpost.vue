@@ -3,9 +3,9 @@
     <template v-if="model">
         <section class="grad-write-blogpost__type">
             <select>
-                <option>Modset</option>
-                <option>Event</option>
-                <option>Allgemein</option>
+                <option class="grad-write-blogpost--type-misc">Allgemein</option>
+                <option class="grad-write-blogpost--type-event">Event</option>
+                <option class="grad-write-blogpost--type-modset">Modset</option>
             </select>
         </section>
         <BlogEntry 
@@ -185,6 +185,23 @@ export default class WriteBlogPost extends Vue {
     
     &__type {
         justify-content: flex-start;
+
+        option.grad-write-blogpost--type {
+            &-misc {
+                background-color: white;
+                color: black;   
+            }
+
+            &-event {
+                background-color: black;
+                color: #D18D1F;   
+            }
+
+            &-modset {
+                background-color: purple;
+                color: white
+            }
+        }
     }
 }
 </style>

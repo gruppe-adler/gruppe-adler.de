@@ -34,6 +34,7 @@ button {
     cursor: pointer;
     display: flex;
     align-items: center;
+    outline: none;
 }
 button:hover {
     background-color: #EDEDED;
