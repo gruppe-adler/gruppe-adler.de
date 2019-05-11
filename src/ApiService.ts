@@ -194,7 +194,7 @@ export default class ApiService {
         });
 
         // return tweets without the one specified in maxId
-        return tweets.filter(t => t.id !== maxId);
+        return tweets.filter(t => !(t instanceof Retweet)).filter(t => t.id !== maxId);
     }
 
     /**
