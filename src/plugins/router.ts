@@ -89,28 +89,33 @@ export default new Router({
             redirect: '/home/alles'
         },
         {
-            path: '/home/alles',
-            component: AsyncHome
-        },
-        {
             path: '/blog/write',
             component: AsyncWriteBlogPost
         },
         {
+            path: '/home/alles',
+            component: AsyncHome,
+            name: 'Blog - Alles'
+        },
+        {
             path: '/home/tweets',
-            component: AsyncHome
+            component: AsyncHome,
+            name: 'Blog - Tweets'
         },
         {
             path: '/home/allgemeines',
-            component: AsyncHome
+            component: AsyncHome,
+            name: 'Blog - Allgemeines'
         },
         {
             path: '/home/events',
-            component: AsyncHome
+            component: AsyncHome,
+            name: 'Blog - Events'
         },
         {
             path: '/home/modset',
-            component: AsyncHome
+            component: AsyncHome,
+            name: 'Blog - Modset'
         },
         {
             path: '/ueber-uns',
@@ -118,19 +123,23 @@ export default new Router({
         },
         {
             path: '/ueber-uns/miteinander',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Über uns - Miteinander'
         },
         {
             path: '/ueber-uns/struktur',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Über uns - Struktur'
         },
         {
             path: '/ueber-uns/historie',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Über uns - Historie'
         },
         {
             path: '/ueber-uns/eindruecke',
-            component: AsyncEindruecke
+            component: AsyncEindruecke,
+            name: 'Über uns - Eindrücke'
         },
         {
             path: '/technik',
@@ -138,15 +147,18 @@ export default new Router({
         },
         {
             path: '/technik/server',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Technik - Server'
         },
         {
             path: '/technik/missionsbau',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Technik - Missionsbau'
         },
         {
             path: '/technik/modding',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Technik - Modding'
         },
         {
             path: '/spielweise',
@@ -154,15 +166,18 @@ export default new Router({
         },
         {
             path: '/spielweise/uebersicht',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Spielweise - Übersicht'
         },
         {
             path: '/spielweise/addons',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Spielweise - Addons'
         },
         {
             path: '/spielweise/missionen',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Spielweise - Missionen'
         },
         {
             path: '/mitspielen',
@@ -170,27 +185,30 @@ export default new Router({
         },
         {
             path: '/mitspielen/allgemeines',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Mitspielen - Allgemeines'
         },
         {
             path: '/mitspielen/checkliste',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Mitspielen - Checkliste'
         },
         {
             path: '/mitspielen/kontakt',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
+            name: 'Mitspielen - Kontakt'
         },
         {
             path: '/en',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
         },
         {
             path: '/datenschutzerklaerung',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
         },
         {
             path: '/impressum',
-            component: AsyncCMSPage
+            component: AsyncCMSPage,
         },
         {
             path: '/login',
