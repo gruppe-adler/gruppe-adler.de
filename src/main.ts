@@ -4,6 +4,7 @@ import router from './plugins/router';
 import './plugins/registerServiceWorker';
 import './plugins/globalComponents';
 import './plugins/smoothScroll';
+import './plugins/vueAnalytics';
 
 Vue.config.productionTip = false;
 
