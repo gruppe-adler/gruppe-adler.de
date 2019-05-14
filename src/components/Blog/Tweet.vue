@@ -1,5 +1,5 @@
 <template>
-    <BlogEntry headerColor="#1DA1F2" class="grad-tweet">
+    <BlogEntry headerColor="#D18D1F" class="grad-tweet">
         <template v-slot:date>{{date}}</template>
         <template v-slot:heading><a target="_blank" :href="`https://twitter.com/${model.author.username}`">@{{model.author.username}}</a></template>
         <template v-slot:tags>
@@ -109,7 +109,7 @@ export default class TweetVue extends Vue {
     .grad-container__content,
     .grad-container__footer {
         a {
-            color: #1DA1F2;
+            color: #D18D1F;
             font-weight: bold;
         }
     }
