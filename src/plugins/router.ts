@@ -201,14 +201,15 @@ export default new Router({
         {
             path: '/en',
             component: AsyncCMSPage,
+            name: 'English - Contact'
         },
         {
             path: '/datenschutzerklaerung',
-            component: AsyncCMSPage,
+            component: AsyncCMSPage
         },
         {
             path: '/impressum',
-            component: AsyncCMSPage,
+            component: AsyncCMSPage
         },
         {
             path: '/login',

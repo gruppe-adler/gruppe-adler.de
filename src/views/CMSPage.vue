@@ -60,6 +60,8 @@ export default class CMSPageVue extends Vue {
     private routeChanged(to: Route, from: Route) {
         if (to.path === from.path) return;
 
+        this.$ga.page(this.$router);
+
         this.fetchPageData();
     }
 
