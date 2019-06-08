@@ -46,13 +46,18 @@
                         </template>
                     </div>
                 </template>
-                <router-link 
-                    to="/en"
-                    tag="a"
-                    class="grad-nav__link"
+                <div 
+                    key="/en"
+                    class="grad-nav__link-wrapper"
                 >
-                    <img src="@/assets/en.png" alt="english" />
-                </router-link>
+                    <router-link 
+                        to="/en"
+                        tag="a"
+                        class="grad-nav__link"
+                    >
+                        <img src="@/assets/en.png" alt="english" />
+                    </router-link>
+                </div>
             </div>
             <div class="grad-nav__sub-link-bar">
                 <span v-if="activeSubLink">{{activeSubLink.text}}</span>
