@@ -1,10 +1,13 @@
 <template>
-<div :class="['gallery-item', `gallery-item--width-${size}`]">
+<div :class="['gallery-item', `gallery-item--width-${item.size}`]">
     <div class="gallery-item__wrapper">
-        <img class="gallery-item__image" src="" />
-        <div class="gallery-item__title-bar">
-            <span class="gallery-item__title">{{title}}</span>
-            <span class="gallery-item__author">{{author}}</span>
+        <div class="gallery-item__image">
+            <img :src="image" />
+        </div>
+        <slot />
+        <div class="gallery-item__title-bar" v-if="item.title||item.author">
+            <span v-if="item.title" class="gallery-item__title">{{item.title}}</span>
+            <span v-if="item.author" class="gallery-item__author">{{item.author}}</span>
         </div>
     </div>
 </div>
@@ -12,13 +15,12 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import { GalleryItem } from '@/models/gallery/GalleryItem';
 
 @Component
 export default class GalleryItemVue extends Vue {
-    @Prop({ default: 1 }) private size!: number;
-
-    private author = 'nomisum';
-    private title = 'Touchdown at Extract';
+    @Prop({ default: null }) private item!: GalleryItem|null;
+    @Prop({ default: '' }) private image!: string;
 }
 </script>
 
@@ -68,6 +70,17 @@ export default class GalleryItemVue extends Vue {
         max-height: 50%;
         box-sizing: border-box;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.27) 40.62%, rgba(0, 0, 0, 0.75) 100%);
+    }
+
+    &__image {
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+
+        > img {
+            max-height: 100%;
+        }
     }
 
     &__author,

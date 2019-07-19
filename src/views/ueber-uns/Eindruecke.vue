@@ -1,26 +1,49 @@
 <template>
 <Content>
-    <div class="gallery-wrapper">
-        <gallery-item v-for="(i, index) in items" :key="index" :size="i" />
+    <div class="gallery-wrapper">   
+        <template v-for="(i, index) in items">
+            <GalleryImage v-if="i.type === 'image'" :key="index" :item="i" />
+            <GalleryVideo v-if="i.type === 'video'" :key="index" :item="i" />
+        </template>
     </div>
 </Content>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import GalleryItemVue from '@/components/Gallery/Item.vue';
+import { GalleryItem } from '@/models/gallery/GalleryItem';
+import ApiService from '@/ApiService';
+import GalleryVideoVue from '@/components/Gallery/Video.vue';
+import GalleryImageVue from '@/components/Gallery/Image.vue';
 
 @Component({
     components: {
-        GalleryItem: GalleryItemVue
+        GalleryImage: GalleryImageVue,
+        GalleryVideo: GalleryVideoVue
     }
 })
 export default class UeberUnsEindruecke extends Vue {
-    private items: number[] = [];
+    private items: GalleryItem[] = [];
+    private loadingError: boolean = false;
+    private loading: boolean = true;
 
     private mounted() {
-        for (let i = 0; i < 40; i++) {
-            this.items.push(Math.floor(Math.random() * 3 + 1));
+        this.fetchItems();
+    }
+
+    /**
+     * @description Fetches gallery data (incl. images and videos)
+     * @author DerZade
+     */
+    private async fetchItems() {
+        this.items = [];
+        this.loadingError = false;
+
+        try {
+            this.items = await ApiService.getGalleryItems();
+        } catch (err) {
+            console.error(err);
+            this.loadingError = true;
         }
     }
 }

@@ -17,6 +17,8 @@ import GraphemeSplitter from 'grapheme-splitter';
 import { TwitterUser } from './models/blog/TwitterUser';
 import { BlogPostEvent, BlogPostEventMedia } from './models/blog/BlogPostEvent';
 import { BlogPostModset, BlogPostModsetChange } from './models/blog/BlogPostModset';
+import { GalleryItem } from './models/gallery/GalleryItem';
+import { CmsGalleryItem } from './models/cms/GalleryItem';
 
 const CMS_URL = 'https://cms.dev.gruppe-adler.de/';
 const API_URL = 'https://api.dev.gruppe-adler.de/';
@@ -305,6 +307,63 @@ export default class ApiService {
         });
 
         return blogPosts;
+    }
+
+    /**
+     * @async
+     * @description Retrieves gallery items from CMS API
+     * @author DerZade
+     * @param {number} skip How much items to skip
+     * @returns {Promise<GalleryItem[]>} BlogPosts
+     */
+    public static async getGalleryItems(skip: number = 0): Promise<GalleryItem[]> {
+
+        let response = { total: 0, entries: [] };
+        const rpOptions = {
+            method: 'POST',
+            uri: `${CMS_URL}api/collections/get/galleryitem`,
+            headers: {
+                'Authorization': `Bearer ${CMS_TOKEN}`,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                fields: {
+                    type: 1,
+                    size: 1,
+                    position: 1,
+                    image: 1,
+                    videoUrl: 1,
+                    title: 1,
+                    author: 1
+                },
+                populate: 1,
+	            sort: { position: 1 },
+                skip,
+                limit: 30
+            })
+        };
+
+        try {
+            response = JSON.parse(await rp(rpOptions));
+        } catch (err) {
+            throw err;
+        }
+
+        const cmsGalleryItems: CmsGalleryItem[] = response.entries;
+
+        if (cmsGalleryItems.length === 0) return [];
+
+        const galleryItems: GalleryItem[] = cmsGalleryItems.map((item: CmsGalleryItem) => {
+
+            return {
+                ...item,
+                position: Number.parseInt(item.position, 10),
+                size: Number.parseInt(item.size, 10) as 1|2|3,
+                image: this.normalizeImage(item.image)
+            };
+        });
+
+        return galleryItems;
     }
 
     /**
