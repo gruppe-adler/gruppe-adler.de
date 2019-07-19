@@ -8,4 +8,11 @@
     </div>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component
+export default class GradSmallMenuBtnMenuVue extends Vue {}
+</script>
+
 <style scoped src="./small-menu-btn.scss" lang="scss"></style>
