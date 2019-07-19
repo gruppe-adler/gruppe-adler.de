@@ -27,8 +27,6 @@ $offset: 200px;
         flex: none;
         z-index: 0;
         width: 800px;
-        max-width: calc(100% - 20px);
-        padding: 0px 5px;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -53,6 +51,7 @@ $offset: 200px;
         justify-content: center;
         &__main {
             width: 800px;
+            max-width: calc(100% - 20px);
         }
         &__left,
         &__right {
