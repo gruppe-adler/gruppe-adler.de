@@ -1,5 +1,5 @@
 <template>
-<div :class="['gallery-item', `gallery-item--width-${item.size}`]">
+<div :class="['gallery-item', `gallery-item--width-${item.size}`]"  @click="$emit('click', $event)">
     <div class="gallery-item__wrapper">
         <div class="gallery-item__image">
             <img :src="image" />
@@ -26,6 +26,7 @@ export default class GalleryItemVue extends Vue {
 
 <style lang="scss" scoped>
 .gallery-item {
+    cursor: pointer;
     float: left;
     margin-bottom: 35px;
 

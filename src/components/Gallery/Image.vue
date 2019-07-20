@@ -1,5 +1,5 @@
 <template>
-    <GalleryItem :item="item" :image="item.image" />
+    <GalleryItem :item="item" :image="item.image" @click="$emit('click', $event)" />
 </template>
 
 <script lang="ts">

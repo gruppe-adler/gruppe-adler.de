@@ -1,5 +1,5 @@
 <template>
-    <GalleryItem :item="item" :image="''">
+    <GalleryItem :item="item" image=""  @click="$emit('click', $event)">
         <div class="gallery-video__icon-wrapper">
             <i class="material-icons">play_arrow</i>
         </div>
