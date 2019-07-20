@@ -84,7 +84,6 @@ export default class GalleryItemVue extends Vue {
         }
     }
 
-    &__author,
     &__title {
         color: white;
     }
