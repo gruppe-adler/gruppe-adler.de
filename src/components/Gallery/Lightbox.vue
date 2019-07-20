@@ -9,6 +9,10 @@
         <i class="material-icons grad-lightbox__prev" @click="$emit('prev', $event)">arrow_back_ios</i>
         <i class="material-icons grad-lightbox__next" @click="$emit('next', $event)">arrow_forward_ios</i>    
         <i class="material-icons grad-lightbox__close" @click="$emit('close', $event)">close</i>
+        <div class="grad-lightbox__title-bar" v-if="item.title||item.author">
+            <span v-if="item.title" class="grad-lightbox__title">{{item.title}}</span>
+            <span v-if="item.author" class="grad-lightbox__author">{{item.author}}</span>
+        </div>
     </div>
 </div>
 </template>
@@ -68,6 +72,31 @@ export default class LigthboxVue extends Vue {
     &__prev {
         position: absolute;
         left: 0px;
+    }
+
+    &__title-bar {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+
+        padding: 30px;
+        display: flex;
+        align-items: flex-end;
+        top: auto;
+        height: 100px;
+        max-height: 50%;
+        box-sizing: border-box;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.27) 40.62%, rgba(0, 0, 0, 0.75) 100%);
+    }
+
+    &__title {
+        color: white;
+    }
+
+    &__author {
+        margin-left: 10px;
+        color: #C0C0C0;
     }
 
     i {
