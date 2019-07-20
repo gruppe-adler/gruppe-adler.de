@@ -106,6 +106,19 @@ export default class LigthboxVue extends Vue {
         background-color: rgba(0,0,0,0.5);
         border-radius: 50%;
         cursor: pointer;
+        transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    i:hover {
+        background-color: rgba(255,255,255,.25);
+        color: #000;
+        transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    i:active {
+        background-color: rgba(255,255,255,.5);
+        color: #000;
+        transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
     }
 }
 </style>
