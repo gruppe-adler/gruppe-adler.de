@@ -36,9 +36,13 @@ button {
     align-items: center;
     outline: none;
     justify-content: center;
+    font-weight: bold;
+    transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 button:hover {
-    background-color: #EDEDED;
+    background-color: #2F80ED;
+    color: #fff;
+    transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .grad-container__content img {
