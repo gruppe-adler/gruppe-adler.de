@@ -1,16 +1,18 @@
 <template>
-<Content>
-    <div class="gallery-wrapper">   
-        <template v-for="(i, index) in items">
-            <GalleryImage @click="lightboxItem = i" v-if="i.type === 'image'" :key="index" :item="i" />
-            <GalleryVideo @click="lightboxItem = i" v-if="i.type === 'video'" :key="index" :item="i" />
-        </template>
-    </div>
-    <Loader v-if="loading && !loadingError" />
-    <a v-if="!loading && !loadingError" key="load-more" class="grad-gallery__load-more" @click="fetchItems">Mehr laden</a>
-    <Error v-if="loadingError">
-        Scheint so als ob beim Laden der Eindrücke etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
-    </Error>
+<div>
+    <Content>
+        <div class="gallery-wrapper">   
+            <template v-for="(i, index) in items">
+                <GalleryImage @click="lightboxItem = i" v-if="i.type === 'image'" :key="index" :item="i" />
+                <GalleryVideo @click="lightboxItem = i" v-if="i.type === 'video'" :key="index" :item="i" />
+            </template>
+        </div>
+        <Loader v-if="loading && !loadingError" />
+        <a v-if="!loading && !loadingError" key="load-more" class="grad-gallery__load-more" @click="fetchItems">Mehr laden</a>
+        <Error v-if="loadingError">
+            Scheint so als ob beim Laden der Eindrücke etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
+        </Error>
+    </Content>
     <Lightbox 
         v-if="lightboxItem !== null"
         :item="lightboxItem"
@@ -18,7 +20,7 @@
         @prev="onLightboxPrev"
         @next="onLightboxNext"
     />
-</Content>
+</div>
 </template>
 
 <script lang="ts">
