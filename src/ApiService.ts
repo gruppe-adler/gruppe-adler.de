@@ -337,7 +337,7 @@ export default class ApiService {
                     author: 1
                 },
                 populate: 1,
-	            sort: { position: 1 },
+                sort: { position: 1 },
                 skip,
                 limit: 30
             })
