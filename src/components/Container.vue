@@ -98,6 +98,12 @@ export default class Container extends Vue {
             color: #2F80ED;
             font-weight: bold;
             text-decoration: none;
+            transition: color .2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        a: hover {
+            color: #2057A1;
+            transition: color .2s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
     }
