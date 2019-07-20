@@ -42,13 +42,13 @@ button {
     outline: none;
     justify-content: center;
     font-weight: bold;
-    transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 button:hover {
     background-color: #2F80ED;
     color: #fff;
     padding: 0px 30px;
-    transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 .grad-container__content img {
