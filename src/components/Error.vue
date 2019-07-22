@@ -4,7 +4,7 @@
         <img class="grad-error__image" v-else src="@/assets/error/generic.svg" alt="error-image" />
         <div class="grad-error__text">
             <slot v-if="$slots.default"></slot>
-            <template v-else>Scheint so als ob etwas schief gelaufen ist.</template>
+            <template v-else>Scheint so, als ob etwas schief gelaufen ist.</template>
         </div>
     </div>
 </template>
@@ -21,8 +21,8 @@
     &__text {
         font-family: 'Oswald', sans-serif;
         font-size: 20px;
-        margin-top: 20px;
         text-align: center;
+        margin-top: -20px;
     }
 
 }

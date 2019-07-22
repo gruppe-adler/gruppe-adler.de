@@ -1,9 +1,10 @@
 <template>
     <Content>
         <Error type="404">
-            <h3>Adler ausgeflogen.</h3>
+            <h3>Leider ausgeflogen.</h3>
+            <div class="subline">Seite existiert nicht.</div><br/>
             <router-link  to="/" tag="a">
-                <button>Zurück zum Anfang</button>
+                <button class="grad-back">Zurück zum Anfang</button>
             </router-link>
         </Error>
     </Content>
@@ -11,11 +12,14 @@
 
 <style lang="scss" scoped>
 .grad-back {
-    color: #d18d1f;
-    opacity: 0.9;
-
-    &:hover {
-        opacity: 1;
-    }
+    background-color: rgba(255,255,255,0);
+}
+.grad-back:hover {
+    background-color: #2F80ED;
+}
+.subline {
+    font-size: 16px;
+    font-family: "Source Sans Pro";
+    color: #666;
 }
 </style>
