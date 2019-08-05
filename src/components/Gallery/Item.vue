@@ -29,8 +29,10 @@ export default class GalleryItemVue extends Vue {
     cursor: pointer;
     float: left;
     margin-bottom: 35px;
-
     margin-left: 35px;
+    border-radius: 8px;
+
+    transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     
     &#{&}--width-1 {
         // reset 
@@ -46,6 +48,7 @@ export default class GalleryItemVue extends Vue {
     }
 
     &__wrapper {
+        border-radius: 8px;
         box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
         background-color: #C4C4C4;
         position: relative;
@@ -55,6 +58,7 @@ export default class GalleryItemVue extends Vue {
 
     &__title-bar,
     &__image {
+        border-radius: 8px;
         position: absolute;
         top: 0px;
         left: 0px;
@@ -97,5 +101,10 @@ export default class GalleryItemVue extends Vue {
     // &#{&}--width-3 #{&}__title-bar > * {
     //     display: none
     // }
+}
+
+.gallery-item:hover {
+     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.5);
+     transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 </style>
