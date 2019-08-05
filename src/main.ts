@@ -5,6 +5,7 @@ import './plugins/registerServiceWorker';
 import './plugins/globalComponents';
 import './plugins/smoothScroll';
 import './plugins/vueAnalytics';
+import User from './models/sso/User';
 
 Vue.config.productionTip = false;
 
@@ -39,15 +40,15 @@ if (detectIE()) {
     new Vue({
         router,
         render: h => h(App),
-        data: () => ({
-            bearerToken: ''
+        data: (): { user: User|null } => ({
+            user: null
         }),
         methods: {
             isLoggedIn(): boolean {
-                return (this.bearerToken === '');
+                return (this.user !== null);
             },
-            setToken(token: string = ''): void {
-                this.bearerToken = token;
+            setUser(user: User|null = null): void {
+                this.user = user;
             }
         }
         }).$mount('#app');

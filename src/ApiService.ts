@@ -19,8 +19,10 @@ import { BlogPostEvent, BlogPostEventMedia } from './models/blog/BlogPostEvent';
 import { BlogPostModset, BlogPostModsetChange } from './models/blog/BlogPostModset';
 import { GalleryItem } from './models/gallery/GalleryItem';
 import { CmsGalleryItem } from './models/cms/GalleryItem';
+import User from './models/sso/User';
 
 const CMS_URL = 'https://cms.dev.gruppe-adler.de/';
+const SSO_URL = 'https://sso.gruppe-adler.de/';
 const API_URL = 'https://api.dev.gruppe-adler.de/';
 const CMS_TOKEN = 'acacff37c21c30b6e6569e958fa7be';
 
@@ -364,6 +366,52 @@ export default class ApiService {
         });
 
         return galleryItems;
+    }
+
+    public static async authenticate(): Promise<User|null> {
+
+        let response: { data: { authenticate: User|null } };
+        try {
+            const res = await fetch(`${SSO_URL}api/v1/graphql`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    query: `
+                    mutation {
+                        authenticate {
+                            id
+                            username
+                            steamId
+                            avatar
+                            admin
+                            groups { ...fullGroup }
+                            primaryGroup { ...fullGroup }
+                        }
+                    }
+                    fragment fullGroup on Group {
+                        id
+                        tag
+                        color
+                        label
+                        hidden
+                    }
+                    `,
+                    variables: {}
+                })
+            });
+
+            if (!res.ok) throw res;
+
+            response = await res.json();
+
+        } catch (err) {
+            throw err;
+        }
+
+        return response.data.authenticate;
     }
 
     /**

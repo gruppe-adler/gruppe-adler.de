@@ -28,21 +28,43 @@
             </router-link>
         </div>
         <div class="grad-footer__copyright">© 2019 Gruppe Adler</div>
-        <router-link 
-                class="grad-footer__login"
-                to="/login"
-                tag="a"
-            >
-                LOGIN
-        </router-link>
+        <a 
+            v-if="$root.isLoggedIn()"
+            class="grad-footer__login"
+            @click="logout"
+        >
+            LOGOUT
+        </a>
+        <a 
+            v-else
+            class="grad-footer__login"
+            @click="login"
+        >
+            LOGIN
+        </a>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
+import ApiService from '../ApiService';
+import { URLSearchParams } from 'url';
 
 @Component
 export default class Footer extends Vue {
+
+    @Watch('$route')
+    private onRouteChanged() {
+        const item = sessionStorage.getItem('grad-homepage-redirected-from-login');
+
+        if (!item) return;
+
+        if (item === window.location.href) {
+            sessionStorage.removeItem('grad-homepage-redirected-from-login');
+            this.login(false);
+        }
+    }
+
     private items: object[] = [
         {
             image: 'discord',
@@ -69,6 +91,44 @@ export default class Footer extends Vue {
             url: 'https://steamcommunity.com/groups/gruppe-adler'
         }
     ];
+
+    private async logout() {
+        this.$root.$data.user = null;
+    }
+
+    private async login(forceLogin: boolean = true) {
+        let user;
+        try {
+            user = await ApiService.authenticate();
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+
+        if (user) {
+            const groups = user.groups.map(g => g.tag);
+            const admin = user.admin;
+            let isInGroup = false;
+
+            for (const grp of ['adler', 'fuehrung']) {
+                if (!groups.includes(grp)) isInGroup = true;
+            }
+
+            if (!admin && !isInGroup) return;
+
+            this.$root.$data.user = user;
+            return;
+        }
+
+        if (!forceLogin) return;
+
+        sessionStorage.setItem('grad-homepage-redirected-from-login', window.location.href);
+
+        const url = new URL('https://sso.gruppe-adler.de');
+        url.searchParams.append('redirect_after_login', window.location.href);
+
+        window.location.replace(url.href);
+    }
 
 }
 </script>
