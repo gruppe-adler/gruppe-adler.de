@@ -51,6 +51,6 @@ if (detectIE()) {
                 this.user = user;
             }
         }
-        }).$mount('#app');
+    }).$mount('#app');
 }
 
