@@ -17,7 +17,7 @@
             </transition-group>
         </template>
         <Loader v-if="loading && !loadingError" />
-        <a v-if="!loading && !loadingError" key="load-more" class="grad-blog__load-more" @click="fetchBlogData">Mehr laden</a>
+        <a v-if="!loading && !loadingError" key="load-more" class="grad-blog__load-more" @click="loadMore">Mehr laden</a>
         <Error v-if="loadingError">
             Scheint so als ob beim Laden der Blogposts etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
         </Error>
@@ -48,11 +48,14 @@ export default class HomeVue extends Vue {
     private blogPosts: BlogPost[] = [];
     private blogEntries: BlogEntry[] = [];
     private scrollTimeout: number | null = null;
+    private scrollListenerAdded: boolean = false;
 
-    private mounted() {
+    private created() {
         this.fetchBlogData();
+    }
 
-        // window.addEventListener('scroll', this.handleScroll);
+    private beforeDestroy() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
 
     @Watch('$route')
@@ -131,6 +134,19 @@ export default class HomeVue extends Vue {
         this.blogEntries = arr.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
 
+    /**
+     * @description Click callback for "load more" button fetches more blogpost and adds scroll event listener
+     * @author DerZade
+     */
+    private loadMore() {
+        this.fetchBlogData();
+
+        if (this.scrollListenerAdded) return;
+
+        this.scrollListenerAdded = true;
+
+        window.addEventListener('scroll', this.handleScroll);
+    }
 
     /**
      * @description Check whether blogentry is blogpost
