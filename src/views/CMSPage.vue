@@ -1,43 +1,41 @@
 <template>
-    <Content>
-        <template v-if="page">
-            <template v-if="page.toc" v-slot:left>
-                <TableOfContents :containers="page.containers" />
-            </template>
-            <template>
-                <Container 
-                    v-for="c in page.containers"
-                    :key="c.id"
-                    :id="`grad-container-${c.id}`"
-                    :headerColor="c.headerColor"
-                > 
-                    <template v-slot:header v-if="c.heading">
-                        <span>{{c.heading}}</span>
-                        <img 
-                            v-if="c.headerImage !== ''"
-                            class="grad-container__header-image" 
-                            :src="c.headerImage"
-                        />
-                    </template>
-                    <template v-slot:image  v-if="c.pinnedImage !== ''">
-                        <img :src="c.pinnedImage" alt="pinned-image">
-                    </template>
-                    <template v-if="c.content">
-                        <div v-html="c.content"></div>
-                    </template>
-                    <template v-slot:footer v-if="c.footer">
-                        <div v-html="c.footer"></div>
-                    </template>
-                </Container>
-            </template>
+    <Content v-if="page">
+        <template v-if="page.toc" v-slot:left>
+            <TableOfContents :containers="page.containers" />
         </template>
-        <template v-else>
-            <!-- If page is still null -->
-            <Error v-if="loadingError">
-                Scheint so als ob beim Laden der Seite etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
-            </Error>
-            <Loader v-else />
+        <template>
+            <Container 
+                v-for="c in page.containers"
+                :key="c.id"
+                :id="`grad-container-${c.id}`"
+                :headerColor="c.headerColor"
+            > 
+                <template v-slot:header v-if="c.heading">
+                    <span>{{c.heading}}</span>
+                    <img 
+                        v-if="c.headerImage !== ''"
+                        class="grad-container__header-image" 
+                        :src="c.headerImage"
+                    />
+                </template>
+                <template v-slot:image  v-if="c.pinnedImage !== ''">
+                    <img :src="c.pinnedImage" alt="pinned-image">
+                </template>
+                <template v-if="c.content">
+                    <div v-html="c.content"></div>
+                </template>
+                <template v-slot:footer v-if="c.footer">
+                    <div v-html="c.footer"></div>
+                </template>
+            </Container>
         </template>
+    </Content>
+    <Content v-else>
+        <!-- If page is still null -->
+        <Error v-if="loadingError">
+            Scheint so als ob beim Laden der Seite etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
+        </Error>
+        <Loader v-else />
     </Content>
 </template>
 <script lang="ts">
