@@ -43,19 +43,19 @@ button {
     justify-content: center;
     font-weight: bold;
     transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-button:hover {
-    background-color: #2F80ED;
-    color: #fff;
-    padding: 0px 30px;
-    transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+    :hover {
+        background-color: #2F80ED;
+        color: #fff;
+        padding: 0px 30px;
+    }
 }
 
 .grad-container__content img {
     max-width: 100%;
 }
-.timeline {
 
+.timeline {
     border-width:0px 0px 0px 2px;
     border-style: solid;
     border-image: 
@@ -77,48 +77,50 @@ button:hover {
     text-align: left;
     font-weight: 100;
     max-width: 100%;
-}
 
-.timeline .event {
-    padding-bottom: 25px;
-    margin-bottom: 50px;
-    position: relative;
-}
+    .event {
+        padding-bottom: 25px;
+        margin-bottom: 50px;
+        position: relative;
 
-.timeline .textblock {
-    position: relative;
-    top: -5px;
-}
-.timeline .event:last-of-type {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border: none;
-}
-.timeline .event:before,
-.timeline .event:after {
-    position: absolute;
-    display: block;
-    top: 0;
-}
-.timeline .event:before {
-    left: -200px;
-    color: rgba(0, 0, 0, 0.4);
-    content: attr(data-date);
-    text-align: right;
-    font-weight: 100;
-    font-size: 0.9em;
-    min-width: 120px;
-    top: -5px;
-}
-.timeline .event:after {
-    box-shadow: 0 0 0 3px #999;
-    left: -57px;
-    background: #fff;
-    border-radius: 50%;
-    height: 11px;
-    width: 11px;
-    content: "";
-    top: 0px;
+        &:last-of-type {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border: none;
+        }
+
+        &:before,
+        &:after {
+            position: absolute;
+            display: block;
+        }
+
+        &:before {
+            left: -200px;
+            color: rgba(0, 0, 0, 0.4);
+            content: attr(data-date);
+            text-align: right;
+            font-weight: 100;
+            font-size: 0.9em;
+            min-width: 120px;
+            top: -5px;
+        }
+        &:after {
+            box-shadow: 0 0 0 3px #999;
+            left: -57px;
+            background: #fff;
+            border-radius: 50%;
+            height: 11px;
+            width: 11px;
+            content: "";
+            top: 0px;
+        }
+    }
+
+    .textblock {
+        position: relative;
+        top: -5px;
+    }
 }
 
 .grad-blog-entry--transition-enter-active, 

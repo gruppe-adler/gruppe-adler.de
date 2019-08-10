@@ -1,5 +1,4 @@
 <template>
-<div>
     <Content>
         <div class="gallery-wrapper">   
             <template v-for="(i, index) in items">
@@ -12,15 +11,14 @@
         <Error v-if="loadingError">
             Scheint so als ob beim Laden der Eindrücke etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
         </Error>
+        <Lightbox 
+            v-if="lightboxItem !== null"
+            :item="lightboxItem"
+            @close="lightboxItem = null;"
+            @prev="onLightboxPrev"
+            @next="onLightboxNext"
+        />
     </Content>
-    <Lightbox 
-        v-if="lightboxItem !== null"
-        :item="lightboxItem"
-        @close="lightboxItem = null;"
-        @prev="onLightboxPrev"
-        @next="onLightboxNext"
-    />
-</div>
 </template>
 
 <script lang="ts">

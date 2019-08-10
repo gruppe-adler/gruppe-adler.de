@@ -1,47 +1,47 @@
 <template>
-<Content>
-    <template v-if="model">
-        <section class="grad-write-blogpost__type">
-            <select>
-                <option class="grad-write-blogpost--type-misc">Allgemein</option>
-                <option class="grad-write-blogpost--type-event">Event</option>
-                <option class="grad-write-blogpost--type-modset">Modset</option>
-            </select>
-        </section>
-        <BlogEntry 
-            :class="['grad-blogpost', `grad-blogpost--${model.type}`]"
-        > 
-            <template v-slot:date>
-                <span class="grad-write-blogpost__date">{{date}}</span>
-            </template>
-            <template v-slot:heading>
-                <input class="grad-write-blogpost__heading" type="text" v-model="model.heading" />
-            </template>
-            <template v-slot:tags>
-                <span class="grad-write-blogpost__add-tag">+</span>
-                <span v-for="t in model.tags" :key="t">{{t}}</span>
-            </template>
-            <template v-slot:author><img :src="model.author.picture" /></template>
-            <template v-slot:image >
-                <img v-if="model.pinnedImage" :src="model.pinnedImage" alt="pinned-image">
-                <div v-else class="grad-write-blogpost__image-placeholder">
-                    <i class="material-icons">photo</i>
-                </div>
-            </template>
-            <template>
-                <div v-html="model.content"></div>
-            </template>
-            <!-- <template v-slot:footer v-if="footerComponent">
-                <component :is="footerComponent" :model="model"></component>
-            </template> -->
-        </BlogEntry>
-        <section class="grad-write-blogpost__bottom-buttons">
-            <button @click="publish"><i class="material-icons">publish</i> Veröffentlichen</button>
-            <button @click="save"><i class="material-icons">save</i> Speichern</button>
-        </section>
-    </template>
-    <Loader v-else />
-</Content>
+    <Content>
+        <template v-if="model">
+            <section class="grad-write-blogpost__type">
+                <select>
+                    <option class="grad-write-blogpost--type-misc">Allgemein</option>
+                    <option class="grad-write-blogpost--type-event">Event</option>
+                    <option class="grad-write-blogpost--type-modset">Modset</option>
+                </select>
+            </section>
+            <BlogEntry 
+                :class="['grad-blogpost', `grad-blogpost--${model.type}`]"
+            > 
+                <template v-slot:date>
+                    <span class="grad-write-blogpost__date">{{date}}</span>
+                </template>
+                <template v-slot:heading>
+                    <input class="grad-write-blogpost__heading" type="text" v-model="model.heading" />
+                </template>
+                <template v-slot:tags>
+                    <span class="grad-write-blogpost__add-tag">+</span>
+                    <span v-for="t in model.tags" :key="t">{{t}}</span>
+                </template>
+                <template v-slot:author><img :src="model.author.picture" /></template>
+                <template v-slot:image >
+                    <img v-if="model.pinnedImage" :src="model.pinnedImage" alt="pinned-image">
+                    <div v-else class="grad-write-blogpost__image-placeholder">
+                        <i class="material-icons">photo</i>
+                    </div>
+                </template>
+                <template>
+                    <div v-html="model.content"></div>
+                </template>
+                <!-- <template v-slot:footer v-if="footerComponent">
+                    <component :is="footerComponent" :model="model"></component>
+                </template> -->
+            </BlogEntry>
+            <section class="grad-write-blogpost__bottom-buttons">
+                <button @click="publish"><i class="material-icons">publish</i> Veröffentlichen</button>
+                <button @click="save"><i class="material-icons">save</i> Speichern</button>
+            </section>
+        </template>
+        <Loader v-else />
+    </Content>
 </template>
 
 <script lang="ts">

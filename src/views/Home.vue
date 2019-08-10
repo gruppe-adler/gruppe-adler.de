@@ -1,5 +1,4 @@
 <template>
-<div>
     <Content>
         <template v-if="blogEntries.length > 0">
             <transition-group name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
@@ -23,7 +22,6 @@
             Scheint so als ob beim Laden der Blogposts etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
         </Error>
     </Content>
-</div>
 </template>
 
 <script lang="ts">

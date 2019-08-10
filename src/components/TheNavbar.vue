@@ -221,6 +221,7 @@ export default class Navbar extends Vue {
             const right = elem.getBoundingClientRect().right;
 
             if (right > maxRight) {
+                // apply negative left offset to prevent clipping
                 elem.style.left = `${maxRight - right}px`;
             }
         }

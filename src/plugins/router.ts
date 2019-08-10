@@ -43,7 +43,7 @@ const AsyncEindruecke = () => ({
 
 const AsyncWriteBlogPost = () => ({
     component: import(
-        /* webpackChunkName: "Eindruecke" */
+        /* webpackChunkName: "admin" */
         /* webpackMode: "lazy" */
         '@/views/WriteBlogpost.vue'
     ),
@@ -210,10 +210,6 @@ export default new Router({
         {
             path: '/impressum',
             component: AsyncCMSPage
-        },
-        {
-            path: '/login',
-            component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
         },
         {
             path: '/forum',

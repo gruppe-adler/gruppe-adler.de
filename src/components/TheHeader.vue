@@ -21,9 +21,7 @@ export default class Header extends Vue {}
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    
     height: 450px;
-    
 
     &__image {
         max-width: 100%;

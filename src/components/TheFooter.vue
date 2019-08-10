@@ -8,7 +8,7 @@
                 :key="item.url"
                 class="grad-footer__link"
             >
-                <img :src="`/footer/${item.image}.svg`" :alt="item.image" />
+                <img :src="`/img/footer/${item.image}.svg`" :alt="item.image" />
             </a>
         </div>
         <div>
@@ -53,18 +53,6 @@ import { URLSearchParams } from 'url';
 @Component
 export default class Footer extends Vue {
 
-    @Watch('$route')
-    private onRouteChanged() {
-        const item = sessionStorage.getItem('grad-homepage-redirected-from-login');
-
-        if (!item) return;
-
-        if (item === window.location.href) {
-            sessionStorage.removeItem('grad-homepage-redirected-from-login');
-            this.login(false);
-        }
-    }
-
     private items: object[] = [
         {
             image: 'discord',
@@ -92,11 +80,31 @@ export default class Footer extends Vue {
         }
     ];
 
+    /**
+     * Checks if user was redirect to this page after SSO login and tries to authenticate
+     * against SSO
+     */
+    @Watch('$route')
+    private onRouteChanged() {
+        const item = sessionStorage.getItem('grad-homepage-redirected-from-login');
+        if (!item) return;
+
+        if (item === window.location.href) {
+            sessionStorage.removeItem('grad-homepage-redirected-from-login');
+            this.login(false);
+        }
+    }
+
     private async logout() {
         this.$root.$data.user = null;
     }
 
-    private async login(forceLogin: boolean = true) {
+    /**
+     * Authenticates user against SSO api.
+     * @async
+     * @param {boolean?} [redirectToSSO] redirect user to sso if not logged in (default: true)
+     */
+    private async login(redirectToSSO: boolean = true) {
         let user;
         try {
             user = await ApiService.authenticate();
@@ -105,6 +113,7 @@ export default class Footer extends Vue {
             return;
         }
 
+        // the user is logged in if we get a user from the authentication request
         if (user) {
             const groups = user.groups.map(g => g.tag);
             const admin = user.admin;
@@ -120,13 +129,15 @@ export default class Footer extends Vue {
             return;
         }
 
-        if (!forceLogin) return;
+        if (!redirectToSSO) return;
 
+        // save route user is currently on we will use this to detect that the user
+        // was redirected to this page after a successfull redirect
         sessionStorage.setItem('grad-homepage-redirected-from-login', window.location.href);
 
+        // redirect to SSO
         const url = new URL('https://sso.gruppe-adler.de');
         url.searchParams.append('redirect_after_login', window.location.href);
-
         window.location.replace(url.href);
     }
 
