@@ -249,7 +249,7 @@ $navbar-height: 72px;
     top: 0px;
     left: 0px;
     right: 0px;
-    z-index: 1000;
+    z-index: 2;
     transition: top .25s ease-in-out;
 
     &.grad-nav--hidden {
@@ -364,8 +364,6 @@ $navbar-height: 72px;
         display: flex;
         align-items: center;
         
-        z-index: 0;
-
         position: absolute;
         height: 43px;
         top: $navbar-height;

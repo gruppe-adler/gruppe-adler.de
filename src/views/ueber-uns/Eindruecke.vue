@@ -1,9 +1,9 @@
 <template>
     <Content>
         <div class="gallery-wrapper">   
-            <template v-for="(i, index) in items">
-                <GalleryImage @click="lightboxItem = i" v-if="i.type === 'image'" :key="index" :item="i" />
-                <GalleryVideo @click="lightboxItem = i" v-if="i.type === 'video'" :key="index" :item="i" />
+            <template v-for="(item, index) in items">
+                <GalleryImage @click="lightboxItem = item" v-if="item.type === 'image'" :key="index" :item="item" />
+                <GalleryVideo @click="lightboxItem = item" v-if="item.type === 'video'" :key="index" :item="item" />
             </template>
         </div>
         <Loader v-if="loading && !loadingError" />
@@ -83,11 +83,9 @@ export default class UeberUnsEindruecke extends Vue {
     }
 
     private onLightboxNext(event: MouseEvent) {
-        console.log('next', 1);
         if (this.lightboxItem === null) return;
         if (this.items.length === 0) return;
 
-        console.log('next', 2);
         // find index of cur shown item
         const index = this.items.findIndex(i => i.position === this.lightboxItem!.position);
 

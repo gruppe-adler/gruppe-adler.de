@@ -1,8 +1,7 @@
 <template>
 <div :class="['gallery-item', `gallery-item--width-${item.size}`]"  @click="$emit('click', $event)">
     <div class="gallery-item__wrapper">
-        <div class="gallery-item__image">
-            <img :src="image" />
+        <div class="gallery-item__image" :style="`background-image: url(${image})`">
         </div>
         <slot />
         <div class="gallery-item__title-bar" v-if="item.title||item.author">
@@ -47,6 +46,10 @@ export default class GalleryItemVue extends Vue {
         width: calc((100% - 105px) / 3);
     }
 
+    &#{&}--width-3 #{&}__title-bar {
+        display: none;
+    }
+
     &__wrapper {
         border-radius: 8px;
         box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
@@ -78,14 +81,9 @@ export default class GalleryItemVue extends Vue {
     }
 
     &__image {
-        display: flex;
-        overflow: hidden;
-        justify-content: center;
-        align-items: center;
-
-        > img {
-            max-height: 100%;
-        }
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     &__title {
@@ -104,7 +102,7 @@ export default class GalleryItemVue extends Vue {
 }
 
 .gallery-item:hover {
-     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.5);
-     transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.5);
+    transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 </style>

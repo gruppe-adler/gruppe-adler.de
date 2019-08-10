@@ -1,5 +1,5 @@
 <template>
-    <GalleryItem :item="item" image=""  @click="$emit('click', $event)">
+    <GalleryItem :item="item" :image="`http://i3.ytimg.com/vi/${item.videoUrl}/maxresdefault.jpg`"  @click="$emit('click', $event)">
         <div class="gallery-video__icon-wrapper">
             <i class="material-icons">play_arrow</i>
         </div>

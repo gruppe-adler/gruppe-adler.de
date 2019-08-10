@@ -3,7 +3,7 @@
     <div class="grad-lightbox__wrapper">
         <template v-if="item">
             <img v-if="item.type === 'image'" class="grad-lightbox__img" :src="item.image" />
-            <!-- TODO: VIDEO -->
+            <img v-else-if="item.type === 'video'" class="grad-lightbox__img" :src="`http://i3.ytimg.com/vi/${item.videoUrl}/maxresdefault.jpg`" />
             <img v-else class="grad-lightbox__img" src="" />
         </template>
         <i class="material-icons grad-lightbox__prev" @click="$emit('prev', $event)">arrow_back_ios</i>
@@ -35,7 +35,7 @@ export default class LigthboxVue extends Vue {
     right: 0px;
     bottom: 0px;
     background-color: rgba(0,0,0,0.8);
-    z-index: 1001;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;

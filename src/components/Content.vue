@@ -21,11 +21,9 @@ $offset: 200px;
     grid-template-columns: 0.5fr auto 0.5fr;
     margin-bottom: 100px;
     position: relative;
-    z-index: 1;
 
     &__main {
         flex: none;
-        z-index: 0;
         width: 800px;
         align-items: center;
         display: flex;
