@@ -63,6 +63,9 @@ export default class Container extends Vue {
         -webkit-backdrop-filter: blur(5px);
         backdrop-filter: blur(5px);
 
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+
         &-image {
             max-height: 45px;
             filter: saturate(0%);
@@ -77,6 +80,9 @@ export default class Container extends Vue {
         margin-top: -72px;
         max-height: 360px;
         overflow: hidden;
+
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
 
         > * {
             max-width: 100%;
