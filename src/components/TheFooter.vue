@@ -80,6 +80,17 @@ export default class Footer extends Vue {
         }
     ];
 
+    private created() {
+
+        // preserve login when reloading the page
+        const item = sessionStorage.getItem('grad-homepage-was-logged-in');
+        if (!item) return;
+
+        sessionStorage.removeItem('grad-homepage-was-logged-in');
+
+        this.login(false);
+    }
+
     /**
      * Checks if user was redirect to this page after SSO login and tries to authenticate
      * against SSO
@@ -126,6 +137,7 @@ export default class Footer extends Vue {
             if (!admin && !isInGroup) return;
 
             this.$root.$data.user = user;
+            sessionStorage.setItem('grad-homepage-was-logged-in', 'true');
             return;
         }
 
@@ -193,6 +205,7 @@ export default class Footer extends Vue {
     }
     &__login {
         left: auto;
+        cursor: pointer;
         right: 0px;
         color: black;
     }
