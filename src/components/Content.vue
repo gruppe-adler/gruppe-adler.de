@@ -28,6 +28,7 @@ $offset: 200px;
         align-items: center;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
     
     &__left,
