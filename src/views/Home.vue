@@ -1,10 +1,8 @@
 <template>
     <Content>
-        <template v-if="isLoggedIn">
-            <div class="grad-action-buttons">
-                <IconButton icon="add" @click="$router.push('/blog/write')" />
-            </div>
-        </template>
+        <ActionButtons v-if="isLoggedIn && blogEntries.length > 0">
+            <ActionButton icon="add" @click="$router.push('/blog/write')" />
+        </ActionButtons>
         <template v-if="blogEntries.length > 0">
             <transition-group name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
                 <template v-for="entry in blogEntries">
@@ -35,7 +33,8 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import BlogPostVue from '@/components/Blog/BlogPost.vue';
 import TweetVue from '@/components/Blog/Tweet.vue';
-import IconButtonVue from '@/components/IconButton.vue';
+import ActionButtonVue from '@/components/ActionButton.vue';
+import ActionButtonsVue from '@/components/ActionButtons.vue';
 
 import { BlogEntry } from '@/models/blog/BlogEntry';
 import { BlogPost, BLOG_POST_TYPE } from '@/models/blog/BlogPost';
@@ -46,7 +45,12 @@ import { MOD_UPDATE_TYPE } from '@/models/blog/BlogPostModset';
 import ApiService from '@/ApiService';
 
 @Component({
-    components: { BlogPost: BlogPostVue, Tweet: TweetVue, IconButton: IconButtonVue }
+    components: {
+        BlogPost: BlogPostVue,
+        Tweet: TweetVue,
+        ActionButton: ActionButtonVue,
+        ActionButtons: ActionButtonsVue
+    }
 })
 export default class HomeVue extends Vue {
     private loadingError: boolean = false;
@@ -239,13 +243,5 @@ export default class HomeVue extends Vue {
     &:hover {
         opacity: 1;
     }
-}
-</style>
-
-<style lang="scss" scoped>
-.grad-action-buttons {
-    position: absolute;
-    top: -80px;
-    left: 0px;
 }
 </style>
