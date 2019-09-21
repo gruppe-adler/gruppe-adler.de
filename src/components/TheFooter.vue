@@ -108,6 +108,9 @@ export default class Footer extends Vue {
 
     private async logout() {
         this.$root.$data.user = null;
+
+        const item = sessionStorage.getItem('grad-homepage-was-logged-in');
+        if (item) sessionStorage.removeItem('grad-homepage-was-logged-in');
     }
 
     /**
