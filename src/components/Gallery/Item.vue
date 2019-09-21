@@ -1,5 +1,5 @@
 <template>
-<div :class="['gallery-item', `gallery-item--width-${item.size}`]"  @click="$emit('click', $event)">
+<div :class="['gallery-item', `gallery-item--width-${item.size}`, editable ? `gallery-item--editable`: '' ]" @click="editable ? null : $emit('click', $event)">
     <div class="gallery-item__wrapper">
         <div class="gallery-item__image" :style="`background-image: url(${image})`">
         </div>
@@ -8,6 +8,8 @@
             <span v-if="item.title" class="gallery-item__title">{{item.title}}</span>
             <span v-if="item.author" class="gallery-item__author">{{item.author}}</span>
         </div>
+        <EditOverlay v-if="editable" v-model="item" @delete="$emit('delete', $event)" />
+        </div>
     </div>
 </div>
 </template>
@@ -15,11 +17,20 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { GalleryItem } from '@/models/gallery/GalleryItem';
+import EditOverlayVue from './EditOverlay.vue';
 
-@Component
+@Component({
+    components: {
+        EditOverlay: EditOverlayVue
+    }
+})
 export default class GalleryItemVue extends Vue {
-    @Prop({ default: null }) private item!: GalleryItem|null;
+    @Prop({ default: null }) private value!: GalleryItem|null;
     @Prop({ default: '' }) private image!: string;
+    @Prop({ default: false }) private editable!: boolean;
+
+    private get item() { return this.value; }
+    private set item(item: GalleryItem|null) { this.$emit('input', item); }
 }
 </script>
 
@@ -95,10 +106,9 @@ export default class GalleryItemVue extends Vue {
         color: #C0C0C0;
     }
 
-    // &#{&}--width-2 #{&}__title-bar > *,
-    // &#{&}--width-3 #{&}__title-bar > * {
-    //     display: none
-    // }
+    &--editable {
+        cursor: grab;
+    }
 }
 
 .gallery-item:hover {

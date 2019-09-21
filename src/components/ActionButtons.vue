@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .grad-action-buttons {
     position: absolute;
     top: -60px;

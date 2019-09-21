@@ -59,6 +59,7 @@ export default class TooltipVue extends Vue {
         top: 0px;
         letter-spacing: 0.08em;
         transform: translateY( calc(-100% - 4px) );
+        z-index: 2;
     }
 }
 </style>

@@ -97,7 +97,7 @@ export default class BlogPostVue extends Vue {
         right: 0px;
         bottom: 0px;
         background-color: rgba(0,0,0,0.3);
-        z-index: 3;
+        z-index: 1;
         border-radius: 4px;
         display: flex;
         align-items: center;

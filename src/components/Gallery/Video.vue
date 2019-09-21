@@ -1,5 +1,11 @@
 <template>
-    <GalleryItem :item="item" :image="`http://i3.ytimg.com/vi/${item.videoUrl}/maxresdefault.jpg`"  @click="$emit('click', $event)">
+    <GalleryItem
+        v-model="item"
+        :editable="editable"
+        :image="`http://i3.ytimg.com/vi/${item.videoUrl}/maxresdefault.jpg`"
+        @click="$emit('click', $event)"
+        @delete="$emit('delete', $event)"
+    >
         <div class="gallery-video__icon-wrapper">
             <i class="material-icons">play_arrow</i>
         </div>
@@ -18,6 +24,7 @@ import GalleryItemVue from './Item.vue';
 })
 export default class GalleryVideoVue extends Vue {
     @Prop({ default: null }) private item!: GalleryVideo|null;
+    @Prop({ default: false }) private editable!: boolean;
 }
 </script>
 
