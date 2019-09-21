@@ -190,7 +190,7 @@ export default class HomeVue extends Vue {
      * @author DerZade
      */
     private handleScroll(): void {
-        if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
+        if (this.scrollTimeout) window.clearTimeout(this.scrollTimeout);
         this.scrollTimeout = window.setTimeout(this.checkIfBottom, 200);
     }
 

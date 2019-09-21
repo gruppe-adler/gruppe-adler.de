@@ -32,7 +32,7 @@ export default class TableOfContents extends Vue {
     }
 
     private handleScroll() {
-        if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
+        if (this.scrollTimeout) window.clearTimeout(this.scrollTimeout);
         this.scrollTimeout = window.setTimeout(this.updateCurrentContainer, 200);
     }
 

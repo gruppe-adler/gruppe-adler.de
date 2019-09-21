@@ -16,7 +16,6 @@
 <script lang="ts">
 import Progress from '@/components/Loader/Progress.vue';
 import { Component, Vue } from 'vue-property-decorator';
-import { setTimeout } from 'timers';
 
 @Component({
     components: { Progress }
@@ -26,7 +25,7 @@ export default class Loader extends Vue {
     private mounted() {
         // show loader only after 200ms to prevent "flashing" of
         // the loader for normal (< 200ms) loading times
-        setTimeout(() => this.timeoutDone = true, 200);
+        window.setTimeout(() => this.timeoutDone = true, 200);
     }
 }
 </script>

@@ -165,9 +165,9 @@ export default class Navbar extends Vue {
      * @author DerZade
      */
     private handleResize() {
-        if (this.resizeTimeout !== undefined) clearTimeout(this.resizeTimeout);
+        if (this.resizeTimeout !== undefined) window.clearTimeout(this.resizeTimeout);
 
-        setTimeout(this.onResizeTimeout.bind(this), 100);
+        this.resizeTimeout = window.setTimeout(this.onResizeTimeout.bind(this), 100);
     }
 
     /**
