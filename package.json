@@ -13,6 +13,7 @@
     "grapheme-splitter": "^1.0.4",
     "register-service-worker": "^1.5.2",
     "request-promise-native": "^1.0.7",
+    "sortablejs": "^1.10.0",
     "vue": "^2.6.4",
     "vue-analytics": "^5.16.4",
     "vue-class-component": "^6.0.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@types/request-promise-native": "^1.0.15",
+    "@types/sortablejs": "^1.7.2",
     "@vue/cli-plugin-babel": "^3.9.2",
     "@vue/cli-plugin-pwa": "^3.9.0",
     "@vue/cli-plugin-typescript": "^3.9.0",

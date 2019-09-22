@@ -12,7 +12,7 @@
                 <ActionButton icon="edit" @click="addMode = false; editMode = true" />
             </template>
         </ActionButtons>
-        <div class="gallery-wrapper">
+        <div class="gallery-wrapper" ref="galleryWrapper">
             <transition name="add-gallery-item">
                 <AddGalleryItem v-if="addMode" />
             </transition>
@@ -60,6 +60,7 @@ import LightboxVue from '@/components/Gallery/Lightbox.vue';
 import ActionButtonVue from '@/components/ActionButton.vue';
 import ActionButtonsVue from '@/components/ActionButtons.vue';
 import AddGalleryItemVue from '@/components/Gallery/AddItem.vue';
+import Sortable from 'sortablejs';
 
 @Component({
     components: {
@@ -79,6 +80,7 @@ export default class UeberUnsEindruecke extends Vue {
     private addMode: boolean = false;
     private editMode: boolean = false;
     private originalItems: GalleryItem[] = [];
+    private sortable: Sortable|null = null;
 
     private mounted() {
         this.fetchItems();
@@ -88,8 +90,15 @@ export default class UeberUnsEindruecke extends Vue {
     private onEditModeChanged() {
         if (this.editMode) {
             this.originalItems = JSON.parse(JSON.stringify(this.items));
+
+            this.sortable = new Sortable(this.$refs.galleryWrapper as HTMLDivElement, {
+                ghostClass: 'gallery-item--ghost',
+                animation: 100
+            });
         } else {
             this.items = this.originalItems;
+
+            if (this.sortable) this.sortable.destroy();
         }
     }
 
@@ -189,5 +198,10 @@ export default class UeberUnsEindruecke extends Vue {
     opacity: 0;
     height: 0px;
     margin-bottom: 0px;
+}
+
+// Sortable.js ghost element
+.gallery-item--ghost {
+    opacity: 0.1;
 }
 </style>
