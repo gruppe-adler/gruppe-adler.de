@@ -12,8 +12,10 @@
                 <ActionButton icon="edit" @click="addMode = false; editMode = true" />
             </template>
         </ActionButtons>
-        <div class="gallery-wrapper">   
-            <AddGalleryItem v-if="addMode" />
+        <div class="gallery-wrapper">
+            <transition name="add-gallery-item">
+                <AddGalleryItem v-if="addMode" />
+            </transition>
             <template v-for="(item, index) in items">
                 <GalleryImage
                     v-if="item.type === 'image'"
@@ -178,5 +180,14 @@ export default class UeberUnsEindruecke extends Vue {
     &:hover {
         opacity: 1;
     }
+}
+
+.add-gallery-item-enter-active, .add-gallery-item-leave-active {
+    transition: all .1s;
+}
+.add-gallery-item-enter, .add-gallery-item-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    height: 0px;
+    margin-bottom: 0px;
 }
 </style>
