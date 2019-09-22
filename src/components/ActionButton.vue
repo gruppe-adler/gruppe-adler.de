@@ -1,7 +1,9 @@
 <template>
-    <div class="grad-action-button" :style="`--color: ${color}`" @click="$emit('click', $event)">
-        <i class="material-icons">{{ icon }}</i>
-    </div>
+    <Tooltip :text="tooltip">
+        <div class="grad-action-button" :style="`--color: ${color}`" @click="$emit('click', $event)">
+            <i class="material-icons">{{ icon }}</i>
+        </div>
+    </Tooltip>
 </template>
 
 <script lang="ts">
@@ -11,6 +13,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 export default class ActionButtonVue extends Vue {
     @Prop({ required: true }) private icon!: string;
     @Prop({ default: '#d18d1f' }) private color!: string;
+    @Prop({ default: '' }) private tooltip!: string;
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="grad-tooltip" @mouseenter="shown = true;" @mouseleave="shown = false;">
         <slot/>
-        <span ref="tooltip" v-if="shown" class="grad-tooltip__text">{{text}}</span>
+        <span ref="tooltip" v-if="shown && text.length > 0" class="grad-tooltip__text">{{text}}</span>
     </div>
 </template>
 

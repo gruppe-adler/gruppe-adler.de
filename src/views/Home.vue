@@ -1,7 +1,7 @@
 <template>
     <Content>
         <ActionButtons v-if="isLoggedIn && blogEntries.length > 0">
-            <ActionButton icon="add" @click="$router.push('/blog/write')" />
+            <ActionButton icon="add" tooltip="Artikel verfassen" @click="$router.push('/blog/write')" />
         </ActionButtons>
         <template v-if="blogEntries.length > 0">
             <transition-group name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">

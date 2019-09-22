@@ -3,13 +3,13 @@
         <ActionButtons v-if="isLoggedIn && items.length > 0">
             <template v-if="editMode">
                 <div style="margin-left: auto;"></div>
-                <ActionButton icon="close" color="#8F1167" @click="editMode = false" />
-                <ActionButton icon="save" @click="editMode = true" />
+                <ActionButton icon="close" tooltip="Abbrechen" color="#8F1167" @click="editMode = false" />
+                <ActionButton icon="save" tooltip="Speichern" @click="editMode = true" />
             </template>
             <template v-else>
-                <ActionButton v-if="!addMode" icon="add" @click="addMode = true" />
-                <ActionButton v-else icon="close" color="#8F1167" @click="addMode = false" />
-                <ActionButton icon="edit" @click="addMode = false; editMode = true" />
+                <ActionButton v-if="!addMode" icon="add" tooltip="Eintrag hinzufügen" @click="addMode = true" />
+                <ActionButton v-else icon="close" tooltip="Hinzufügen abbrechen" color="#8F1167" @click="addMode = false" />
+                <ActionButton icon="edit" tooltip="Einträge bearbeiten" @click="addMode = false; editMode = true" />
             </template>
         </ActionButtons>
         <div class="gallery-wrapper" ref="galleryWrapper">
