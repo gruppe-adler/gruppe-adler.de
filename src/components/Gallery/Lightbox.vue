@@ -6,14 +6,14 @@
             <img v-else-if="item.type === 'video'" class="grad-lightbox__img" :src="`http://i3.ytimg.com/vi/${item.videoUrl}/maxresdefault.jpg`" />
             <img v-else class="grad-lightbox__img" src="" />
         </template>
-        <i class="material-icons grad-lightbox__prev" @click="$emit('prev', $event)">arrow_back_ios</i>
-        <i class="material-icons grad-lightbox__next" @click="$emit('next', $event)">arrow_forward_ios</i>    
-        <i class="material-icons grad-lightbox__close" @click="$emit('close', $event)">close</i>
         <div class="grad-lightbox__title-bar" v-if="item.title||item.author">
             <span v-if="item.title" class="grad-lightbox__title">{{item.title}}</span>
             <span v-if="item.author" class="grad-lightbox__author">{{item.author}}</span>
         </div>
     </div>
+    <i class="material-icons grad-lightbox__prev" @click="$emit('prev', $event)">arrow_back_ios</i>
+    <i class="material-icons grad-lightbox__next" @click="$emit('next', $event)">arrow_forward_ios</i>    
+    <i class="material-icons grad-lightbox__close" @click="$emit('close', $event)">close</i>
 </div>
 </template>
 
@@ -53,8 +53,6 @@ export default class LigthboxVue extends Vue {
     &__img {
         max-width: calc(100vw - 80px);
         max-height: calc(100vh - 80px);
-        min-height: 400px;
-        min-width: 400px;
         background-color: #C4C4C4;
     }
 
@@ -103,10 +101,11 @@ export default class LigthboxVue extends Vue {
         padding: 25px;
         margin: 10px;
         color: white;
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0,0,0,0.7);
         border-radius: 50%;
         cursor: pointer;
         transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
+        user-select: none;
     }
 
     i:hover {
