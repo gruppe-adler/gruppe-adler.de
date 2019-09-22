@@ -11,7 +11,7 @@
                 <span>oder</span>
             </template>
             <div>
-                <input type="text" placeholder="Yoututbe URL eingeben" v-model="url">
+                <input type="text" placeholder="Youtube URL eingeben" v-model="url">
                 <button v-if="url.length > 0">Fertig</button>
             </div>
         </div>
