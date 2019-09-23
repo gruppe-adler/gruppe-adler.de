@@ -12,6 +12,7 @@
     top: 0px;
     left: 0px;
     right: 0px;
+    overflow: hidden;
 
     &:after {
         background-color: currentColor;

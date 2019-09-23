@@ -65,11 +65,9 @@ export default class WriteBlogPost extends Vue {
             pinnedImage: '',
             tags: [],
             author: {
-                picture: '',
+                avatar: '',
                 username: 'User',
-                uid: 3,
-                iconBgColor: '#D18D1F',
-                iconText: 'U'
+                id: 1
             },
             date: new Date(),
             published: false

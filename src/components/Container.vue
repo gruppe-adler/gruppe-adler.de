@@ -36,7 +36,6 @@ export default class Container extends Vue {
 
     background-color: white;
     border-radius: 4px;
-    overflow: hidden;
     box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
     font-size: 16px;
     width: 100%;

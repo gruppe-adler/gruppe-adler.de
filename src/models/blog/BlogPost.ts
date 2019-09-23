@@ -1,5 +1,5 @@
 import { BlogEntry } from './BlogEntry';
-import { ForumUser } from './ForumUser';
+import { SSOUser } from './SSOUser';
 
 export const BLOG_POST_TYPE = 'blogpost';
 
@@ -9,7 +9,7 @@ export interface BlogPostConstructorArgs {
     content: string;
     pinnedImage: string;
     tags: string[];
-    author: ForumUser;
+    author: SSOUser;
     date: Date;
     published: boolean;
 }
@@ -24,7 +24,7 @@ export class BlogPost implements BlogEntry {
     public pinnedImage?: string;
     public published: boolean;
     public tags: string[];
-    public author: ForumUser;
+    public author: SSOUser;
 
     constructor({ id, heading, content, pinnedImage, tags, author, date, published }: BlogPostConstructorArgs) {
         this.id = id;

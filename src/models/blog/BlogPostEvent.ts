@@ -1,5 +1,4 @@
 import { BlogPost, BlogPostConstructorArgs } from './BlogPost';
-import { ForumUser } from './ForumUser';
 
 export const EVENT_REPORT_TYPE = 'event';
 

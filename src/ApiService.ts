@@ -20,9 +20,10 @@ import { BlogPostModset, BlogPostModsetChange } from './models/blog/BlogPostMods
 import { GalleryItem } from './models/gallery/GalleryItem';
 import { CmsGalleryItem } from './models/cms/GalleryItem';
 import User from './models/sso/User';
+import { SSOUser } from './models/blog/SSOUser';
 
 const CMS_URL = 'https://cms.dev.gruppe-adler.de/';
-const SSO_URL = 'https://sso.gruppe-adler.de/';
+const SSO_URL = 'https://sso.gruppe-adler.de';
 const API_URL = 'https://api.dev.gruppe-adler.de/';
 const CMS_TOKEN = 'acacff37c21c30b6e6569e958fa7be';
 
@@ -248,7 +249,7 @@ export default class ApiService {
 
         if (cmsBlogPosts.length === 0) return [];
 
-        const blogPosts: BlogPost[] = cmsBlogPosts.map((post: CmsBlogPost) => {
+        const blogPosts: BlogPost[] = await Promise.all(cmsBlogPosts.map(async (post: CmsBlogPost) => {
 
             // properties needed for every type of blogpost
             const generalArgs: BlogPostConstructorArgs = {
@@ -257,7 +258,7 @@ export default class ApiService {
                 content: post.content,
                 pinnedImage: this.normalizeImage(post.pinnedImage),
                 tags: post.tags,
-                author: post.author,
+                author: await this.fetchSSOUser(post.author),
                 date: new Date(post.date),
                 published: post.published
             };
@@ -306,7 +307,7 @@ export default class ApiService {
 
             // normal blogpost
             return new BlogPost(generalArgs);
-        });
+        }));
 
         return blogPosts;
     }
@@ -372,7 +373,7 @@ export default class ApiService {
 
         let response: { data: { authenticate: User|null } };
         try {
-            const res = await fetch(`${SSO_URL}api/v1/graphql`, {
+            const res = await fetch(`${SSO_URL}/api/v1/graphql`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -524,5 +525,50 @@ export default class ApiService {
         });
 
         return text.replace(/\n/g, '<br />');
+    }
+
+    private static ssoUserCache = new Map<number, SSOUser>();
+
+    private static async fetchSSOUser(id: number): Promise<SSOUser> {
+        if (this.ssoUserCache.has(id)) return this.ssoUserCache.get(id)!;
+
+        const res = await fetch(`${SSO_URL}/api/v1/graphql`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: `
+                    query {
+                        user(where: { id: ${id} }) { id, username, avatar }
+                    }
+
+                `,
+                variables: {}
+            })
+        });
+
+        const body = await res.json() as {
+            data: {
+                user: {
+                    id: number,
+                    username: string,
+                    avatar: string
+                }
+            },
+            errors?: any
+        };
+
+        if (body.errors) throw body.errors;
+
+        const user: SSOUser = {
+            id: body.data.user.id,
+            username: body.data.user.username,
+            avatar: `${SSO_URL}/avatars/${body.data.user.avatar}`
+        };
+
+        this.ssoUserCache.set(id, user);
+
+        return user;
     }
 }

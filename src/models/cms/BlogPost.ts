@@ -1,5 +1,5 @@
 export interface CmsBlogPost {
-    author: any;
+    author: number;
     heading: string;
     content: string;
     pinnedImage: any;

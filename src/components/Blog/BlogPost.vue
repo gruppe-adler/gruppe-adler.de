@@ -6,7 +6,11 @@
         <template v-slot:date>{{date}}</template>
         <template v-slot:heading>{{model.heading}}</template>
         <template v-slot:tags><span v-for="t in model.tags" :key="t">{{t}}</span></template>
-        <template v-slot:author><img :src="model.author.picture" /></template>
+        <template v-slot:author>
+            <Tooltip :text="model.author.username">
+                <img :src="model.author.avatar" />
+            </Tooltip>
+        </template>
         <template v-slot:image v-if="model.pinnedImage">
             <img :src="model.pinnedImage" alt="pinned-image">
         </template>
