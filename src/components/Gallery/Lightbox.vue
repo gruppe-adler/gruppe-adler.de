@@ -2,14 +2,27 @@
 <div class="grad-lightbox" @click.self="$emit('close', $event)">
     <div class="grad-lightbox__wrapper">
         <template v-if="item">
-            <img v-if="item.type === 'image'" class="grad-lightbox__img" :src="item.image" />
-            <img v-else-if="item.type === 'video'" class="grad-lightbox__img" :src="`http://i3.ytimg.com/vi/${item.videoUrl}/maxresdefault.jpg`" />
-            <img v-else class="grad-lightbox__img" src="" />
+            <img class="grad-lightbox__img" :src="imageUrl" />
+            <i
+                v-if="item.type === 'video'"
+                class="material-icons grad-lightbox__video"
+                @click="playVideo"
+            >
+                play_arrow
+            </i>
+            <div class="grad-lightbox__title-bar" v-if="item.title||item.author">
+                <span v-if="item.title" class="grad-lightbox__title">{{item.title}}</span>
+                <span v-if="item.author" class="grad-lightbox__author">{{item.author}}</span>
+            </div>
+            <iframe
+                class="grad-lightbox__player"
+                v-if="isVideoPlaying"
+                :src="`https://www.youtube.com/embed/${item.videoUrl}`"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+            ></iframe>
         </template>
-        <div class="grad-lightbox__title-bar" v-if="item.title||item.author">
-            <span v-if="item.title" class="grad-lightbox__title">{{item.title}}</span>
-            <span v-if="item.author" class="grad-lightbox__author">{{item.author}}</span>
-        </div>
     </div>
     <i class="material-icons grad-lightbox__prev" @click="$emit('prev', $event)">arrow_back_ios</i>
     <i class="material-icons grad-lightbox__next" @click="$emit('next', $event)">arrow_forward_ios</i>    
@@ -20,10 +33,32 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { GalleryItem } from '@/models/gallery/GalleryItem';
+import { GalleryImage } from '@/models/gallery/GalleryImage';
+import { GalleryVideo } from '@/models/gallery/GalleryVideo';
 
 @Component
 export default class LigthboxVue extends Vue {
     @Prop({ default: null }) private item!: GalleryItem|null;
+
+    private isVideoPlaying: boolean = false;
+
+    @Watch('item')
+    private resetIFrame() {
+        this.isVideoPlaying = false;
+    }
+
+    get imageUrl(): string {
+        if (!this.item) return '';
+
+        if (this.item.type === 'image') return (this.item as GalleryImage).image;
+        if (this.item.type === 'video') return `https://i.ytimg.com/vi/${(this.item as GalleryVideo).videoUrl}/hqdefault.jpg`;
+
+        return '';
+    }
+
+    private playVideo() {
+        this.isVideoPlaying = true;
+    }
 }
 </script>
 
@@ -70,6 +105,23 @@ export default class LigthboxVue extends Vue {
     &__prev {
         position: absolute;
         left: 0px;
+    }
+
+    &__video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    &__player {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        width: 100%;
+        height: 100%;
     }
 
     &__title-bar {

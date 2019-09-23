@@ -2,7 +2,7 @@
     <GalleryItem
         v-model="item"
         :editable="editable"
-        :image="`http://i3.ytimg.com/vi/${item.videoUrl}/maxresdefault.jpg`"
+        :image="`https://i.ytimg.com/vi/${item.videoUrl}/hqdefault.jpg`"
         @click="$emit('click', $event)"
         @delete="$emit('delete', $event)"
     >
