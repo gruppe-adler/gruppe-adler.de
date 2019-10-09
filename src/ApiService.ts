@@ -505,7 +505,7 @@ export default class ApiService {
                 text = [
                     pre,
                     `<a target="_blank" href="${entity.expanded_url}">`,
-                    mid,
+                    entity.display_url,
                     '</a>',
                     post
                 ].join('');
