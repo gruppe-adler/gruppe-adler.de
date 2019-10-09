@@ -96,7 +96,8 @@ export default class UeberUnsEindruecke extends Vue {
                 animation: 100
             });
         } else {
-            this.items = this.originalItems;
+            this.items = [];
+            this.$nextTick(() => this.items = this.originalItems);
 
             if (this.sortable) this.sortable.destroy();
         }
