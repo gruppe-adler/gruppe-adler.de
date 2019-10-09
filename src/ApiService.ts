@@ -27,7 +27,6 @@ const SSO_URL = 'https://sso.gruppe-adler.de';
 const API_URL = 'https://api.dev.gruppe-adler.de/';
 const CMS_TOKEN = 'acacff37c21c30b6e6569e958fa7be';
 
-
 export default class ApiService {
 
     /**
@@ -570,5 +569,13 @@ export default class ApiService {
         this.ssoUserCache.set(id, user);
 
         return user;
+    }
+
+    public static cmsThumbnailUrl(url: string) {
+        if (url.search(CMS_URL) !== 0) return url;
+
+        url = url.substring(CMS_URL.length);
+
+        return `${CMS_URL}api/cockpit/image?token=${CMS_TOKEN}&src=${url}&w=700&h=700&o=true&m=bestFit`;
     }
 }
