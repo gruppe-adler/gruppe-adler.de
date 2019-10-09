@@ -45,7 +45,13 @@ export default class GalleryVideoVue extends Vue {
             color: white;
             background-color: rgba(0,0,0,0.5);
             border-radius: 50%;
+
+            @media (max-width: 650px) {
+                padding: 10px;
+                font-size: 20px;
+            }
         }
+        
     }
 }
 </style>

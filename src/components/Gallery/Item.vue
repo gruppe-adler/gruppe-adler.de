@@ -44,6 +44,10 @@ export default class GalleryItemVue extends Vue {
 
     transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     
+    &:hover {
+        box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.5);
+    }
+
     &#{&}--width-1 {
         // reset 
         width: calc(100% - 35px);
@@ -89,6 +93,10 @@ export default class GalleryItemVue extends Vue {
         max-height: 50%;
         box-sizing: border-box;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.27) 40.62%, rgba(0, 0, 0, 0.75) 100%);
+
+        @media (max-width: 650px) {
+            display: none;
+        }
     }
 
     &__image {
@@ -111,8 +119,4 @@ export default class GalleryItemVue extends Vue {
     }
 }
 
-.gallery-item:hover {
-    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.5);
-    transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
 </style>
