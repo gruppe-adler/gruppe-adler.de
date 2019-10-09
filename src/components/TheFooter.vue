@@ -36,6 +36,12 @@
             LOGOUT
         </a>
         <a 
+            v-else-if="loadingText.length > 0"
+            class="grad-footer__login"
+        >
+            <span style="font-size: 2em; font-weight: bold;">{{loadingText}}</span>
+        </a>
+        <a
             v-else
             class="grad-footer__login"
             @click="login"
@@ -80,6 +86,8 @@ export default class Footer extends Vue {
         }
     ];
 
+    private loadingText = '';
+
     private created() {
 
         // preserve login when reloading the page
@@ -120,12 +128,19 @@ export default class Footer extends Vue {
      */
     private async login(redirectToSSO: boolean = true) {
         let user;
+
+        const int = window.setInterval(this.loadingIndicator, 100);
+
         try {
             user = await ApiService.authenticate();
         } catch (err) {
+            window.clearInterval(int);
+            this.loadingText = '';
             console.error(err);
             return;
         }
+        window.clearInterval(int);
+        this.loadingText = '';
 
         // the user is logged in if we get a user from the authentication request
         if (user) {
@@ -154,6 +169,14 @@ export default class Footer extends Vue {
         const url = new URL('https://sso.gruppe-adler.de');
         url.searchParams.append('redirect_after_login', window.location.href);
         window.location.replace(url.href);
+    }
+
+    private loadingIndicator() {
+        if (this.loadingText.length < 5) {
+            this.loadingText = `${this.loadingText}.`;
+        } else {
+            this.loadingText = '.';
+        }
     }
 
 }
