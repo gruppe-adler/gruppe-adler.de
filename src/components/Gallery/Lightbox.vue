@@ -51,6 +51,8 @@ export default class LigthboxVue extends Vue {
         if (!this.item) return '';
 
         if (this.item.type === 'image') return (this.item as GalleryImage).image;
+
+        // tslint:disable-next-line:max-line-length
         if (this.item.type === 'video') return `https://i.ytimg.com/vi/${(this.item as GalleryVideo).videoUrl}/hqdefault.jpg`;
 
         return '';
