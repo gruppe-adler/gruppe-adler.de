@@ -128,15 +128,11 @@ export default class UeberUnsEindruecke extends Vue {
         if (this.items.length === 0) return;
 
         // find index of cur shown item
-        const index = this.items.findIndex(i => i.position === this.lightboxItem!.position);
+        const index = this.items.findIndex(i => i._id === this.lightboxItem!._id);
 
-        // item is first item
-        if (index === 0) {
-            this.lightboxItem = this.items[this.items.length - 1];
-            return;
-        }
+        const newIndex = (index === 0) ? (this.items.length - 1) : (index - 1);
 
-        this.lightboxItem = this.items[index - 1];
+        this.lightboxItem = this.items[newIndex];
     }
 
     private onLightboxNext(event: MouseEvent) {
@@ -144,16 +140,11 @@ export default class UeberUnsEindruecke extends Vue {
         if (this.items.length === 0) return;
 
         // find index of cur shown item
-        const index = this.items.findIndex(i => i.position === this.lightboxItem!.position);
+        const index = this.items.findIndex(i => i._id === this.lightboxItem!._id);
 
-        // item is last item
-        if (index === this.items.length - 1) {
-            this.lightboxItem = this.items[0];
-            return;
-        }
+        const newIndex = (index === this.items.length - 1) ? (0) : (index + 1);
 
-        this.lightboxItem = this.items[index + 1];
-
+        this.lightboxItem = this.items[newIndex];
     }
 
     /**
