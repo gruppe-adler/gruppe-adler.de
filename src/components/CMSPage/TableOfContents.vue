@@ -64,7 +64,8 @@ export default class TableOfContents extends Vue {
     &__container {
         position: -webkit-sticky;
         position: sticky;
-        top: 120px;
+        top: 150px;
+        transition: top .25s ease-in-out;
 
         > a + a {
             margin-top: 10px;
@@ -83,3 +84,8 @@ export default class TableOfContents extends Vue {
 }
 </style>
 
+<style lang="scss">
+body.grad-nav-collapsed .grad-toc__container {
+    top: 78px;
+}
+</style>

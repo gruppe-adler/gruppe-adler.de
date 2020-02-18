@@ -193,10 +193,12 @@ export default class Navbar extends Vue {
             // user scrolled down
             if (pageYOffset > 80) {
                 this.navShown = false;
+                document.body.classList.add('grad-nav-collapsed');
             }
         } else {
             // user scrolled up
             this.navShown = true;
+            document.body.classList.remove('grad-nav-collapsed');
         }
         this.pageYOffset = pageYOffset;
     }
