@@ -1,0 +1,37 @@
+body {
+    background-color: #F0EEEC;
+}
+#noJS,
+#IEHint {
+    margin: 5vh 5vw;
+    height: 90vh;
+    width: 90vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 15pt;
+    text-align: center;
+}
+
+#noJS img,
+#IEHint img {
+    max-width: calc(100vw - 10rem);
+    width: 500px;
+}
+#noJS h1,
+#IEHint h1 {
+    font-family: 'Oswald', sans-serif;
+}
+
+#noJS h1,
+#IEHint h1 {
+    font-family: 'Oswald', sans-serif;
+}
+
+#noJS a,
+#IEHint a {
+    color: #d18d1f;
+    text-decoration: underline;
+}
