@@ -1,5 +1,5 @@
 <template>
-    <div class="grad-toc__container">
+    <div class="grad-toc__container" v-if="containers.length > 1">
         <a
             v-for="(c, i) in containers"
             :class="[i == currentId ? 'grad-toc--active' : '']"
@@ -18,7 +18,7 @@ import { Container } from '@/services/page';
 
 @Component
 export default class TableOfContents extends Vue {
-    @Prop() private containers?: Container[];
+    @Prop({ default: () => [], type: Array }) private containers!: Container[];
     private currentId = -1;
     private scrollTimeout: number | null = null;
 
