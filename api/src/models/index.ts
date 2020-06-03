@@ -3,5 +3,5 @@ import Container from './container.model';
 
 export {
     Page,
-    Container,
+    Container
 };

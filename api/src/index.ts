@@ -42,7 +42,7 @@ app.use('/api/v1', v1Router);
 
 app.get('/', (req, res) => {
     res.send('meh');
-})
+});
 
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
@@ -63,6 +63,8 @@ const {
 
 const port = Number.parseInt(PORT, 10);
 
-app.listen(port, () => { console.log(`
-    Server listening on http://localhost:${port}
-`)})
+app.listen(port, () => {
+    console.log(`
+        Server listening on http://localhost:${port}
+    `);
+});

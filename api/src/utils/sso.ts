@@ -2,21 +2,22 @@ import { Request, Response, NextFunction } from 'express/index';
 
 import fetch from 'node-fetch';
 import { globalErrorHandler } from './express';
+import ReponseError from './ResponseError';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('../../config/config.json');
-
 
 interface SSOUser {
     admin: boolean;
     groups: { tag: string; }[];
 }
 
-async function fetchUser (token: string ): Promise<SSOUser|null> {
+async function fetchUser(token: string): Promise<SSOUser|null> {
     const res = await fetch(`${config.sso.domain}/api/v1/graphql`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
             query: `
@@ -34,7 +35,7 @@ async function fetchUser (token: string ): Promise<SSOUser|null> {
         })
     });
 
-    if (!res.ok) throw { status: 401 };
+    if (!res.ok) throw new ReponseError(401);
 
     const json = await res.json() as { data: { authenticate: SSOUser|null } };
 
@@ -44,7 +45,7 @@ async function fetchUser (token: string ): Promise<SSOUser|null> {
 async function validateToken (token: string) {
     const user = await fetchUser(token);
 
-    if (user === null) throw { status: 401 };
+    if (user === null) throw new ReponseError(401);
 
     const groups = user.groups.map(g => g.tag);
     const admin = user.admin;
@@ -54,7 +55,7 @@ async function validateToken (token: string) {
         if (groups.includes(grp)) isInGroup = true;
     }
 
-    if (!admin && !isInGroup) throw { status: 403 };
+    if (!admin && !isInGroup) throw new ReponseError(403);
 }
 
 function extractToken(req: Request): string {
@@ -72,18 +73,19 @@ function extractToken(req: Request): string {
     throw new Error('Couldn\'t find token to extract');
 }
 
-export async function ssoCheckAuthorized(req: Request, res: Response, next: NextFunction) {
+export async function ssoCheckAuthorized(req: Request, res: Response, next: NextFunction): Promise<void> {
     let token: string;
     try {
-        token = extractToken(req)
+        token = extractToken(req);
     } catch (err) {
-        return res.status(401).end();
+        res.status(401).end();
+        return;
     }
 
     try {
         await validateToken(token);
     } catch (err) {
-        globalErrorHandler(err, req, res);
+        globalErrorHandler(err, req, res, next);
         return;
     }
 

@@ -6,7 +6,6 @@ import {
     Default,
     DefaultScope,
     PrimaryKey,
-    AutoIncrement,
     HasMany
 } from 'sequelize-typescript';
 
@@ -14,7 +13,7 @@ import { Container } from '.';
 
 @DefaultScope({
     include: [
-        { model: () => Container },
+        { model: (): typeof Container => Container }
     ]
 })
 @Table({

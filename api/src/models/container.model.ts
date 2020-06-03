@@ -4,10 +4,8 @@ import {
     Model,
     DataType,
     Default,
-    DefaultScope,
     PrimaryKey,
     AutoIncrement,
-    BelongsToMany,
     AllowNull,
     BelongsTo,
     ForeignKey
@@ -45,7 +43,7 @@ export default class Container extends Model<Container> {
     @AllowNull
     @Column(DataType.TEXT)
     public headerImage: string|null;
-    
+
     @Default(null)
     @AllowNull
     @Column(DataType.TEXT)

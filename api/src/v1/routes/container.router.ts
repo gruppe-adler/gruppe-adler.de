@@ -1,8 +1,9 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express';
-import { param, check, body, oneOf, matchedData } from 'express-validator';
+import { param, body, matchedData } from 'express-validator';
 import { Container } from '../../models';
 import { ssoCheckAuthorized } from '../../utils/sso';
+import ReponseError from '../../utils/ResponseError';
 
 const defaultContainerRules = [
     body('heading').optional().isString(),
@@ -11,7 +12,7 @@ const defaultContainerRules = [
     body('headerColor').optional().custom(val => val === null || typeof val === 'string'),
     body('headerImage').optional().custom(val => val === null || typeof val === 'string'),
     body('pinnedImage').optional().custom(val => val === null || typeof val === 'string'),
-    body('index').optional().isInt(),  
+    body('index').optional().isInt()
 ];
 
 type defaultContainerData = {
@@ -34,12 +35,12 @@ containerRouter.post('/', [
 ], wrapAsync(async (req, res) => {
     const data = matchedData(req) as defaultContainerData & { pageSlug: string };
 
-    const container = await Container.create(data)
+    const container = await Container.create(data);
 
     res.status(201).json(container);
 }));
 
-containerRouter.put('/:id',[
+containerRouter.put('/:id', [
     ssoCheckAuthorized,
     param('id').isInt(),
     ...defaultContainerRules,
@@ -51,15 +52,15 @@ containerRouter.put('/:id',[
     const container: Container|null = await Container.findByPk(id);
 
     if (container === null) {
-        throw {status: 404, responseMessage: `Container with id '${id}' not found.`}
+        throw new ReponseError(404, `Container with id '${id}' not found.`);
     }
 
-    const updatedContainer = await container.update(updateData)
+    const updatedContainer = await container.update(updateData);
 
     res.json(updatedContainer);
 }));
 
-containerRouter.delete('/:id',[
+containerRouter.delete('/:id', [
     ssoCheckAuthorized,
     param('id').isInt(),
     return422
@@ -69,10 +70,10 @@ containerRouter.delete('/:id',[
     const container: Container|null = await Container.findByPk(id);
 
     if (container === null) {
-        throw {status: 404, responseMessage: `Container with id '${id}' not found.`}
+        throw new ReponseError(404, `Container with id '${id}' not found.`);
     }
 
-    await container.destroy()
+    await container.destroy();
 
     res.end();
 }));
