@@ -31,16 +31,20 @@ const AsyncEditPage: AsyncComponent = () => ({
     timeout: 10000
 });
 
+const redirects: { [from: string]: string } = {
+    '/': '/home',
+    '/ueber-uns': '/ueber-uns/miteinander',
+    '/technik': '/technik/server',
+    '/spielweise': '/spielweise/uebersicht',
+    '/mitspielen': '/mitspielen/allgemeines'
+};
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
     {
         path: '*',
         component: AsyncPage
-    },
-    {
-        path: '/',
-        redirect: '/home'
     },
     {
         path: '/edit/*',
@@ -59,6 +63,10 @@ const routes: Array<RouteConfig> = [
         }
     }
 ];
+
+for (const [from, to] of Object.entries(redirects)) {
+    routes.push({ path: from, redirect: to });
+}
 
 const router = new VueRouter({
     mode: 'history',
