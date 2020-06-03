@@ -40,10 +40,6 @@ app.use(morgan('short'));
 // api
 app.use('/api/v1', v1Router);
 
-app.get('/', (req, res) => {
-    res.send('meh');
-});
-
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
     app.use('/', express.static(join(__dirname, '../frontend')));
