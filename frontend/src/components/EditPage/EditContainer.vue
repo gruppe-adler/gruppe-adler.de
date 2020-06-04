@@ -44,7 +44,7 @@
         <div class="grad-edit-container__actions">
             <EditHeaderColor v-model="values.headerColor" />
             <span style="height: 1rem;"></span>
-            <ActionButton v-if="saveShown" icon="save" :tooltip="values.new ? 'Container speichern' : 'Änderungen speichern'" color="#66AA66" @click="$emit('save', values)" />
+            <ActionButton v-if="saveShown" icon="save" :tooltip="values.new ? 'Container speichern' : 'Änderungen speichern'" color="#66AA66" @click="save" />
             <template v-if="cancelShown">
                 <ActionButton icon="cancel" tooltip="Änderungen verwerfen" @click="updateValues" />
                 <span style="height: 1rem;"></span>
@@ -105,6 +105,36 @@ export default class EditContainerVue extends Vue {
 
     private get cancelShown (): boolean {
         return !equal(this.container, this.values) && this.container.new !== true;
+    }
+
+    private save () {
+        if (this.values === null) return;
+
+        const updatedValues: Partial<Container> & Pick<Container, 'id'> = {
+            id: this.values.id
+        };
+
+        for (const key in this.values) {
+            if (Object.prototype.hasOwnProperty.call(this.values, key)) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                const value = this.values[key];
+
+                if (value === undefined) continue;
+
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                if (!Object.prototype.hasOwnProperty.call(this.container, key) || !equal(this.container[key], value)) {
+                    // key is not present in original container -> we assume it has to be "updated"
+                    // value is not the same as it was on the original container -> it has to be updated
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    updatedValues[key] = value;
+                }
+            }
+        }
+
+        this.$emit('save', updatedValues);
     }
 }
 </script>
