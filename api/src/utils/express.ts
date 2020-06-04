@@ -20,6 +20,8 @@ export const globalErrorHandler = (err: unknown, req: Request, res: Response, ne
     if (err instanceof ResponseError) {
         status = err.status;
         msg = err.message;
+    } else {
+        console.error(err);
     }
 
     res.status(status);
