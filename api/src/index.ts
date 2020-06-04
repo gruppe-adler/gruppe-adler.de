@@ -40,6 +40,8 @@ app.use(morgan('short'));
 // api
 app.use('/api/v1', v1Router);
 
+app.use('/uploads', express.static(join(__dirname, '../data/uploads')));
+
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
     app.use('/', express.static(join(__dirname, '../frontend')));
