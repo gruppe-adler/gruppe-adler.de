@@ -44,7 +44,7 @@ app.use('/api/v1', v1Router);
 if (existsSync(join(__dirname, '../frontend'))) {
     app.use('/', express.static(join(__dirname, '../frontend')));
     app.get('*', (req: Request, res: Response, next: NextFunction) => {
-        if (req.headers['content-type'] === 'application/html') {
+        if (!req.accepts('application/html')) {
             next();
             return;
         }
