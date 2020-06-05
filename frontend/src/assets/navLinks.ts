@@ -64,8 +64,8 @@ const links: GradLink[] = [
         ]
     },
     {
-        text: 'Konakt',
-        url: '/konakt'
+        text: 'Kontakt',
+        url: '/kontakt'
     },
     {
         text: 'Forum',
