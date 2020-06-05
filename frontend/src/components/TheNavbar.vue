@@ -61,6 +61,7 @@
             </div>
             <div class="grad-nav__sub-link-bar">
                 <span v-if="activeSubLink">{{activeSubLink.text}}</span>
+                <span v-else>{{activeLink.text}}</span>
             </div>
         </template>
     </nav>
