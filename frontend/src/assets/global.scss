@@ -3,9 +3,13 @@
 html, body {
     margin: 0px;
     padding: 0px;
-    background-color: #F0EEEC;
+    background-color: black;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
+}
+
+#app {
+    background-color: #F0EEEC;
 }
 
 ::selection,
