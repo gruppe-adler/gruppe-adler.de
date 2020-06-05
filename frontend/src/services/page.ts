@@ -24,15 +24,10 @@ const CMS_URI = window.location.origin;
 
 const CMS_URL = `${CMS_URI}/api/v1`;
 
-const dataUrlRegex = /^data:(.+\/.+);base64,/i;
-
 export async function uploadImage (dataUrl: string): Promise<string> {
-    const matches = dataUrl.match(dataUrlRegex);
-
-    if (matches == null) throw new Error('Oopps'); // TODO
-
-    const [header, mimeType] = matches;
-    const base64Str = dataUrl.substr(header.length);
+    const base64Index = dataUrl.indexOf('base64,');
+    const base64Str = dataUrl.substr(base64Index + 7);
+    const mimeType = dataUrl.substring(5, base64Index - 1);
 
     const byteChars = window.atob(base64Str);
     const array = new Array(byteChars.length);
@@ -63,10 +58,10 @@ export async function createPage (p: Page): Promise<Page> {
 export async function createContainer (c: Container): Promise<Container> {
     const promises: Promise<void>[] = [];
     if (c.pinnedImage !== undefined && c.pinnedImage !== null) {
-        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }));
+        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }).catch(() => { debugger; }));
     }
-    if (c.pinnedImage !== undefined && c.headerImage !== null) {
-        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }));
+    if (c.headerImage !== undefined && c.headerImage !== null) {
+        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }).catch(() => { debugger; }));
     }
     await Promise.all(promises);
 
@@ -80,10 +75,10 @@ export async function createContainer (c: Container): Promise<Container> {
 export async function updateContainer (c: Partial<Container> & Pick<Container, 'id'>): Promise<Container> {
     const promises: Promise<void>[] = [];
     if (c.pinnedImage !== undefined && c.pinnedImage !== undefined && c.pinnedImage !== null) {
-        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }));
+        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }).catch(() => { debugger; }));
     }
-    if (c.pinnedImage !== undefined && c.headerImage !== undefined && c.headerImage !== null) {
-        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }));
+    if (c.headerImage !== undefined && c.headerImage !== undefined && c.headerImage !== null) {
+        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }).catch(() => { debugger; }));
     }
     await Promise.all(promises);
 
