@@ -45,8 +45,8 @@ export default class ContainerVue extends Vue {
 
     background-color: white;
     border-radius: 4px;
-    box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
-    font-size: 16px;
+    box-shadow: 0 4px 60px rgba(155,96,0,0.15), 0 2px 20px rgba(155,96,0,0.15);
+    font-size: 18px;
     width: 100%;
     display: inline-block;
 
@@ -103,7 +103,7 @@ export default class ContainerVue extends Vue {
         color: #666666;
         margin-top: 18px;
         margin-bottom: 18px;
-        line-height: 2em;
+        line-height: 1.7em;
 
         > div {
             width: 100%;
@@ -132,6 +132,8 @@ export default class ContainerVue extends Vue {
         -webkit-backdrop-filter: blur(5px);
         backdrop-filter: blur(5px);
         color: #666666;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
 
         > div {
             width: 100%;
