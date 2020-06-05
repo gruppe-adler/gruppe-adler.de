@@ -116,7 +116,7 @@ export default class EditContainerVue extends Vue {
         }
 
         const updatedValues: Partial<Container> & Pick<Container, 'id'> = {
-            id: this.values.id,
+            id: this.values.id
         };
 
         for (const key in this.values) {
