@@ -24,7 +24,7 @@ export default class AppVue extends Vue {}
 </script>
 
 <style lang="scss">
-@import url('~@/assets/global.scss');
+@import '~@/assets/global.scss';
 
 // make the page min height 100vh
 #app > .grad-header + *  {
