@@ -7,29 +7,7 @@ export interface GradLink {
 const links: GradLink[] = [
     {
         text: 'Home',
-        url: '/home',
-        sublinks: [
-            {
-                text: 'Alles',
-                url: '/alles'
-            },
-            {
-                text: 'Allgemeines',
-                url: '/allgemeines'
-            },
-            {
-                text: 'Events',
-                url: '/events'
-            },
-            {
-                text: 'Modset',
-                url: '/modset'
-            },
-            {
-                text: 'Tweets',
-                url: '/tweets'
-            }
-        ]
+        url: '/home'
     },
     {
         text: 'Über uns',
@@ -72,24 +50,6 @@ const links: GradLink[] = [
         ]
     },
     {
-        text: 'Spielweise',
-        url: '/spielweise',
-        sublinks: [
-            {
-                text: 'Übersicht',
-                url: '/uebersicht'
-            },
-            {
-                text: 'Addons',
-                url: '/addons'
-            },
-            {
-                text: 'Missionen',
-                url: '/missionen'
-            }
-        ]
-    },
-    {
         text: 'Mitspielen',
         url: '/mitspielen',
         sublinks: [
@@ -100,12 +60,12 @@ const links: GradLink[] = [
             {
                 text: 'Checkliste',
                 url: '/checkliste'
-            },
-            {
-                text: 'Kontakt',
-                url: '/kontakt'
             }
         ]
+    },
+    {
+        text: 'Konakt',
+        url: '/konakt'
     },
     {
         text: 'Forum',
