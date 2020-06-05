@@ -110,9 +110,10 @@ export default class EditContainerVue extends Vue {
     private save () {
         if (this.values === null) return;
 
-        const updatedValues: Partial<Container> & Pick<Container, 'id'> = {
+        const updatedValues: Partial<Container> & Pick<Container, 'id'|'pageSlug'|'new'> = {
             id: this.values.id,
-            new: this.values.new
+            new: this.values.new,
+            pageSlug: this.values.pageSlug
         };
 
         for (const key in this.values) {
