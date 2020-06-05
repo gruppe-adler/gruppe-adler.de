@@ -47,96 +47,14 @@ button {
     outline: none;
     justify-content: center;
     font-weight: bold;
-    transition: all .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition: all .1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
-    :hover {
+    &:hover {
         background-color: #2F80ED;
         color: #fff;
-        padding: 0px 30px;
     }
 }
 
 .grad-container__content img {
     max-width: 100%;
-}
-
-.timeline {
-    border-width:0px 0px 0px 2px;
-    border-style: solid;
-    border-image: 
-        linear-gradient(
-            to bottom, 
-            #999, 
-            rgba(0, 0, 0, 0)
-        ) 1 100%;
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
-    font-family: 'Source Sans Pro', sans-serif;
-    margin: 0px 0px 50px 120px;
-    letter-spacing: 0.5px;
-    position: relative;
-    line-height: 1.4em;
-    font-size: 1.03em;
-    padding: 0px 50px;
-    list-style: none;
-    text-align: left;
-    font-weight: 100;
-    max-width: 100%;
-
-    .event {
-        padding-bottom: 25px;
-        margin-bottom: 50px;
-        position: relative;
-
-        &:last-of-type {
-            padding-bottom: 0;
-            margin-bottom: 0;
-            border: none;
-        }
-
-        &:before,
-        &:after {
-            position: absolute;
-            display: block;
-        }
-
-        &:before {
-            left: -200px;
-            color: rgba(0, 0, 0, 0.4);
-            content: attr(data-date);
-            text-align: right;
-            font-weight: 100;
-            font-size: 0.9em;
-            min-width: 120px;
-            top: -5px;
-        }
-        &:after {
-            box-shadow: 0 0 0 3px #999;
-            left: -57px;
-            background: #fff;
-            border-radius: 50%;
-            height: 11px;
-            width: 11px;
-            content: "";
-            top: 0px;
-        }
-    }
-
-    .textblock {
-        position: relative;
-        top: -5px;
-    }
-}
-
-.grad-blog-entry--transition-enter-active, 
-.grad-blog-entry--transition-leave-active {
-    transition: all 0.25s !important;
-    max-height: 1000px !important;
-    opacity: 1 !important;
-}
-
-.grad-blog-entry--transition-enter, 
-.grad-blog-entry--transition-leave-to {
-    max-height: 0px !important;
-    opacity: 0 !important;
 }
