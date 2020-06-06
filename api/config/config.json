@@ -2,5 +2,9 @@
     "sso": {
         "cookiename": "gruppe-adler-sso-token",
         "domain": "https://sso.gruppe-adler.de" 
+    },
+    "twitter": {
+        "base64-bearer-token-credentials": "<SET_TOKEN>",
+        "screen-name": "gruppe_adler"
     }
 }
