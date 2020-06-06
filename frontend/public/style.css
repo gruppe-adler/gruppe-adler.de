@@ -1,9 +1,6 @@
-body {
-    background-color: #F0EEEC;
-}
 #noJS,
 #IEHint {
-    margin: 5vh 5vw;
+    padding: 5vh 5vw;
     height: 90vh;
     width: 90vw;
     display: flex;
@@ -13,6 +10,7 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 15pt;
     text-align: center;
+    background-color: #F0EEEC;
 }
 
 #noJS img,
