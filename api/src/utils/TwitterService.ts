@@ -23,15 +23,15 @@ export class TwitterService {
         return this.instance;
     }
 
-    public async getTweets(count?: string, maxId?: string): Promise<Tweet[]> {
+    public async getTweets(count?: number, maxId?: string, excludeReplies?: boolean): Promise<Tweet[]> {
         const url = new URL('https://api.twitter.com/1.1/statuses/user_timeline.json');
 
         url.searchParams.append('screen_name', config.twitter['screen-name']);
         url.searchParams.append('tweet_mode', 'extended');
-        url.searchParams.append('exclude_replies', 'true');
 
-        if (count !== undefined) url.searchParams.append('count', count);
+        if (count !== undefined) url.searchParams.append('count', `${count}`);
         if (maxId !== undefined) url.searchParams.append('max_id', maxId);
+        if (excludeReplies !== undefined) url.searchParams.append('exclude_replies', `${excludeReplies}`);
 
         const bearerToken = await this.getToken();
 
