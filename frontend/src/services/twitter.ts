@@ -116,7 +116,7 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
             entity = entity as HashtagEntity;
             text = [
                 pre,
-                `<a target="_blank" href="https://twitter.com/hashtag/${entity.text}?src=hash">`,
+                `<a href="https://twitter.com/hashtag/${entity.text}?src=hash" target="_blank" rel="noreferrer">`,
                 mid,
                 '</a>',
                 post
@@ -133,7 +133,7 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
             entity = entity as UrlEntity;
             text = [
                 pre,
-                `<a target="_blank" href="${entity.expanded_url}">`,
+                `<a href="${entity.expanded_url}" target="_blank" rel="noreferrer">`,
                 entity.display_url,
                 '</a>',
                 post
@@ -144,7 +144,7 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
             entity = entity as UserMentionEntity;
             text = [
                 pre,
-                `<a target="_blank" href="https://twitter.com/${entity.screen_name}">`,
+                `<a href="https://twitter.com/${entity.screen_name}" target="_blank" rel="noreferrer">`,
                 mid,
                 '</a>',
                 post
@@ -164,7 +164,7 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
  * @returns {Promise<Tweet[]>} Tweets
  */
 export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
-    const params = maxId !== undefined ? `?max_id=${maxId}&count=100` : '?count=100';
+    const params = maxId !== undefined ? `?max_id=${maxId}&count=50` : '?count=50';
 
     const responseTweets = await fetchJSON<ApiResTweet[]>(`${API_URI}/api/v1/twitter${params}`);
 

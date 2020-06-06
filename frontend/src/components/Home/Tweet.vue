@@ -1,8 +1,12 @@
 <template>
     <BlogEntry headerColor="rgba(255,255,255,0.5)" class="grad-tweet">
         <template v-slot:date>{{date}}</template>
-        <template v-slot:heading><a target="_blank" :href="`https://twitter.com/${model.author.username}`">@{{model.author.username}}</a></template>
-        <template v-slot:author><a target="_blank" :href="`https://twitter.com/${model.author.username}`"><img v-lazy-img :data-src="model.author.picture" /></a></template>
+        <template v-slot:heading><a :href="`https://twitter.com/${model.author.username}`" target="_blank" rel="noreferrer">@{{model.author.username}}</a></template>
+        <template v-slot:author>
+            <a :href="`https://twitter.com/${model.author.username}`" target="_blank" rel="noreferrer">
+                <img v-lazy-img :data-src="model.author.picture" alt="avatar" />
+            </a>
+        </template>
         <template>
             <div class="grad-tweet__media" v-if="model.media.length > 0">
                 <a
@@ -11,11 +15,11 @@
                     :href="m.target"
                     target="_blank"
                 >
-                    <img v-lazy-img :data-src="m.url" />
+                    <img v-lazy-img :data-src="m.url" alt="twitter-media" />
                 </a>
             </div>
             <p v-if="isRetweet" class="grad-tweet__retweet-author">
-                Retweet von <a :href="`https://twitter.com/${model.retweetedTweet.author.username}`">@{{model.retweetedTweet.author.username}}</a>
+                Retweet von <a :href="`https://twitter.com/${model.retweetedTweet.author.username}`" target="_blank" rel="noreferrer">@{{model.retweetedTweet.author.username}}</a>
             </p>
             <p v-html="model.caption"></p>
         </template>
@@ -29,8 +33,9 @@
                     :key="m.id"
                     :href="m.target"
                     target="_blank"
+                    rel="noreferrer"
                 >
-                    <img v-lazy-img :src="m.url" />
+                    <img v-lazy-img :src="m.url" alt="twitter-media" />
                 </a>
             </div>
             <div>
