@@ -1,7 +1,7 @@
 <template>
     <div class="grad-editable-image">
         <slot v-if="img !== null" name="img" :img="img">
-            <img :src="img" alt="preview-image">
+            <img v-lazy-img :data-src="img" alt="preview-image">
         </slot>
         <slot v-else name="placeholder">
             <div class="grad-editable-image__placeholder" :style="placeholderStyle">

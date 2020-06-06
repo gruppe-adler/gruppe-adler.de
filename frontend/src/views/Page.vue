@@ -17,13 +17,14 @@
                     <span>{{c.heading}}</span>
                     <img
                         v-if="c.headerImage !== null"
+                        v-lazy-img
                         class="grad-container__header-image"
                         alt="header-image"
-                        :src="c.headerImage"
+                        :data-src="c.headerImage"
                     />
                 </template>
                 <template v-slot:image  v-if="c.pinnedImage !== null">
-                    <img :src="c.pinnedImage" alt="pinned-image">
+                    <img v-lazy-img :data-src="c.pinnedImage" alt="pinned-image">
                 </template>
                 <template v-if="c.content">
                     <Markdown :md="c.content" />

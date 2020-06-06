@@ -8,7 +8,7 @@
                 :key="item.url"
                 class="grad-footer__link"
             >
-                <img :src="`/img/footer/${item.image}.svg`" :alt="item.image" />
+                <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" />
             </a>
         </div>
         <div>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
 import './plugins/globalComponents';
+import './plugins/globalDirectives';
 import './plugins/smoothScroll';
 import router from './plugins/router';
 import { SSOUser } from '@/services/sso';
