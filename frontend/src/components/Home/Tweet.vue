@@ -14,6 +14,7 @@
                     :key="m.id"
                     :href="m.target"
                     target="_blank"
+                    rel="noreferrer"
                 >
                     <img v-lazy-img :data-src="m.url" alt="twitter-media" />
                 </a>
