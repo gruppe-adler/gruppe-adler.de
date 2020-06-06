@@ -7,15 +7,14 @@
     <meta name="Description" content="Deutsche Arma3 Coop & TvT Community">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald|Source+Sans+Pro|Material+Icons&display=swap" async>
     <link rel="preconnect" href="https://storage.googleapis.com">
-    <link rel="stylesheet" type="text/css" href="<%= BASE_URL %>style.css" media="none" onload="if(media!='all')media='all'" async>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Oswald|Source+Sans+Pro|Material+Icons&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="<%= BASE_URL %>style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <title>Gruppe Adler </title>
 </head>
 
 <body>
     <noscript id="noJS">
-        <link rel="stylesheet" type="text/css" href="<%= BASE_URL %>style.css">
         <img src="<%= BASE_URL %>logo.svg" alt="logo">
         <div>
             <h1>Gerne würden wir Dir hier was anzeigen</h1>
