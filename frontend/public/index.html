@@ -70,17 +70,19 @@
             return false;
         }
 
-        // show ieHint
-        const ieHint = document.getElementById('IEHint');
-        if (ieHint) ieHint.style.display = '';
-
-        // load needed styles
-        const link = document.createElement('link');
-        link.href = '<%= BASE_URL %>style.css';
-        link.type = 'text/css';
-        link.rel = 'stylesheet';
-        link.media = 'screen,print';
-        document.head.appendChild(link);
+        if (detectIE()) {
+            // show ieHint
+            const ieHint = document.getElementById('IEHint');
+            if (ieHint) ieHint.style.display = '';
+    
+            // load needed styles
+            const link = document.createElement('link');
+            link.href = '<%= BASE_URL %>style.css';
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            link.media = 'screen,print';
+            document.head.appendChild(link);
+        }
     </script>
     </div>
     <div id="app"></div>
