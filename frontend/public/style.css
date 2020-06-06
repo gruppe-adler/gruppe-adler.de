@@ -1,3 +1,8 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
 #noJS,
 #IEHint {
     padding: 5vh 5vw;

@@ -9,12 +9,12 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="preconnect" href="https://storage.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Source+Sans+Pro|Material+Icons&display=swap">
-    <link rel="stylesheet" href="<%= BASE_URL %>style.css">
     <title>Gruppe Adler </title>
 </head>
 
 <body>
     <noscript id="noJS">
+        <link rel="stylesheet" href="<%= BASE_URL %>style.css">
         <img src="<%= BASE_URL %>logo.svg" alt="logo">
         <div>
             <h1>Gerne würden wir Dir hier was anzeigen</h1>
@@ -50,6 +50,38 @@
             </p>
         </div>
     </div>
+    <script>        
+        function detectIE () {
+            const ua = window.navigator.userAgent;
+
+            const msie = ua.indexOf('MSIE ');
+            if (msie > 0) {
+                // IE 10 or older
+                return true;
+            }
+
+            const trident = ua.indexOf('Trident/');
+            if (trident > 0) {
+                // IE 11
+                return true;
+            }
+
+            // other browser
+            return false;
+        }
+
+        // show ieHint
+        const ieHint = document.getElementById('IEHint');
+        if (ieHint) ieHint.style.display = '';
+
+        // load needed styles
+        const link = document.createElement('link');
+        link.href = '<%= BASE_URL %>style.css';
+        link.type = 'text/css';
+        link.rel = 'stylesheet';
+        link.media = 'screen,print';
+        document.head.appendChild(link);
+    </script>
     </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
