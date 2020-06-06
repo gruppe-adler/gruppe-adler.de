@@ -31,6 +31,20 @@ const AsyncEditPage: AsyncComponent = () => ({
     timeout: 10000
 });
 
+const AsyncHomePage: AsyncComponent = () => ({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    component: import(
+        /* webpackChunkName: "home" */
+        /* webpackMode: "lazy" */
+        '@/views/Home.vue'
+    ),
+    loading: LoaderVue,
+    error: ErrorVue,
+    delay: 200,
+    timeout: 10000
+});
+
 const redirects: { [from: string]: string } = {
     '/': '/home',
     '/ueber-uns': '/ueber-uns/miteinander',
@@ -49,6 +63,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/edit/*',
         component: AsyncEditPage
+    },
+    {
+        path: '/home',
+        component: AsyncHomePage
     },
     {
         path: '/forum',

@@ -1,5 +1,6 @@
 import { fetchJSON } from './utils';
 import ResponseError from './utils/ResponseError';
+import { API_URI, API_URL } from '.';
 
 export interface Container {
     id: number;
@@ -20,10 +21,6 @@ export interface Page {
     containers: Container[];
 }
 
-const CMS_URI = window.location.origin;
-
-const CMS_URL = `${CMS_URI}/api/v1`;
-
 export async function uploadImage (dataUrl: string): Promise<string> {
     const base64Index = dataUrl.indexOf('base64,');
     const base64Str = dataUrl.substr(base64Index + 7);
@@ -37,12 +34,12 @@ export async function uploadImage (dataUrl: string): Promise<string> {
     const byteArray = new Uint8Array(array);
     const blob = new Blob([byteArray], { type: mimeType });
 
-    const { fileName } = await fetchJSON<{ fileName: string }>(`${CMS_URL}/upload`, { method: 'POST', headers: { 'Content-Type': mimeType }, body: blob });
-    return `${CMS_URI}/uploads/${fileName}`;
+    const { fileName } = await fetchJSON<{ fileName: string }>(`${API_URL}/upload`, { method: 'POST', headers: { 'Content-Type': mimeType }, body: blob });
+    return `${API_URI}/uploads/${fileName}`;
 }
 
 export async function loadPage (path: string): Promise<Page> {
-    const page = await fetchJSON<Page>(`${CMS_URL}/page${path}`);
+    const page = await fetchJSON<Page>(`${API_URL}/page${path}`);
 
     page.containers = page.containers.sort((a, b) => a.index - b.index);
 
@@ -50,7 +47,7 @@ export async function loadPage (path: string): Promise<Page> {
 }
 
 export async function createPage (p: Page): Promise<Page> {
-    const page = await fetchJSON<Page>(`${CMS_URL}/page`, { method: 'POST', body: JSON.stringify(p), headers: { 'Content-Type': 'application/json' } });
+    const page = await fetchJSON<Page>(`${API_URL}/page`, { method: 'POST', body: JSON.stringify(p), headers: { 'Content-Type': 'application/json' } });
 
     return page;
 }
@@ -67,7 +64,7 @@ export async function createContainer (c: Container): Promise<Container> {
 
     delete c.id;
 
-    const newContainer = await fetchJSON<Container>(`${CMS_URL}/container`, { method: 'POST', body: JSON.stringify(c), headers: { 'Content-Type': 'application/json' } });
+    const newContainer = await fetchJSON<Container>(`${API_URL}/container`, { method: 'POST', body: JSON.stringify(c), headers: { 'Content-Type': 'application/json' } });
 
     return newContainer;
 }
@@ -82,13 +79,13 @@ export async function updateContainer (c: Partial<Container> & Pick<Container, '
     }
     await Promise.all(promises);
 
-    const updatedContainer = await fetchJSON<Container>(`${CMS_URL}/container/${c.id}`, { method: 'PUT', body: JSON.stringify(c), headers: { 'Content-Type': 'application/json' } });
+    const updatedContainer = await fetchJSON<Container>(`${API_URL}/container/${c.id}`, { method: 'PUT', body: JSON.stringify(c), headers: { 'Content-Type': 'application/json' } });
 
     return updatedContainer;
 }
 
 export async function deleteContainer (id: number): Promise<void> {
-    const response = await fetch(`${CMS_URL}/container/${id}`, { method: 'DELETE', credentials: 'include' });
+    const response = await fetch(`${API_URL}/container/${id}`, { method: 'DELETE', credentials: 'include' });
 
     if (!response.ok) throw new ResponseError(response);
 }
