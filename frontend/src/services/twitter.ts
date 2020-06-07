@@ -164,7 +164,7 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
  * @returns {Promise<Tweet[]>} Tweets
  */
 export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
-    const params = maxId !== undefined ? `?max_id=${maxId}&count=50` : '?count=50';
+    const params = maxId !== undefined ? `?max_id=${maxId}&count=50&exclude_replies=true` : '?count=50&exclude_replies=true';
 
     const responseTweets = await fetchJSON<ApiResTweet[]>(`${API_URI}/api/v1/twitter${params}`);
 
@@ -259,5 +259,5 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
     });
 
     // return tweets without the one specified in maxId
-    return tweets.filter(t => !(t instanceof Retweet) && t.id !== maxId).sort((a, b) => b.date.getTime() - a.date.getTime());
+    return tweets.filter(t => t.id !== maxId).sort((a, b) => b.date.getTime() - a.date.getTime());
 }

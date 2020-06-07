@@ -16,7 +16,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img :data-src="m.url" alt="twitter-media" />
+                    <img v-lazy-img="500" :data-src="m.url" alt="twitter-media" />
                 </a>
             </div>
             <p v-if="isRetweet" class="grad-tweet__retweet-author">
@@ -36,7 +36,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img :src="m.url" alt="twitter-media" />
+                    <img v-lazy-img="500" :data-src="m.url" alt="twitter-media" />
                 </a>
             </div>
             <div>
@@ -122,7 +122,7 @@ export default class TweetVue extends Vue {
     }
 
     .grad-container__content .grad-tweet__media img {
-            max-height: 250px;
+        max-height: 250px;
     }
 
     .grad-container__footer {
@@ -142,6 +142,7 @@ export default class TweetVue extends Vue {
             margin-right: 20px;
             margin-bottom: 0px;
             flex: none;
+            width: auto;
 
             img {
                 max-height: 80px;
