@@ -118,7 +118,7 @@ export default class TweetVue extends Vue {
         background-image: url('~@/assets/twitter.svg');
         background-repeat: no-repeat;
         background-position: center;
-        background-size: 5%;
+        background-size: 3%;
     }
 
     .grad-container__content .grad-tweet__media img {
