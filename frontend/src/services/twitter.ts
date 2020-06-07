@@ -191,7 +191,7 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
         }
 
         // content of main tweet
-        let mainCaption = enrichTwitterCaption(mainTweet.full_text, mainTweet.entities);
+        let mainCaption;
 
         // quoted_status and retweeted_status both contain the tweet that was retweeted with the
         // only difference being that the parent tweet of quoted_status will contain a own comment
@@ -199,13 +199,27 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
         let retweetedStatus: ApiResTweet|null = null;
         if (mainTweet.quoted_status) {
             retweetedStatus = mainTweet.quoted_status;
+
+            if (Object.prototype.hasOwnProperty.call(mainTweet, 'quoted_status_permalink')) {
+                // eslint-disable-next-line @typescript-eslint/camelcase, @typescript-eslint/no-non-null-assertion
+                const url = mainTweet.quoted_status_permalink!.url;
+
+                // the full_text of the mainTweet will include a link of the quoted tweet, and we dont want that
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                mainTweet.full_text = mainTweet.full_text.replace(url, '');
+
+                mainTweet.entities.urls = (mainTweet.entities.urls || []).filter(e => e.url !== url);
+            }
+            mainCaption = enrichTwitterCaption(mainTweet.full_text, mainTweet.entities);
         } else if (mainTweet.retweeted_status) {
             retweetedStatus = mainTweet.retweeted_status;
 
             mainCaption = ''; // full_text of main tweet will just contain part of the retweeted full_text
+        } else {
+            mainCaption = enrichTwitterCaption(mainTweet.full_text, mainTweet.entities);
         }
 
-        if (retweetedStatus) {
+        if (retweetedStatus !== null) {
             const retweetedId = retweetedStatus.id_str;
 
             // retweeted media
