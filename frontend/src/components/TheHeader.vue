@@ -1,18 +1,40 @@
 <template>
     <header class="grad-header">
-        <video video autobuffer autoplay muted loop  class="grad-header__video">
-            <source src="@/assets/technik.mp4" type="video/mp4">
-        </video>
+        <video video autobuffer autoplay muted loop class="grad-header__video" :src="`${baseUrl}video/header/${video}`"></video>
         <div class="grad-header__fade"></div>
-        <img class="grad-header__logo" src="/logo.svg" alt="logo" />
+        <img class="grad-header__logo" :src="`${baseUrl}logo.svg`" alt="logo" />
     </header>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+const DEFAULT_VIDEO = 'default.webm';
+
+/* eslint-disable quote-props */
+const videos: { [key: string]: string } = {
+    'technik': 'technik.mp4'
+};
+/* eslint-enable quote-props */
+
 @Component
-export default class TheHeaderVue extends Vue {}
+export default class TheHeaderVue extends Vue {
+    private get video (): string {
+        const routeParts = this.$route.path.split('/').filter(s => s.length > 0).map(s => s.toLowerCase());
+
+        if (routeParts.length === 0) return DEFAULT_VIDEO;
+
+        if (Object.prototype.hasOwnProperty.call(videos, routeParts[0])) {
+            return videos[routeParts[0]];
+        }
+
+        return DEFAULT_VIDEO;
+    }
+
+    private get baseUrl (): string {
+        return process.env.BASE_URL;
+    }
+}
 </script>
 
 <style lang="scss" scoped>
