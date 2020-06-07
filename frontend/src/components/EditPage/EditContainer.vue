@@ -49,7 +49,13 @@
                 <ActionButton icon="cancel" tooltip="Änderungen verwerfen" @click="updateValues" />
                 <span style="height: 1rem;"></span>
             </template>
-            <ActionButton icon="delete" tooltip="Container löschen" color="#8F1167" @click="$emit('delete', container)" />
+            <div class="grad-edit-container__delete">
+                <ActionButton icon="delete" tooltip="Container löschen" color="#8F1167" @click="deletePopup = !deletePopup" />
+                <div v-if="deletePopup">
+                    <button @click="$emit('delete', container)">Bestätigen</button>
+                    <button @click="deletePopup = false">Abbrechen</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -78,6 +84,7 @@ export default class EditContainerVue extends Vue {
     @Prop({ required: true }) private container!: Container;
     private values: Container|null = null;
     private editHeading = false;
+    private deletePopup = false;
 
     private created () {
         this.updateValues();
@@ -161,6 +168,53 @@ export default class EditContainerVue extends Vue {
         display: grid;
         grid-row-gap: .5rem;
         align-content: flex-start;
+
+    }
+
+    &__delete {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        > div:nth-child(2) {
+            position: absolute;
+            left: 100%;
+            background-color: #C4C4C4;
+            padding: .5rem;
+            border-radius: 1rem;
+            margin-left: .75rem;
+            display: grid;
+            grid-row-gap: .5rem;
+
+            > button {
+                background-color: white;
+                // color: #2F80ED;
+
+                &:hover {
+                    background-color: #2F80ED;
+                }
+
+                &:first-of-type {
+                    color: #8F1167;
+
+                    &:hover {
+                        color: white;
+                        background-color: #8F1167;
+                    }
+                }
+            }
+
+            &::before {
+                background-color: inherit;
+                content: '';
+                width: 1rem;
+                height: 1rem;
+                position: absolute;
+                left: 0px;
+                transform: translate(-50%, -50%) rotate(45deg);
+                top: 50%;
+            }
+        }
     }
 
     &__heading-text-field {
