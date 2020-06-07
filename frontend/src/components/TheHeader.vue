@@ -1,7 +1,7 @@
 <template>
     <header class="grad-header">
         <video video autobuffer autoplay muted loop  class="grad-header__video">
-            <source src="@/assets/header.webm" type="video/webm">
+            <source src="@/assets/technik.webm" type="video/webm">
         </video>
         <div class="grad-header__fade"></div>
         <img class="grad-header__logo" src="/logo.svg" alt="logo" />
@@ -36,7 +36,7 @@ export default class TheHeaderVue extends Vue {}
         left: 0px;
         bottom: 0px;
         right: 0px;
-        background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%), url('~@/assets/technik.webm');
+        background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%);
     }
 
     &__video {
