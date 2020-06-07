@@ -50,6 +50,10 @@ button {
     &:hover {
         background-color: #2F80ED;
         color: #fff;
+
+        > img {
+            filter: brightness(200);
+        }
     }
 }
 
