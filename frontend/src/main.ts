@@ -4,6 +4,7 @@ import './registerServiceWorker';
 import './plugins/globalComponents';
 import './plugins/globalDirectives';
 import './plugins/smoothScroll';
+import './plugins/gtag';
 import router from './plugins/router';
 import { SSOUser } from '@/services/sso';
 
