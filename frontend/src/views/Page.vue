@@ -75,7 +75,7 @@ export default class PageVue extends Vue {
     private loadingError = false;
     private pageNotFound = false;
 
-    private mounted () {
+    private created () {
         this.fetchPageData();
     }
 

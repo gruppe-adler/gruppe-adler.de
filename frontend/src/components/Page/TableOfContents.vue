@@ -4,7 +4,7 @@
             v-for="(c, i) in containers"
             :class="[i == currentId ? 'grad-toc--active' : '']"
             :key="i"
-            v-smooth-scroll="{ offset: -120 }"
+            v-smooth-scroll="{ offset }"
             :href="`#grad-container-${i}`"
         >
             {{c.heading}}
@@ -21,10 +21,23 @@ export default class TableOfContents extends Vue {
     @Prop({ default: () => [], type: Array }) private containers!: Container[];
     private currentId = -1;
     private scrollTimeout: number | null = null;
+    private offset = -120;
 
     private mounted () {
         window.addEventListener('scroll', this.handleScroll);
         this.updateCurrentContainer();
+
+        if (this.$route.hash.length > 0) {
+            this.$nextTick(() => {
+                const el = document.getElementById(this.$route.hash.substr(1));
+                if (el === null) return;
+
+                const { top } = el.getBoundingClientRect();
+                const offsetPosition = top + this.offset;
+
+                window.scrollTo({ top: offsetPosition });
+            });
+        }
     }
 
     private beforeDestroy () {
