@@ -1,7 +1,7 @@
 <template>
     <header class="grad-header">
         <video video autobuffer autoplay muted loop  class="grad-header__video">
-            <source src="@/assets/technik.webm" type="video/webm">
+            <source src="@/assets/technik.mp4" type="video/mp4">
         </video>
         <div class="grad-header__fade"></div>
         <img class="grad-header__logo" src="/logo.svg" alt="logo" />
