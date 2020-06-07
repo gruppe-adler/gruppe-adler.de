@@ -36,7 +36,7 @@ export default class TheHeaderVue extends Vue {}
         left: 0px;
         bottom: 0px;
         right: 0px;
-        background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%), url('~@/assets/header.webm');
+        background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%), url('~@/assets/technik.webm');
     }
 
     &__video {
