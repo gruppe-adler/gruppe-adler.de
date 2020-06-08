@@ -10,6 +10,7 @@ import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
+import * as compression from 'compression';
 
 import v1Router from './v1';
 
@@ -36,6 +37,9 @@ app.use(cookieParser());
 
 // logger
 app.use(morgan('short'));
+
+// gzip
+app.use(compression());
 
 // api
 app.use('/api/v1', v1Router);
