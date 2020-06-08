@@ -1,6 +1,6 @@
 <template>
     <Content>
-        <transition-group name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
+        <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
             <Tweet
                 v-for="tweet in tweets"
                 :model="tweet"
