@@ -8,7 +8,7 @@ const AsyncPage: AsyncComponent = () => ({
     // @ts-ignore
     component: import(
         /* webpackChunkName: "page" */
-        /* webpackMode: "lazy" */
+        /* webpackMode: "eager" */
         '@/views/Page.vue'
     ),
     loading: LoaderVue,
@@ -36,7 +36,7 @@ const AsyncHomePage: AsyncComponent = () => ({
     // @ts-ignore
     component: import(
         /* webpackChunkName: "home" */
-        /* webpackMode: "lazy" */
+        /* webpackMode: "eager" */
         '@/views/Home.vue'
     ),
     loading: LoaderVue,
