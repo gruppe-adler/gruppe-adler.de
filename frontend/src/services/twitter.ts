@@ -103,56 +103,30 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
 
     const sortedEntities = allEntities.sort((a, b) => b.end - a.end);
 
+    const graphemes = splitter.splitGraphemes(text);
+
     // now we can start inserting into the text
     sortedEntities.forEach(e => {
-        let entity: HashtagEntity | MediaEntity | UserMentionEntity | UrlEntity = e.entity;
-
-        // split the text at the indices position
-        const pre = splitter.splitGraphemes(text).slice(0, e.start).join('');
-        const mid = splitter.splitGraphemes(text).slice(e.start, e.end).join('');
-        const post = splitter.splitGraphemes(text).slice(e.end).join('');
+        let insertText = '';
 
         if (e.type === 'hashtags') {
-            entity = entity as HashtagEntity;
-            text = [
-                pre,
-                `<a href="https://twitter.com/hashtag/${entity.text}?src=hash" target="_blank" rel="noreferrer">`,
-                mid,
-                '</a>',
-                post
-            ].join('');
-        }
-
-        if (e.type === 'media') {
+            const entity = e.entity as HashtagEntity;
+            const mid = graphemes.slice(e.start, e.end).join('');
+            insertText = `<a href="https://twitter.com/hashtag/${entity.text}?src=hash" target="_blank" rel="noreferrer">${mid}</a>`;
+        } else if (e.type === 'media') {
             // media url will be just discarded
-            entity = entity as MediaEntity;
-            text = [pre, post].join('');
+        } else if (e.type === 'urls') {
+            const entity = e.entity as UrlEntity;
+            insertText = `<a href="${entity.expanded_url}" target="_blank" rel="noreferrer">${entity.display_url}</a>`;
+        } else if (e.type === 'user_mentions') {
+            const entity = e.entity as UserMentionEntity;
+            const mid = graphemes.slice(e.start, e.end).join('');
+            insertText = `<a href="https://twitter.com/${entity.screen_name}" target="_blank" rel="noreferrer">${mid}</a>`;
         }
-
-        if (e.type === 'urls') {
-            entity = entity as UrlEntity;
-            text = [
-                pre,
-                `<a href="${entity.expanded_url}" target="_blank" rel="noreferrer">`,
-                entity.display_url,
-                '</a>',
-                post
-            ].join('');
-        }
-
-        if (e.type === 'user_mentions') {
-            entity = entity as UserMentionEntity;
-            text = [
-                pre,
-                `<a href="https://twitter.com/${entity.screen_name}" target="_blank" rel="noreferrer">`,
-                mid,
-                '</a>',
-                post
-            ].join('');
-        }
+        graphemes.splice(e.start, e.end - e.start, insertText);
     });
 
-    return text.replace(/\n/g, '<br />');
+    return graphemes.join('').replace(/\n/g, '<br />');
 };
 
 /**
