@@ -98,6 +98,10 @@ export default class TweetVue extends Vue {
             &:not(:last-child) {
                 margin-right: 2px;
             }
+
+            &:only-child {
+                border-radius: inherit;
+            }
         }
     }
 
