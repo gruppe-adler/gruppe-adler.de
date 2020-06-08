@@ -7,6 +7,8 @@
                 :href="item.url"
                 :key="item.url"
                 class="grad-footer__link"
+                target="_blank"
+                rel="noreferrer"
             >
                 <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" />
             </a>
