@@ -1,6 +1,6 @@
 html, body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     background-color: black;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
@@ -33,12 +33,12 @@ a:hover {
 button {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #F0F0F0;
-    border-radius: 100px;
+    border-radius: 6.25rem;
     color: #2F80ED;
-    height: 40px;
-    padding: 0px 20px;
+    height: 2.5rem;
+    padding: 0 1.25rem;
     border-style: none;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
     display: flex;
     align-items: center;

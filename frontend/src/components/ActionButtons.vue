@@ -13,13 +13,13 @@ export default class ActionButtonsVue extends Vue {}
 <style lang="scss">
 .grad-action-buttons {
     position: absolute;
-    top: -60px;
-    left: 0px;
+    top: -3.75rem;
+    left: 0;
     display: flex;
     width: 100%;
 
     > *:not(:last-child) {
-        margin-right: 8px;
+        margin-right: .5rem;
     }
 }
 </style>

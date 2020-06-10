@@ -39,14 +39,14 @@ export default class TheHeaderVue extends Vue {
 
 <style lang="scss" scoped>
 .grad-header {
-    margin-top: 40px;
+    margin-top: 2.5rem;
     position: relative;
     z-index: 0;
     background-color: transparent;
-    height: 450px;
+    height: 28rem;
     width: 100%;
     overflow: hidden;
-    min-height: 450px;
+    min-height: 28rem;
     min-width: 100%;
     display: flex;
     justify-content: center;
@@ -54,10 +54,10 @@ export default class TheHeaderVue extends Vue {
 
     &__fade {
         position: absolute;
-        top: 0px;
-        left: 0px;
-        bottom: 0px;
-        right: 0px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%);
     }
 
@@ -72,14 +72,14 @@ export default class TheHeaderVue extends Vue {
     }
 
     &__logo {
-        height: 162px;
+        height: 10rem;
         position: absolute;
-        top: 100px;
-        left: 10px;
+        top: 6rem;
+        left: .5rem;
     }
 
     @media(max-width: 1150px) {
-        height: 350px;
+        height: 21.75rem;
         &__logo {
             display: none;
         }

@@ -120,12 +120,12 @@ export default class HomeVue extends Vue {
 }
 
 .grad-blog-wrapper + .grad-loader {
-    margin-top: 30px;
+    margin-top: 2rem;
 }
 
 .grad-blog__load-more,
 .grad-blog__end {
-    margin-top: 50px;
+    margin-top: 3rem;
     font-size: 1.1em;
     font-weight: bold;
     opacity: 0.7;
@@ -142,20 +142,5 @@ export default class HomeVue extends Vue {
 
 .grad-blog__end {
     color: black;
-}
-</style>
-
-<style lang="scss">
-.grad-blog-entry--transition-enter-active,
-.grad-blog-entry--transition-leave-active {
-    transition: all 0.25s !important;
-    max-height: 1000px !important;
-    opacity: 1 !important;
-}
-
-.grad-blog-entry--transition-enter,
-.grad-blog-entry--transition-leave-to {
-    max-height: 0px !important;
-    opacity: 0 !important;
 }
 </style>

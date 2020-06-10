@@ -178,27 +178,27 @@ export default class TheFooterVue extends Vue {
 
 <style lang="scss" scoped>
 .grad-footer {
-    margin-top: 50px;
+    margin-top: 3rem;
     position: relative;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
     > * {
-        margin: 0 50px;
-        padding-bottom: 50px;
+        margin: 0 3rem;
+        padding-bottom: 3rem;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
     }
     &__link {
-        margin: 20px;
+        margin: 1.25rem;
         flex: none;
         color: black;
         cursor: pointer;
         opacity: 0.7;
 
         img {
-            height: 40px;
+            height: 2.5rem;
             filter: saturate(0%);
         }
 
@@ -210,15 +210,15 @@ export default class TheFooterVue extends Vue {
         }
     }
     &__desc {
-        margin: 20px;
-        padding-bottom: 0px;
+        margin: 1.25rem;
+        padding-bottom: 0;
         opacity: 0.7;
     }
     &__login,
     &__copyright {
         position: absolute;
-        bottom: 0px;
-        left: 0px;
+        bottom: 0;
+        left: 0;
         font-size: 0.7em;
         opacity: 0.7;
         padding-bottom: 2em;
@@ -226,7 +226,7 @@ export default class TheFooterVue extends Vue {
     &__login {
         left: auto;
         cursor: pointer;
-        right: 0px;
+        right: 0;
         color: black;
     }
 }

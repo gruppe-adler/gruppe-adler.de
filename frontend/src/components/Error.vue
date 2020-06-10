@@ -21,14 +21,14 @@ export default class ErrorVue extends Vue {}
     align-items: center;
     flex-direction: column;
     &__image {
-        max-height: 320px;
+        height: 20rem;
     }
 
     &__text {
         font-family: 'Oswald', sans-serif;
-        font-size: 20px;
+        font-size: 1.25rem;
         text-align: center;
-        margin-top: -20px;
+        margin-top: -1.25rem;
     }
 
 }

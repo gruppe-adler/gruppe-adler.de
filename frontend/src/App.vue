@@ -28,7 +28,7 @@ export default class AppVue extends Vue {}
 
 // make the page min height 100vh
 #app > .grad-header + *  {
-    min-height: calc(100vh - 400px);
+    min-height: calc(100vh - 25rem);
 }
 
 </style>

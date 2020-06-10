@@ -78,12 +78,12 @@ export function parseDate (date: Date): string {
         align-items: center;
 
         > span {
-            border-radius: 20px;
+            border-radius: 1.25rem;
             font-size: 0.67em;
-            padding: 5px 10px;
+            padding: .25rem .5rem;
             text-transform: none;
             display: flex;
-            height: 36px;
+            height: 2.25rem;
             box-sizing: border-box;
             align-items: center;
             background-color: rgba(0,0,0,0.2);
@@ -91,7 +91,7 @@ export function parseDate (date: Date): string {
             color: white;
 
             & ~ * {
-                margin-left: 8px;
+                margin-left: .5rem;
             }
         }
     }
@@ -99,16 +99,12 @@ export function parseDate (date: Date): string {
     &__author {
         align-items: center;
         display: flex;
-        margin-left: 10px;
+        margin-left: .5rem;
         img {
             border-radius: 50%;
-            height: 36px;
-            width: 36px;
+            height: 2.25rem;
+            width: 2.25rem;
         }
     }
-
-    // .grad-container__content {
-    //     margin-top: 18px;
-    // }
 }
 </style>

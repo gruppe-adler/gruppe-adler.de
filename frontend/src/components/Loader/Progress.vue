@@ -5,13 +5,13 @@
 <style lang="scss" scoped>
 .grad-progress {
     color: #D18D1F;
-    height: 5px;
+    height: 0.25rem;
     background-color: rgba(#D18D1F, 0.4);
     width: 100%;
     position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
     overflow: hidden;
 
     &:after {

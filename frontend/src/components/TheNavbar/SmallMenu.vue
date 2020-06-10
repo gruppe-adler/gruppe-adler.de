@@ -76,10 +76,10 @@ export default class NavbarSmallMenu extends Vue {
 .grad-nav__small-menu {
     overflow: hidden;
     position: fixed;
-    top: 72px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    top: 4.5rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: black;
 
     > a {
@@ -88,11 +88,11 @@ export default class NavbarSmallMenu extends Vue {
         cursor: pointer;
         align-items: center;
         display: flex;
-        line-height: 20px;
-        font-size: 20px;
-        padding: 5px 0px 5px 27px;
-        margin: 15px 0px;
-        border-left: 4px solid transparent;
+        line-height: 1.25rem;
+        font-size: 1.25rem;
+        padding: .25rem 0 .25rem 1.5rem;
+        margin: 1rem 0;
+        border-left: .25rem solid transparent;
         opacity: 0.7;
 
         &.grad-nav__link.grad-nav--active {
@@ -102,8 +102,8 @@ export default class NavbarSmallMenu extends Vue {
         &.grad-nav--expanded {
             border-color: #D18D1F;
             opacity: 1;
-            font-size: 28px;
-            line-height: 28px;
+            font-size: 1.75rem;
+            line-height: 1.75rem;
         }
 
         > img {
@@ -116,11 +116,11 @@ export default class NavbarSmallMenu extends Vue {
         }
         &.small-menu-enter,
         &.small-menu-leave-to {
-            height: 0px;
-            margin-top: 0px;
-            margin-bottom: 0px;
-            padding-top: 0px;
-            padding-bottom: 0px;
+            height: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
             opacity: 0;
         }
     }

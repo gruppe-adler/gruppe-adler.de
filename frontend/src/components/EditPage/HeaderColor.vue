@@ -52,16 +52,16 @@ export default class EditHeaderColorVue extends Vue {
 
     &__mask {
         position: fixed;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 100vw;
         height: 100vh;
     }
 
     &__color-picker {
         position: absolute;
-        top: 0px;
-        right: 0px;
+        top: 0;
+        right: 0;
     }
 }
 </style>

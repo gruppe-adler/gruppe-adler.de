@@ -50,6 +50,6 @@ export default class SnackbarVue extends Vue {
     border-radius: .5rem;
 
     background-color: var(--grad-snackbar-color, #6CAACC);
-    box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 .25rem 2.75rem rgba(0, 0, 0, 0.25);
 }
 </style>

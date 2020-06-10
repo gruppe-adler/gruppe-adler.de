@@ -238,7 +238,7 @@ export default class TheNavbarVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
-$navbar-height: 72px;
+$navbar-height: 4.5rem;
 
 .grad-nav {
     user-select: none;
@@ -253,9 +253,9 @@ $navbar-height: 72px;
     background-color: black;
 
     position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 2;
     transition: top .25s ease-in-out;
 
@@ -264,19 +264,18 @@ $navbar-height: 72px;
     }
 
     &__header {
-        height: 45px;
         cursor: pointer;
         flex: none;
         display: flex;
         align-items: center;
-        margin-left: 21px;
+        margin-left: 1rem;
 
         img {
-            margin-right: 8px;
-            height: 50px;
+            margin-right: .5rem;
+            height: 3rem;
         }
         span {
-            font-size: 12px;
+            font-size: .75rem;
             display: block;
 
             &:nth-child(2) {
@@ -284,7 +283,7 @@ $navbar-height: 72px;
             }
 
             &:only-child {
-                font-size: 27px;
+                font-size: 1.75rem;
             }
         }
     }
@@ -296,12 +295,12 @@ $navbar-height: 72px;
         flex: none;
         box-sizing: border-box;
         height: 100%;
-        margin: 0px 10px;
+        margin: 0 .5rem;
         opacity: 0.7;
 
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-        padding: 0px 2px;
+        border-top: .25rem solid transparent;
+        border-bottom: .25rem solid transparent;
+        padding: 0 .125rem;
 
         > img {
             height: 1em;
@@ -316,7 +315,7 @@ $navbar-height: 72px;
         display: flex;
         justify-content: flex-end;
         height: 100%;
-        font-size: 18px;
+        font-size: 1.125rem;
 
         > .grad-nav__link-wrapper {
             position: relative;
@@ -342,16 +341,16 @@ $navbar-height: 72px;
         z-index: 1;
         visibility: hidden;
         display: flex;
-        height: 43px;
-        font-size: 12px;
+        height: 2.75rem;
+        font-size: 0.75rem;
 
         position: absolute;
         top: $navbar-height;
-        left: 0px;
+        left: 0;
 
         .grad-nav__link {
-            border-top: 2px solid transparent;
-            border-bottom: 2px solid transparent;
+            border-top: .125rem solid transparent;
+            border-bottom: .125rem solid transparent;
 
             &.grad-nav--active { // active sub link
                 opacity: 1;
@@ -365,20 +364,20 @@ $navbar-height: 72px;
     }
 
     &__sub-link-bar {
-        font-size: 21px;
-        padding-left: 36px;
+        font-size: 1.25rem;
+        padding-left: 2.25rem;
         display: flex;
         align-items: center;
 
         position: absolute;
-        height: 43px;
+        height: 2.75rem;
         top: $navbar-height;
-        left: 0px;
-        right: 0px;
+        left: 0;
+        right: 0;
 
         background: linear-gradient(270deg, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.08) 100%);
-        -webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(.25rem);
+        backdrop-filter: blur(.25rem);
     }
 
     @media (max-width: 1000px) {

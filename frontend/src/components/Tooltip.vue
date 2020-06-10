@@ -52,14 +52,14 @@ export default class TooltipVue extends Vue {
         color: white;
         white-space: nowrap;
         background-color: rgba(black, 0.8);
-        padding: 8px;
-        border-radius: 4px;
+        padding: .5rem;
+        border-radius: .25rem;
         position: absolute;
-        font-size: 14px;
+        font-size: 1rem;
         font-weight: bold;
-        top: 0px;
+        top: 0;
         letter-spacing: 0.08em;
-        transform: translateY( calc(-100% - 4px) );
+        transform: translateY( calc(-100% - .25rem) );
         z-index: 2;
     }
 }

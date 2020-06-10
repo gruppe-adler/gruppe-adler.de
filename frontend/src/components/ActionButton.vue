@@ -25,12 +25,12 @@ export default class ActionButtonVue extends Vue {
 
 <style lang="scss" scoped>
 .grad-action-button {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
     background-color: var(--color);
     color: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 .25rem 0.75rem rgba(0, 0, 0, 0.25);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -39,7 +39,7 @@ export default class ActionButtonVue extends Vue {
     user-select: none;
 
     &:hover {
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 .5rem 1.25rem rgba(0, 0, 0, 0.25);
     }
 }
 </style>

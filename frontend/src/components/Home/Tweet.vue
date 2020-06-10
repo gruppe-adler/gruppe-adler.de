@@ -1,5 +1,5 @@
 <template>
-    <BlogEntry headerColor="rgba(255,255,255,0.5)" class="grad-tweet">
+    <BlogEntry headerColor="transparent" class="grad-tweet">
         <template v-slot:date>{{date}}</template>
         <template v-slot:heading><a :href="`https://twitter.com/${model.author.username}`" target="_blank" rel="noreferrer">@{{model.author.username}}</a></template>
         <template v-slot:author>
@@ -20,7 +20,7 @@
                 </a>
             </div>
             <p v-if="isRetweet" class="grad-tweet__retweet-author">
-                Retweet von <a :href="`https://twitter.com/${model.retweetedTweet.author.username}`" target="_blank" rel="noreferrer">@{{model.retweetedTweet.author.username}}</a>
+                Retweet von <a :href="`https://twitter.com/${model.retweetedTweet.author.username}`" target="_blank" rel="noreferrer">@{{model.retweetedTweet.author.displayName}}</a>
             </p>
             <p v-html="model.caption"></p>
         </template>
@@ -75,19 +75,12 @@ export default class TweetVue extends Vue {
 </script>
 <style lang="scss">
 .grad-tweet {
-
     &__media {
-        border-radius: 10px;
-        margin-bottom: 10px;
+        border-radius: .5rem;
+        margin-bottom: .5rem;
         display: flex;
         justify-content: space-evenly;
         overflow: hidden;
-
-        img {
-            overflow: hidden;
-            max-width: none;
-            flex: none;
-        }
 
         > a {
             overflow: hidden;
@@ -96,11 +89,17 @@ export default class TweetVue extends Vue {
             justify-content: center;
 
             &:not(:last-child) {
-                margin-right: 2px;
+                margin-right: .125rem;
             }
 
             &:only-child {
                 border-radius: inherit;
+            }
+
+            > img {
+                overflow: hidden;
+                max-width: none;
+                flex: none;
             }
         }
     }
@@ -126,30 +125,30 @@ export default class TweetVue extends Vue {
     }
 
     .grad-container__content .grad-tweet__media img {
-        max-height: 250px;
+        max-height: 16rem;
     }
 
     .grad-container__footer {
-        padding-left: 60px;
+        padding-left: 3.75rem;
         display: flex;
         position: relative;
         line-height: 2em;
 
         > svg {
             position: absolute;
-            left: 20px;
-            top: 20px;
+            left: 1.25rem;
+            top: 1.25rem;
         }
 
         .grad-tweet__media {
-            max-width: 150px;
-            margin-right: 20px;
-            margin-bottom: 0px;
+            max-width: 10rem;
+            margin-right: 1.25rem;
+            margin-bottom: 0;
             flex: none;
             width: auto;
 
             img {
-                max-height: 80px;
+                max-height: 5rem;
             }
         }
     }
@@ -168,7 +167,7 @@ export default class TweetVue extends Vue {
             .grad-tweet__media {
                 width: auto;
                 max-width: 100%;
-                margin-right: 0px;
+                margin-right: 0;
             }
         }
     }

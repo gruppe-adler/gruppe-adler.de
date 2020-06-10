@@ -6,7 +6,7 @@
                 <span></span>
             </template>
             <template>
-                <div style="height: 300px;"></div>
+                <div style="height: 19rem;"></div>
             </template>
         </Container>
         <div class="grad-loader__mask"></div>
@@ -37,10 +37,10 @@ export default class LoaderVue extends Vue {
     position: relative;
 
     &__mask {
-        left: -50px;
-        right: -50px;
-        height: 300px;
-        top: 200px;
+        left: -3rem;
+        right: -3rem;
+        height: 19rem;
+        top: 12.5rem;
         position: absolute;
         background-image: linear-gradient(transparent, #F0EEEC, #F0EEEC, #F0EEEC);
     }

@@ -17,14 +17,14 @@
                     </template>
                     <span>{{values.heading}}</span>
                 </EditableField>
-                <EditableImage v-model="values.headerImage" style="margin-left: 1rem;" placeholderStyle="height: 45px; border-radius: .5rem; width: 4rem; font-size: 2rem;">
+                <EditableImage v-model="values.headerImage" style="margin-left: 1rem;" placeholderStyle="height: 3rem; border-radius: .5rem; width: 4rem; font-size: 2rem;">
                     <template v-slot:img="{ img }">
                         <img v-lazy-img :data-src="img" alt="preview-image" class="grad-container__header-image">
                     </template>
                 </EditableImage>
             </template>
             <template v-slot:image>
-                <EditableImage v-model="values.pinnedImage" style="max-height: inherit;" placeholderStyle="min-height: 10rem; margin-top: 72px; font-size: 3rem;">
+                <EditableImage v-model="values.pinnedImage" style="max-height: inherit;" placeholderStyle="min-height: 10rem; margin-top: 4.5rem; font-size: 3rem;">
                     <template v-slot:img="{ img }">
                         <img v-lazy-img :data-src="img" alt="preview-image" style="max-width: 100%">
                     </template>
@@ -163,8 +163,8 @@ export default class EditContainerVue extends Vue {
     &__actions {
         position: absolute;
         left: calc(100% + .5rem);
-        top: 0px;
-        bottom: 0px;
+        top: 0;
+        bottom: 0;
         display: grid;
         grid-row-gap: .5rem;
         align-content: flex-start;
@@ -210,7 +210,7 @@ export default class EditContainerVue extends Vue {
                 width: 1rem;
                 height: 1rem;
                 position: absolute;
-                left: 0px;
+                left: 0;
                 transform: translate(-50%, -50%) rotate(45deg);
                 top: 50%;
             }
@@ -226,7 +226,7 @@ export default class EditContainerVue extends Vue {
         padding: 0.2rem;
         margin-left: -0.2rem;
         margin-top: -0.2rem;
-        border: 0px;
+        border: 0;
         width: 100%;
         background-color: transparent;
         border: none;

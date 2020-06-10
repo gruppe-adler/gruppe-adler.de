@@ -41,17 +41,15 @@ export default class ContainerVue extends Vue {
 
 <style lang="scss">
 .grad-container {
-    $offset: 200px;
-
     background-color: white;
-    border-radius: 4px;
-    box-shadow: 0 4px 60px rgba(155,96,0,0.15), 0 2px 20px rgba(155,96,0,0.15);
-    font-size: 18px;
+    border-radius: .25rem;
+    box-shadow: 0 .25rem 3.75rem rgba(155,96,0,0.15), 0 .125rem 1.25rem rgba(155,96,0,0.15);
+    font-size: 1.125rem;
     width: 100%;
     display: inline-block;
 
     > * {
-        padding: 0px 36px;
+        padding: 0 2.25rem;
     }
 
     &__header {
@@ -62,21 +60,21 @@ export default class ContainerVue extends Vue {
         align-items: center;
         justify-content: space-between;
 
-        height: 72px;
+        height: 4.5rem;
 
-        font-size: 21px;
+        font-size: 1.3125rem;
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
         color: rgba(0,0,0,0.5);
 
-        -webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(.25rem);
+        backdrop-filter: blur(.25rem);
 
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
 
         &-image {
-            max-height: 45px;
+            max-height: 3rem;
             filter: saturate(0%);
             opacity: 0.4;
         }
@@ -85,13 +83,13 @@ export default class ContainerVue extends Vue {
     &__image {
         z-index: 0;
         position: relative;
-        padding: 0px;
-        margin-top: -72px;
-        max-height: 360px;
+        padding: 0;
+        margin-top: -4.5rem;
+        max-height: 22.5rem;
         overflow: hidden;
 
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
 
         > * {
             max-width: 100%;
@@ -101,8 +99,8 @@ export default class ContainerVue extends Vue {
 
     &__content {
         color: #666666;
-        margin-top: 18px;
-        margin-bottom: 18px;
+        margin-top: 1.125rem;
+        margin-bottom: 1.125rem;
         line-height: 1.7em;
 
         > div {
@@ -126,14 +124,14 @@ export default class ContainerVue extends Vue {
     &__footer {
         display: flex;
         align-items: center;
-        padding-top: 18px;
-        padding-bottom: 19px;
+        padding-top: 1.125rem;
+        padding-bottom: 1.125rem;
         background: rgba(240, 236, 232, 0.7);
-        -webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(.25rem);
+        backdrop-filter: blur(.25rem);
         color: #666666;
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: .25rem;
+        border-bottom-right-radius: .25rem;
 
         > div {
             width: 100%;
@@ -141,7 +139,7 @@ export default class ContainerVue extends Vue {
     }
 
     & + & {
-        margin-top: 30px;
+        margin-top: 2rem;
     }
 }
 </style>
