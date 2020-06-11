@@ -23,6 +23,25 @@
                 Retweet von <a :href="`https://twitter.com/${model.retweetedTweet.author.username}`" target="_blank" rel="noreferrer">@{{model.retweetedTweet.author.displayName}}</a>
             </p>
             <p v-html="model.caption"></p>
+            <template v-if="isLoggedIn">
+                <div v-if="model.hidden" class="grad-tweet__overlay">
+                    <i class="material-icons">visibility_off</i>
+                </div>
+                <div class="grad-tweet__actions">
+                    <ActionButton
+                        v-if="model.hidden"
+                        tooltip="Tweet anzeigen"
+                        icon="visibility"
+                        @click="toggleVisibility"
+                    />
+                    <ActionButton
+                        v-else
+                        tooltip="Tweet verstecken"
+                        icon="visibility_off"
+                        @click="toggleVisibility"
+                    />
+                </div>
+            </template>
         </template>
         <template v-if="isRetweet" v-slot:footer>
             <svg width="26" height="15" viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,11 +70,12 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { Tweet, RETWEET_TYPE } from '@/services/twitter';
+import { Tweet, RETWEET_TYPE, hideTweet } from '@/services/twitter';
 import BlogEntryVue, { parseDate } from './BlogEntry.vue';
+import ActionButtonVue from '../ActionButton.vue';
 
 @Component({
-    components: { BlogEntry: BlogEntryVue }
+    components: { BlogEntry: BlogEntryVue, ActionButton: ActionButtonVue }
 })
 export default class TweetVue extends Vue {
     @Prop() private model?: Tweet;
@@ -70,6 +90,25 @@ export default class TweetVue extends Vue {
         if (!this.model) return '';
 
         return parseDate(this.model.date);
+    }
+
+    private async toggleVisibility () {
+        if (!this.model) return;
+
+        await hideTweet(this.model.id, !this.model.hidden);
+
+        this.model.hidden = !this.model.hidden;
+    }
+
+    /**
+     * @description Check if user is logged in
+     * @author DerZade
+     * @returns {boolean} User logged in?
+     */
+    private get isLoggedIn (): boolean {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return this.$root.isLoggedIn() || false;
     }
 }
 </script>
@@ -102,6 +141,39 @@ export default class TweetVue extends Vue {
                 flex: none;
             }
         }
+    }
+
+    &__overlay {
+        background-color: rgba(black, 0.5);
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 30;
+        border-radius: 0.25rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgba(white, 0.75);
+        cursor: default;
+        transition: opacity 0.1s ease-in-out;
+
+        &:hover {
+            opacity: 0.3;
+        }
+
+        > i {
+            font-size: 3rem
+        }
+    }
+
+    &__actions {
+        position: absolute;
+        top: 0px;
+        left: calc(100% + 0.5rem);
+        bottom: 0px;
+        width: auto !important;
     }
 
     &__retweet-author {

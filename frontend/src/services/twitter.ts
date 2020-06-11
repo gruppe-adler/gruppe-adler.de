@@ -11,6 +11,7 @@ import GraphemeSplitter from 'grapheme-splitter';
 
 import { fetchJSON } from './utils';
 import { API_URI } from '.';
+import ResponseError from './utils/ResponseError';
 
 export const TWEET_TYPE = 'tweet';
 export const RETWEET_TYPE = 'retweet';
@@ -33,6 +34,7 @@ interface TweetConstructorArguments {
     author: TwitterUser;
     media: TweetMedia[];
     id: string;
+    hidden: boolean;
 }
 
 interface RetweetConstructorArguments extends TweetConstructorArguments {
@@ -46,13 +48,15 @@ export class Tweet {
     public caption: string;
     public author: TwitterUser;
     public media: TweetMedia[];
+    public hidden: boolean;
 
-    constructor ({ date, caption, author, media, id }: TweetConstructorArguments) {
+    constructor ({ date, caption, author, media, id, hidden }: TweetConstructorArguments) {
         this.id = id;
         this.date = date;
         this.caption = caption;
         this.author = author;
         this.media = media;
+        this.hidden = hidden;
     }
 }
 
@@ -60,8 +64,8 @@ export class Retweet extends Tweet {
     public type: string = RETWEET_TYPE;
     public retweetedTweet: Tweet;
 
-    constructor ({ date, caption, author, tweet, media, id }: RetweetConstructorArguments) {
-        super({ date, caption, author, media, id });
+    constructor ({ date, caption, author, tweet, media, id, hidden }: RetweetConstructorArguments) {
+        super({ date, caption, author, media, id, hidden });
         this.retweetedTweet = tweet;
     }
 }
@@ -129,6 +133,24 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
     return graphemes.join('').replace(/\n/g, '<br />');
 };
 
+let hiddenTweets: number[]|null = null;
+let hiddenTweetsPromise: Promise<number[]>|null = null;
+const getHiddenTweets = async (): Promise<number[]> => {
+    if (hiddenTweets !== null) return hiddenTweets;
+
+    if (hiddenTweetsPromise === null) {
+        hiddenTweetsPromise = fetchJSON<number[]>(`${API_URI}/api/v1/twitter/hidden`).then(arr => { hiddenTweets = arr; return arr; });
+    };
+
+    return hiddenTweetsPromise;
+};
+
+export async function hideTweet (id: string, hidden: boolean): Promise<void> {
+    const response = await fetch(`${API_URI}/api/v1/twitter/hidden/${id}`, { credentials: 'include', method: hidden ? 'POST' : 'DELETE' });
+
+    if (!response.ok) throw new ResponseError(response);
+}
+
 /**
  * @async
  * @description Retrieves tweets
@@ -140,7 +162,10 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
 export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
     const params = maxId !== undefined ? `?max_id=${maxId}&count=20&exclude_replies=true` : '?count=20&exclude_replies=true';
 
-    const responseTweets = await fetchJSON<ApiResTweet[]>(`${API_URI}/api/v1/twitter${params}`);
+    const responseTweetsProm = fetchJSON<ApiResTweet[]>(`${API_URI}/api/v1/twitter${params}`);
+
+    const hiddenTweets = await getHiddenTweets();
+    const responseTweets = await responseTweetsProm;
 
     const tweets = responseTweets.map(mainTweet => {
         const mainId: string = mainTweet.id_str;
@@ -217,7 +242,8 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
                     username: (retweetedStatus.user as FullTwitterUser).screen_name,
                     displayName: (retweetedStatus.user as FullTwitterUser).name,
                     picture: (retweetedStatus.user as FullTwitterUser).profile_image_url_https
-                }
+                },
+                hidden: false
             });
 
             // media of retweeted tweet will also appear in media of main tweet and we don't like that shit ^^
@@ -232,7 +258,8 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
                 media: mainMedia,
                 id: mainId,
                 author: mainAuthor,
-                tweet: retweetedTweet
+                tweet: retweetedTweet,
+                hidden: hiddenTweets.includes(Number.parseInt(mainId, 10))
             });
         }
 
@@ -242,7 +269,8 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
             caption: mainCaption,
             media: mainMedia,
             id: mainId,
-            author: mainAuthor
+            author: mainAuthor,
+            hidden: hiddenTweets.includes(Number.parseInt(mainId, 10))
         });
     });
 

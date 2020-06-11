@@ -2,7 +2,7 @@
     <Content>
         <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
             <Tweet
-                v-for="tweet in tweets"
+                v-for="tweet in visibleTweets"
                 :model="tweet"
                 :key="`tweet-${tweet.id}`"
             />
@@ -16,7 +16,7 @@
     </Content>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Tweet, fetchTweets } from '@/services/twitter';
 import TweetVue from '@/components/Home/Tweet.vue';
 
@@ -33,6 +33,7 @@ export default class HomeVue extends Vue {
     private nothingLeft = false;
 
     private tweets: Tweet[] = [];
+    private visibleTweets: Tweet[] = [];
 
     private created () {
         this.fetchTweets();
@@ -107,6 +108,27 @@ export default class HomeVue extends Vue {
         if (!bottomOfWindow) return;
 
         this.fetchTweets();
+    }
+
+    @Watch('tweets', { deep: true })
+    @Watch('isLoggedIn')
+    private updateVisibleTweets (): void {
+        if (this.isLoggedIn) {
+            this.visibleTweets = this.tweets;
+        } else {
+            this.visibleTweets = this.tweets.filter(x => !x.hidden);
+        }
+    }
+
+    /**
+     * @description Check if user is logged in
+     * @author DerZade
+     * @returns {boolean} User logged in?
+     */
+    private get isLoggedIn (): boolean {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return this.$root.isLoggedIn() || false;
     }
 }
 </script>

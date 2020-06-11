@@ -47,6 +47,7 @@ export default class ContainerVue extends Vue {
     font-size: 1.125rem;
     width: 100%;
     display: inline-block;
+    position: relative;
 
     > * {
         padding: 0 2.25rem;
