@@ -13,7 +13,8 @@ const DEFAULT_VIDEO = 'default.webm';
 
 /* eslint-disable quote-props */
 const videos: { [key: string]: string } = {
-    'technik': 'technik.mp4'
+    'technik': 'technik.mp4',
+    'ueber-uns': 'ueber-uns.webm'
 };
 /* eslint-enable quote-props */
 
