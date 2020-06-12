@@ -29,7 +29,6 @@ import { Route } from 'vue-router';
 
 import ActionButtonsVue from '@/components/ActionButtons.vue';
 import ActionButtonVue from '@/components/ActionButton.vue';
-import TableOfContentsVue from '@/components/Page/TableOfContents.vue';
 import EditContainerVue from '@/components/EditPage/EditContainer.vue';
 import SnackbarVue from '@/components/EditPage/Snackbar.vue';
 
@@ -38,7 +37,6 @@ import ResponseError from '../services/utils/ResponseError';
 
 @Component({
     components: {
-        TableOfContents: TableOfContentsVue,
         ActionButtons: ActionButtonsVue,
         ActionButton: ActionButtonVue,
         EditContainer: EditContainerVue,

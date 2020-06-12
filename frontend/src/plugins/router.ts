@@ -3,13 +3,13 @@ import VueRouter, { RouteConfig, Route } from 'vue-router';
 import ErrorVue from '@/components/Error.vue';
 import LoaderVue from '@/components/Loader.vue';
 
-const AsyncPage: AsyncComponent = () => ({
+const AsyncCMSPage: AsyncComponent = () => ({
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     component: import(
         /* webpackChunkName: "page" */
         /* webpackMode: "eager" */
-        '@/views/Page.vue'
+        '@/views/CMSPage.vue'
     ),
     loading: LoaderVue,
     error: ErrorVue,
@@ -58,7 +58,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
     {
         path: '*',
-        component: AsyncPage
+        component: AsyncCMSPage
     },
     {
         path: '/edit/*',

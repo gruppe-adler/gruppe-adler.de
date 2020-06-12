@@ -59,7 +59,7 @@ import { Route } from 'vue-router';
 
 import ActionButtonsVue from '@/components/ActionButtons.vue';
 import ActionButtonVue from '@/components/ActionButton.vue';
-import TableOfContentsVue from '@/components/Page/TableOfContents.vue';
+import TableOfContentsVue from '@/components/CMSPage/TableOfContents.vue';
 
 import { Page, loadPage } from '@/services/page';
 
@@ -70,7 +70,7 @@ import { Page, loadPage } from '@/services/page';
         ActionButton: ActionButtonVue
     }
 })
-export default class PageVue extends Vue {
+export default class CMSPageVue extends Vue {
     private page: Page|null = null;
     private loadingError = false;
     private pageNotFound = false;
