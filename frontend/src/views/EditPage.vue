@@ -153,8 +153,6 @@ export default class PageVue extends Vue {
     private async deleteContainer (index: number, container: Container) {
         if (this.page === null) return;
 
-        // TODO: popup
-
         if (container.new !== true) {
             try {
                 await deleteContainer(container.id);
