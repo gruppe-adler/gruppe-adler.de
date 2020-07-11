@@ -1,6 +1,6 @@
 <template>
     <header class="grad-header">
-        <video video autobuffer autoplay muted loop class="grad-header__video" :src="`${baseUrl}video/header/${video}`"></video>
+        <video autobuffer autoplay playsinline muted loop class="grad-header__video" :src="`${baseUrl}video/header/${video}`"></video>
         <div class="grad-header__fade"></div>
         <img class="grad-header__logo" :src="`${baseUrl}logo.svg`" alt="logo" />
     </header>
