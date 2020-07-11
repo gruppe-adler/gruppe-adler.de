@@ -24,10 +24,6 @@ const links: GradLink[] = [
             {
                 text: 'Historie',
                 url: '/historie'
-            },
-            {
-                text: 'Eindrücke',
-                url: '/eindruecke'
             }
         ]
     },
