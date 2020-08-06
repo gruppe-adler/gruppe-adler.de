@@ -79,6 +79,10 @@ export default class TheFooterVue extends Vue {
         {
             image: 'steam',
             url: 'https://steamcommunity.com/groups/gruppe-adler'
+        },
+        {
+            image: 'spreadshirt',
+            url: 'https://shop.spreadshirt.de/gruppe-adler'
         }
     ];
 
