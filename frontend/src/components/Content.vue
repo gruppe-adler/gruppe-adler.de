@@ -44,6 +44,7 @@ $offset: 12.5rem;
         margin: 2.5rem;
         margin-top: $offset + 2.5rem;
         color: rgba(0, 0, 0, 0.5);
+        overflow: hidden;
     }
 }
 @media (max-width: 1350px) {

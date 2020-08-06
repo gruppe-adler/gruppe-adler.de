@@ -13,12 +13,26 @@
         <Loader v-else-if="loading" />
         <a v-else-if="!nothingLeft" key="load-more" class="grad-blog__load-more" @click="loadMore">Mehr laden</a>
         <span v-else key="end" class="grad-blog__end">Sieht so aus als ob du am Anfang angekommen bist.</span>
+        <template v-slot:right>
+            <div class="grad-blog__social-media">
+                <a
+                    v-for="item in footerItems"
+                    :href="item.url"
+                    :key="item.url"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" />
+                </a>
+            </div>
+        </template>
     </Content>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Tweet, fetchTweets } from '@/services/twitter';
 import TweetVue from '@/components/Home/Tweet.vue';
+import footerItems from '@/assets/footerItems';
 
 @Component({
     components: {
@@ -31,6 +45,7 @@ export default class HomeVue extends Vue {
     private scrollTimeout: number|null = null;
     private scrollListenerAdded = false;
     private nothingLeft = false;
+    private footerItems = footerItems;
 
     private tweets: Tweet[] = [];
     private visibleTweets: Tweet[] = [];
@@ -164,5 +179,35 @@ export default class HomeVue extends Vue {
 
 .grad-blog__end {
     color: black;
+}
+
+.grad-blog__social-media {
+    display: inline-grid;
+    margin-left: 3rem;
+    flex-shrink: 1;
+    max-width: 100%;
+    overflow: hidden;
+
+    > a {
+        margin: 2rem 0;
+        flex: none;
+        color: black;
+        cursor: pointer;
+        opacity: 0.7;
+        max-width: 100%;
+
+        img {
+            height: 4rem;
+            max-width: 100%;
+            filter: saturate(0%);
+        }
+
+        &:hover {
+            opacity: 1;
+            img {
+                filter: saturate(100%);
+            }
+        }
+    }
 }
 </style>
