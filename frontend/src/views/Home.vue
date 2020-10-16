@@ -1,5 +1,6 @@
 <template>
     <Content>
+        <Events />
         <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
             <Tweet
                 v-for="tweet in visibleTweets"
@@ -33,10 +34,12 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Tweet, fetchTweets } from '@/services/twitter';
 import TweetVue from '@/components/Home/Tweet.vue';
 import footerItems from '@/assets/footerItems';
+import EventsVue from '@/components/Home/Events.vue';
 
 @Component({
     components: {
-        Tweet: TweetVue
+        Tweet: TweetVue,
+        Events: EventsVue
     }
 })
 export default class HomeVue extends Vue {

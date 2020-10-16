@@ -1,0 +1,219 @@
+<template>
+    <Loader v-if="loading" />
+    <Container v-else headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem;">
+        <template v-slot:header>
+            <span style="color: rgba(255, 255, 255, 0.5);">Events</span>
+        </template>
+        <div class="grad-arma-events" :style="expanded ? 'max-height: 2000px;' : ''">
+            <div v-for="(event, i) in events" :key="i" :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }">
+                <span class="grad-arma-event__date">{{formatDate(event.date)}}</span>
+                <span class="grad-arma-event__title">{{event.title}}</span>
+                <div class="grad-arma-event__attendance">
+                    <div>
+                        <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>
+                        <div v-for="i in event.attendance[1]" :key="i" class="grad-arma-event__attendance-maybe"></div>
+                    </div>
+                    <span>{{event.attendance[0]}} - {{event.attendance[0] + event.attendance[1]}} Zusagen</span>
+                </div>
+                <button class="grad-arma-event__button" @click="openEvent(event)">Zum Event</button>
+            </div>
+        </div>
+        <div v-if="error" style="display: flex; flex-direction: column; align-items: center;">
+            <span style="margin-bottom: 1rem;">Bein Laden der Events ist ein Fehler aufgetreten.</span>
+            <button @click="load">Erneut Versuchen</button>
+        </div>
+        <a
+            v-else-if="expanded"
+            class="grad-arma-events__more"
+            href="https://forum.gruppe-adler.de/category/3"
+            target="_blank"
+            rel="noreferrer"
+        >
+            Mehr Events im Forum
+        </a>
+        <span v-else class="grad-arma-events__more" @click="expanded = true">Mehr anzeigen</span>
+    </Container>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { fetchEvents, ArmaEvent, isInFuture } from '@/services/events';
+
+const padNum = (num: number) => `${num}`.padStart(2, '0');
+
+@Component
+export default class Events extends Vue {
+    private loading = true;
+    private error = false;
+    private events: ArmaEvent[] = [];
+    private expanded = false;
+
+    private created () {
+        this.load();
+    }
+
+    private async load () {
+        this.loading = true;
+        this.error = false;
+
+        try {
+            this.events = await fetchEvents();
+        } catch (err) {
+            console.error(err);
+            this.error = true;
+        }
+
+        this.loading = false;
+    }
+
+    /**
+     * Open thread of given event in new tab
+     * @param {ArmaEvent} event Event to open
+     */
+    private openEvent (event: ArmaEvent) {
+        const win = window.open(event.url, '_blank');
+        if (win === null) return;
+        win.focus();
+    }
+
+    /**
+     * Format date
+     * @param {Date} data Date to format
+     * @returns {string} formatted Date
+     */
+    private formatDate (date: Date): string {
+        return `${padNum(date.getDate())}.${padNum(date.getMonth() + 1)}`;
+    }
+
+    /**
+     * Checks wether event is in future
+     * @param {ArmaEvent} event
+     */
+    private isInFuture (event: ArmaEvent): boolean {
+        return isInFuture(event.date);
+    }
+}
+
+</script>
+
+<style lang="scss" scoped>
+.grad-arma-events {
+    // 3 * event height + 2 * margin between events
+    max-height: 3 * 5.75rem + 2 * 0.5rem;
+    overflow: hidden;
+    transition: all .4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+    &__more {
+        display: block;
+        text-align: center;
+        margin-top: .5rem;
+        color: inherit;
+        font-weight: normal;
+        cursor: pointer;
+        transition: all .05s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+        &:hover {
+            color: white;
+            text-decoration: underline;
+        }
+    }
+}
+
+button {
+    background-color: #666666;
+    color: white;
+    font-weight: normal;
+
+    &:hover {
+        background-color: #66AA66;
+    }
+}
+</style>
+
+<style lang="scss" scoped>
+$baseClass: '.grad-arma-event';
+
+#{$baseClass} {
+    display: grid;
+    grid-template-columns: 3em .6fr .3fr auto;
+    border-radius: .25rem;
+    grid-column-gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    color: rgba(white, 0.5);
+    font-size: 1rem;
+    height: 5.75rem;
+
+    & + & {
+        margin-top: .5rem;
+    }
+
+    &__title {
+        font-size: 1.125rem;
+        font-weight: bold;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+    }
+
+    &__attendance {
+        color: rgba(#C4C4C4, 0.5);
+
+        &-maybe,
+        &-firm {
+            width: .5rem;
+            height: .5rem;
+            margin: .1rem;
+            border-radius: 50%;
+        }
+
+        &-firm {
+            background-color: #66AA66;
+        }
+
+        &-maybe {
+            background-color: #999;
+        }
+
+        > div {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
+    &__button {
+        justify-self: flex-end;
+    }
+}
+
+// Active Event
+#{$baseClass}#{$baseClass}--future {
+    background-color: #66AA66;
+    color: rgba(white, 1);
+
+    #{$baseClass}__button {
+        background-color: #518651;
+
+        &:hover {
+            background-color: #2C2C2C;
+        }
+    }
+
+    #{$baseClass}__attendance {
+        color: inherit;
+
+        &-maybe,
+        &-firm {
+            background-color: white;
+        }
+
+        &-maybe {
+            opacity: 0.25;
+        }
+    }
+}
+</style>
