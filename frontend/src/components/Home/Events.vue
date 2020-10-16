@@ -4,7 +4,7 @@
         <template v-slot:header>
             <span style="color: rgba(255, 255, 255, 0.5);">Events</span>
         </template>
-        <div class="grad-arma-events" :style="expanded ? 'max-height: 2000px;' : ''">
+        <div :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list">
             <div v-for="(event, i) in events" :key="i" :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }">
                 <span class="grad-arma-event__date">{{formatDate(event.date)}}</span>
                 <span class="grad-arma-event__title">{{event.title}}</span>
@@ -23,7 +23,7 @@
             <button @click="load">Erneut Versuchen</button>
         </div>
         <a
-            v-else-if="expanded"
+            v-if="expanded || small"
             class="grad-arma-events__more"
             href="https://forum.gruppe-adler.de/category/3"
             target="_blank"
@@ -48,9 +48,35 @@ export default class Events extends Vue {
     private error = false;
     private events: ArmaEvent[] = [];
     private expanded = false;
+    private small = true;
+    private resizeObserver: null|ResizeObserver = null;
 
     private created () {
         this.load();
+        this.resizeObserver = new ResizeObserver(() => {
+            const list = this.$refs.list as HTMLDivElement|undefined;
+            if (!list) return;
+
+            const { width } = list.getBoundingClientRect();
+
+            this.small = width < 600;
+        });
+    }
+
+    private mounted () {
+        const list = this.$refs.list;
+        if (!list || !this.resizeObserver) return;
+        this.resizeObserver.observe(list as HTMLDivElement);
+    }
+
+    private updated () {
+        const list = this.$refs.list;
+        if (!list || !this.resizeObserver) return;
+        this.resizeObserver.observe(list as HTMLDivElement);
+    }
+
+    private beforeDestory () {
+        if (this.resizeObserver) this.resizeObserver.disconnect();
     }
 
     private async load () {
@@ -98,6 +124,16 @@ export default class Events extends Vue {
 </script>
 
 <style lang="scss" scoped>
+button {
+    background-color: #666666;
+    color: white;
+    font-weight: normal;
+
+    &:hover {
+        background-color: #66AA66;
+    }
+}
+
 .grad-arma-events {
     // 3 * event height + 2 * margin between events
     max-height: 3 * 5.75rem + 2 * 0.5rem;
@@ -118,15 +154,12 @@ export default class Events extends Vue {
             text-decoration: underline;
         }
     }
-}
 
-button {
-    background-color: #666666;
-    color: white;
-    font-weight: normal;
-
-    &:hover {
-        background-color: #66AA66;
+    &#{&}--small {
+        display: flex;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 1rem;
     }
 }
 </style>
@@ -216,5 +249,44 @@ $baseClass: '.grad-arma-event';
             opacity: 0.25;
         }
     }
+}
+
+.grad-arma-events--small #{$baseClass} {
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto auto;
+    margin-top: 0;
+    width: calc((100% - 1rem) / 2);
+    scroll-snap-align: start;
+    margin-right: 1rem;
+    flex-shrink: 0;
+
+    #{$baseClass}__title {
+        align-self: flex-start;
+    }
+
+    #{$baseClass}__attendance {
+        margin: 1rem 0;
+    }
+
+    #{$baseClass}__button {
+        justify-self: initial;
+    }
+}
+
+::-webkit-scrollbar {
+    width: .5rem;
+    height: .5rem;
+}
+::-webkit-scrollbar-track {
+    background: rgba(#666666, 0.2);
+    border-radius: .25rem;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(#666666, 0.5);
+    border-radius: .25rem;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(#666666, 1);
 }
 </style>
