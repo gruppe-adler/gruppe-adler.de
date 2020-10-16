@@ -1,10 +1,7 @@
 <template>
     <Loader v-if="loading" />
     <Container v-else headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem;">
-        <template v-slot:header>
-            <span style="color: rgba(255, 255, 255, 0.5);">Events</span>
-        </template>
-        <div :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list">
+        <div :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
             <div v-for="(event, i) in events" :key="i" :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }">
                 <span class="grad-arma-event__date">{{formatDate(event.date)}}</span>
                 <span class="grad-arma-event__title">{{event.title}}</span>
@@ -139,6 +136,10 @@ button {
     max-height: 3 * 5.75rem + 2 * 0.5rem;
     overflow: hidden;
     transition: all .4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    margin-top: -0.875rem;
+    margin-left: -2rem;
+    width: calc(100% + 4rem);
+    position: relative;
 
     &__more {
         display: block;
