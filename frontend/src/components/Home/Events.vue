@@ -14,6 +14,7 @@
                 </div>
                 <button class="grad-arma-event__button" @click="openEvent(event)">Zum Event</button>
             </div>
+            <i v-if="small && !hasScrolled" class="grad-arma-events__arrow material-icons">chevron_right</i>
         </div>
         <div v-if="error" style="display: flex; flex-direction: column; align-items: center;">
             <span style="margin-bottom: 1rem;">Bein Laden der Events ist ein Fehler aufgetreten.</span>
@@ -43,6 +44,7 @@ const weekDays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
 export default class Events extends Vue {
     private loading = true;
     private error = false;
+    private hasScrolled = false;
     private events: ArmaEvent[] = [];
     private expanded = false;
     private small = true;
@@ -116,6 +118,10 @@ export default class Events extends Vue {
     private isInFuture (event: ArmaEvent): boolean {
         return isInFuture(event.date);
     }
+
+    private onContainerScroll () {
+        this.hasScrolled = true;
+    }
 }
 
 </script>
@@ -154,6 +160,25 @@ button {
             color: white;
             text-decoration: underline;
         }
+    }
+
+    &__arrow {
+        font-size: 2.5rem;
+        position: absolute;
+        color: white;
+        pointer-events: none;
+        right: -0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: listArrow 5s ease-in-out infinite;
+        opacity: 0.7;
+    }
+
+    @keyframes listArrow {
+        0% { right: -0.5rem; opacity: 0; }
+        10% { right: -0.5rem; opacity: 0.7; }
+        20% { right: -0.75rem; opacity: 0; }
+        100% { right: -0.5rem; opacity: 0; }
     }
 
     &#{&}--small {
