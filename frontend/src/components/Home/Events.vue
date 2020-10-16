@@ -40,6 +40,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { fetchEvents, ArmaEvent, isInFuture } from '@/services/events';
 
 const padNum = (num: number) => `${num}`.padStart(2, '0');
+const weekDays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
 
 @Component
 export default class Events extends Vue {
@@ -82,7 +83,7 @@ export default class Events extends Vue {
      * @returns {string} formatted Date
      */
     private formatDate (date: Date): string {
-        return `${padNum(date.getDate())}.${padNum(date.getMonth() + 1)}`;
+        return `${weekDays[date.getDay()]}, ${padNum(date.getDate())}.${padNum(date.getMonth() + 1)}`;
     }
 
     /**
@@ -135,7 +136,7 @@ $baseClass: '.grad-arma-event';
 
 #{$baseClass} {
     display: grid;
-    grid-template-columns: 3em .6fr .3fr auto;
+    grid-template-columns: 4em .6fr .3fr auto;
     border-radius: .25rem;
     grid-column-gap: 1rem;
     align-items: center;
