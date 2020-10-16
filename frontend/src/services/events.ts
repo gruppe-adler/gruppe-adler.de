@@ -5,31 +5,6 @@ const FORUM_URI = 'https://forum.gruppe-adler.de';
 const regex = /^\d{4}-\d{2}-\d{2}\s*,(\s*\w+\s*,)?\s*/i;
 const ATTENDANCE_PLUGIN_ITNRODUCTION = 1483833600000;
 
-interface PageinationThing {
-    page: number;
-    active: boolean;
-    qs: string;
-}
-
-interface TopicsResponse {
-    pagination: {
-        currentPage: number;
-        first: PageinationThing;
-        last: PageinationThing;
-        next: PageinationThing;
-        prev: PageinationThing;
-        pageCount: number;
-        pages: PageinationThing[];
-    };
-    topics: Array<{
-        slug: string;
-        titleRaw: string;
-        tid: number;
-        deleted: 1|0;
-        timestamp: number;
-    }>;
-};
-
 export interface ArmaEvent {
     date: Date;
     title: string;
@@ -81,7 +56,7 @@ async function fetchAttendance (tid: number): Promise<[number, number]> {
 export async function fetchEvents (): Promise<ArmaEvent[]> {
     const rawEvents: Array<Omit<ArmaEvent, 'attendance'> & { tid: number }> = [];
 
-    const response = await fetchJSON(`${FORUM_URI}/api/events/cid-3`) as TopicsResponse;
+    const response = await fetchJSON(`${FORUM_URI}/api/events/cid-3`) as { topics: Array<{ slug: string; titleRaw: string; tid: number; deleted: 1|0; timestamp: number }> };
 
     for (const topic of response.topics) {
         if (topic.timestamp < ATTENDANCE_PLUGIN_ITNRODUCTION) continue;
