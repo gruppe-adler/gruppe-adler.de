@@ -12,7 +12,9 @@
                     </div>
                     <span>{{event.attendance[0]}} - {{event.attendance[0] + event.attendance[1]}} Zusagen</span>
                 </div>
-                <button class="grad-arma-event__button" @click="openEvent(event)">Zum Event</button>
+                <a class="grad-arma-event__button" @click="openEvent(event)">
+                    <i class="material-icons">launch</i>
+                </a>
             </div>
             <i v-if="small && !hasScrolled" class="grad-arma-events__arrow material-icons">chevron_right</i>
         </div>
@@ -58,7 +60,7 @@ export default class Events extends Vue {
 
             const { width } = list.getBoundingClientRect();
 
-            this.small = width < 600;
+            this.small = width < 580;
         });
     }
 
@@ -142,10 +144,11 @@ button {
     max-height: 3 * 5.75rem + 2 * 0.5rem;
     overflow: hidden;
     transition: all .4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    margin-top: -0.875rem;
-    margin-left: -2rem;
-    width: calc(100% + 4rem);
+    margin-top: -1.125rem;
+    margin-left: -2.25rem;
+    width: calc(100% + 4.5rem);
     position: relative;
+    border-radius: .25rem;
 
     &__more {
         display: block;
@@ -195,15 +198,16 @@ $baseClass: '.grad-arma-event';
 
 #{$baseClass} {
     display: grid;
-    grid-template-columns: 4em .6fr .3fr auto;
-    border-radius: .25rem;
-    grid-column-gap: 1rem;
+    grid-template-columns: 4em .6fr .4fr auto;
+    grid-column-gap: 2rem;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 2rem;
     box-sizing: border-box;
     color: rgba(white, 0.5);
     font-size: 1rem;
     height: 5.75rem;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
 
     & + & {
         margin-top: .5rem;
@@ -245,35 +249,32 @@ $baseClass: '.grad-arma-event';
         }
     }
 
-    &__button {
-        justify-self: flex-end;
+    &:hover &__button  {
+        opacity: 1;
     }
+
+    &__button {
+        transition: all .1s ease-in-out;
+        justify-self: flex-end;
+        color: #999;
+        opacity: 0.1;
+        cursor: pointer;
+
+        &:hover {
+            color: #999;
+        }
+    }
+
 }
 
 // Active Event
 #{$baseClass}#{$baseClass}--future {
-    background-color: #66AA66;
     color: rgba(white, 1);
-
-    #{$baseClass}__button {
-        background-color: #518651;
-
-        &:hover {
-            background-color: #2C2C2C;
-        }
-    }
+    border-left-color: #66AA66;
+    border-bottom: 1px solid #404040;
 
     #{$baseClass}__attendance {
         color: inherit;
-
-        &-maybe,
-        &-firm {
-            background-color: white;
-        }
-
-        &-maybe {
-            opacity: 0.25;
-        }
     }
 }
 
@@ -301,8 +302,8 @@ $baseClass: '.grad-arma-event';
 }
 
 ::-webkit-scrollbar {
-    width: .5rem;
-    height: .5rem;
+    width: 0;
+    height: 0;
 }
 ::-webkit-scrollbar-track {
     background: rgba(#666666, 0.2);
