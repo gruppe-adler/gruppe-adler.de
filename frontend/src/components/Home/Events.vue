@@ -1,31 +1,41 @@
 <template>
     <Loader v-if="loading" />
     <Container v-else headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem;">
-        <ul :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
-            <li
-                v-for="(event, i) in events"
-                :key="i"
-                :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }"
-                @click="openEvent(event)"
-            >
-                <span class="grad-arma-event__date">{{formatDate(event.date)}}</span>
-                <h4 class="grad-arma-event__title">{{event.title}}</h4>
-                <div class="grad-arma-event__attendance">
-                    <div>
-                        <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>
-                        <div v-for="i in event.attendance[1]" :key="i" class="grad-arma-event__attendance-maybe"></div>
+        <div style="position: relative; margin-left: -2.25rem; width: calc(100% + 4.5rem); margin-top: -1.125rem; border-radius: .25rem .25rem 0 0; overflow: hidden;">
+            <ul :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
+                <li
+                    v-for="(event, i) in events"
+                    :key="i"
+                    :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }"
+                    @click="openEvent(event)"
+                >
+                    <span class="grad-arma-event__date">{{formatDate(event.date)}}</span>
+                    <h4 class="grad-arma-event__title">{{event.title}}</h4>
+                    <div class="grad-arma-event__attendance">
+                        <div>
+                            <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>
+                            <div v-for="i in event.attendance[1]" :key="i" class="grad-arma-event__attendance-maybe"></div>
+                        </div>
+                        <span>{{event.attendance[0]}} - {{event.attendance[0] + event.attendance[1]}} Zusagen</span>
                     </div>
-                    <span>{{event.attendance[0]}} - {{event.attendance[0] + event.attendance[1]}} Zusagen</span>
-                </div>
-                <i class="material-icons grad-arma-event__arrow">chevron_right</i>
-            </li>
-        </ul>
-        <div v-if="error" style="display: flex; flex-direction: column; align-items: center;">
+                    <i class="material-icons grad-arma-event__arrow">chevron_right</i>
+                </li>
+            </ul>
+            <template v-if="small">
+                <button v-if="scrollLeft" class="grad-arma-events__control grad-arma-events__control--left" @click="scroll(-1)">
+                    <i class="material-icons">chevron_left</i>
+                </button>
+                <button  v-if="scrollRight" class="grad-arma-events__control" @click="scroll(1)">
+                    <i class="material-icons">chevron_right</i>
+                </button>
+            </template>
+        </div>
+        <div v-if="error" style="display: flex; flex-direction: column; align-items: center; margin: 2rem 0; text-align: center;">
             <span style="margin-bottom: 1rem;">Bein Laden der Events ist ein Fehler aufgetreten.</span>
             <button @click="load">Erneut Versuchen</button>
         </div>
         <a
-            v-if="expanded || small"
+            v-else-if="expanded || small"
             class="grad-arma-events__more"
             href="https://forum.gruppe-adler.de/category/3"
             target="_blank"
@@ -48,7 +58,8 @@ const weekDays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
 export default class Events extends Vue {
     private loading = true;
     private error = false;
-    private hasScrolled = false;
+    private scrollLeft = false;
+    private scrollRight = false;
     private events: ArmaEvent[] = [];
     private expanded = false;
     private small = true;
@@ -57,25 +68,27 @@ export default class Events extends Vue {
     private created () {
         this.load();
         this.resizeObserver = new ResizeObserver(() => {
-            const list = this.$refs.list as HTMLDivElement|undefined;
+            const list = this.$refs.list as HTMLElement|undefined;
             if (!list) return;
 
             const { width } = list.getBoundingClientRect();
 
             this.small = width < 580;
+
+            if (this.small) this.onContainerScroll();
         });
     }
 
     private mounted () {
         const list = this.$refs.list;
         if (!list || !this.resizeObserver) return;
-        this.resizeObserver.observe(list as HTMLDivElement);
+        this.resizeObserver.observe(list as HTMLElement);
     }
 
     private updated () {
         const list = this.$refs.list;
         if (!list || !this.resizeObserver) return;
-        this.resizeObserver.observe(list as HTMLDivElement);
+        this.resizeObserver.observe(list as HTMLElement);
     }
 
     private beforeDestory () {
@@ -124,7 +137,30 @@ export default class Events extends Vue {
     }
 
     private onContainerScroll () {
-        this.hasScrolled = true;
+        const list = this.$refs.list as HTMLElement|undefined;
+        if (!list) return;
+
+        const { scrollLeft, scrollWidth, clientWidth } = list;
+
+        this.scrollLeft = (scrollLeft !== 0);
+        this.scrollRight = (scrollWidth - scrollLeft !== clientWidth);
+    }
+
+    private scroll (factor: number) {
+        const list = this.$refs.list as HTMLElement|undefined;
+        if (!list) return;
+
+        const { scrollLeft, scrollWidth, clientWidth } = list;
+
+        console.log(factor);
+
+        const newScrollLeft = scrollLeft + (clientWidth / 2) * factor;
+
+        list.scrollTo({
+            top: 0,
+            left: Math.max(0, Math.min(newScrollLeft, scrollWidth - clientWidth)),
+            behavior: 'smooth'
+        });
     }
 }
 
@@ -146,13 +182,9 @@ button {
     max-height: 3 * 5.75rem;
     overflow: hidden;
     transition: all .4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    margin-top: -1.125rem;
-    margin-left: -2.25rem;
-    width: calc(100% + 4.5rem);
-    position: relative;
-    border-radius: .25rem;
-    padding-left: 0;
-    margin-bottom: 0;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 
     &__more {
         display: block;
@@ -169,11 +201,33 @@ button {
         }
     }
 
+    &__control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        right: .25rem;
+
+        &:hover {
+            background-color: transparent;
+        }
+
+        &#{&}--left {
+            left: .25rem;
+            right: none;
+        }
+    }
+
     &#{&}--small {
         display: flex;
         overflow-x: scroll;
+        scrollbar-width: none;
         scroll-snap-type: x mandatory;
-        padding-bottom: 1rem;
+        border-left: 2rem solid transparent;
+        border-right: 2rem solid transparent;
     }
 }
 </style>
@@ -255,36 +309,29 @@ $baseClass: '.grad-arma-event';
     }
 }
 
-// Future Event
-#{$baseClass}#{$baseClass}--future {
-    color: rgba(white, 1);
-    border-left-color: #66AA66;
-
-    #{$baseClass}__attendance {
-        color: inherit;
-    }
-}
-
 .grad-arma-events--small #{$baseClass} {
     height: auto;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto auto;
+    grid-template-rows: auto 1fr auto;
     margin-top: 0;
-    width: calc((100% - 1rem) / 2);
+    width: calc(100% / 2);
     scroll-snap-align: start;
-    margin-right: 1rem;
     flex-shrink: 0;
+    border-left: none;
+    border-right: none;
+    padding: 1rem;
+    border-top: .25rem solid transparent;
 
     #{$baseClass}__title {
         align-self: flex-start;
     }
 
     #{$baseClass}__attendance {
-        margin: 1rem 0;
+        margin-top: 1rem;
     }
 
-    #{$baseClass}__button {
-        justify-self: initial;
+    #{$baseClass}__arrow {
+        display: none;
     }
 }
 
@@ -292,15 +339,15 @@ $baseClass: '.grad-arma-event';
     width: 0;
     height: 0;
 }
-::-webkit-scrollbar-track {
-    background: rgba(#666666, 0.2);
-    border-radius: .25rem;
-}
-::-webkit-scrollbar-thumb {
-    background: rgba(#666666, 0.5);
-    border-radius: .25rem;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(#666666, 1);
+
+// Future Event
+#{$baseClass}#{$baseClass}--future {
+    color: rgba(white, 1);
+    border-left-color: #66AA66;
+    border-top-color: #66AA66;
+
+    #{$baseClass}__attendance {
+        color: inherit;
+    }
 }
 </style>
