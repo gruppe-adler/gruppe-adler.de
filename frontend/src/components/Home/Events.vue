@@ -217,7 +217,7 @@ button {
 
         &#{&}--left {
             left: .25rem;
-            right: none;
+            right: initial;
         }
     }
 
