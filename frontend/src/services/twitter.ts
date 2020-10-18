@@ -7,7 +7,6 @@ import {
     UrlEntity,
     FullUser as FullTwitterUser
 } from 'twitter-d';
-import GraphemeSplitter from 'grapheme-splitter';
 
 import { fetchJSON } from './utils';
 import { API_URI } from '.';
@@ -71,7 +70,6 @@ export class Retweet extends Tweet {
 }
 
 const fields: Array<'hashtags'|'media'|'urls'|'user_mentions'> = ['hashtags', 'media', 'urls', 'user_mentions'];
-const splitter = new GraphemeSplitter();
 
 /**
  * @description Enriches text with links to user mentions or hashtags
@@ -107,7 +105,9 @@ const enrichTwitterCaption = (text: string, entities: TweetEntities): string => 
 
     const sortedEntities = allEntities.sort((a, b) => b.end - a.end);
 
-    const graphemes = splitter.splitGraphemes(text);
+    // we won't use text.split(''), because twitter uses indices based on unicode chars
+    // see https://stackoverflow.com/a/35223207
+    const graphemes = Array.from(text);
 
     // now we can start inserting into the text
     sortedEntities.forEach(e => {
