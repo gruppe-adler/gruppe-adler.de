@@ -1,10 +1,15 @@
 <template>
     <Loader v-if="loading" />
     <Container v-else headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem;">
-        <div :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
-            <div v-for="(event, i) in events" :key="i" :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }">
+        <ul :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
+            <li
+                v-for="(event, i) in events"
+                :key="i"
+                :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }"
+                @click="openEvent(event)"
+            >
                 <span class="grad-arma-event__date">{{formatDate(event.date)}}</span>
-                <span class="grad-arma-event__title">{{event.title}}</span>
+                <h4 class="grad-arma-event__title">{{event.title}}</h4>
                 <div class="grad-arma-event__attendance">
                     <div>
                         <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>
@@ -12,12 +17,9 @@
                     </div>
                     <span>{{event.attendance[0]}} - {{event.attendance[0] + event.attendance[1]}} Zusagen</span>
                 </div>
-                <a class="grad-arma-event__button" @click="openEvent(event)">
-                    <i class="material-icons">launch</i>
-                </a>
-            </div>
-            <i v-if="small && !hasScrolled" class="grad-arma-events__arrow material-icons">chevron_right</i>
-        </div>
+                <i class="material-icons grad-arma-event__arrow">chevron_right</i>
+            </li>
+        </ul>
         <div v-if="error" style="display: flex; flex-direction: column; align-items: center;">
             <span style="margin-bottom: 1rem;">Bein Laden der Events ist ein Fehler aufgetreten.</span>
             <button @click="load">Erneut Versuchen</button>
@@ -140,8 +142,8 @@ button {
 }
 
 .grad-arma-events {
-    // 3 * event height + 2 * margin between events
-    max-height: 3 * 5.75rem + 2 * 0.5rem;
+    // 3 * event height
+    max-height: 3 * 5.75rem;
     overflow: hidden;
     transition: all .4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     margin-top: -1.125rem;
@@ -149,6 +151,8 @@ button {
     width: calc(100% + 4.5rem);
     position: relative;
     border-radius: .25rem;
+    padding-left: 0;
+    margin-bottom: 0;
 
     &__more {
         display: block;
@@ -163,25 +167,6 @@ button {
             color: white;
             text-decoration: underline;
         }
-    }
-
-    &__arrow {
-        font-size: 2.5rem;
-        position: absolute;
-        color: white;
-        pointer-events: none;
-        right: -0.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        animation: listArrow 5s ease-in-out infinite;
-        opacity: 0.7;
-    }
-
-    @keyframes listArrow {
-        0% { right: -0.5rem; opacity: 0; }
-        10% { right: -0.5rem; opacity: 0.7; }
-        20% { right: -0.75rem; opacity: 0; }
-        100% { right: -0.5rem; opacity: 0; }
     }
 
     &#{&}--small {
@@ -199,7 +184,7 @@ $baseClass: '.grad-arma-event';
 #{$baseClass} {
     display: grid;
     grid-template-columns: 4em .6fr .4fr auto;
-    grid-column-gap: 2rem;
+    grid-column-gap: 1.5rem;
     align-items: center;
     padding: 1rem 2rem;
     box-sizing: border-box;
@@ -208,14 +193,13 @@ $baseClass: '.grad-arma-event';
     height: 5.75rem;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-
-    & + & {
-        margin-top: .5rem;
-    }
+    cursor: pointer;
+    transition: all .1s ease-in;
 
     &__title {
         font-size: 1.125rem;
         font-weight: bold;
+        margin: 0;
 
         overflow: hidden;
         text-overflow: ellipsis;
@@ -225,8 +209,6 @@ $baseClass: '.grad-arma-event';
     }
 
     &__attendance {
-        color: rgba(#C4C4C4, 0.5);
-
         &-maybe,
         &-firm {
             width: .5rem;
@@ -249,29 +231,34 @@ $baseClass: '.grad-arma-event';
         }
     }
 
-    &:hover &__button  {
-        opacity: 1;
+    &__arrow {
+        opacity: 0.1;
     }
 
-    &__button {
-        transition: all .1s ease-in-out;
-        justify-self: flex-end;
-        color: #999;
-        opacity: 0.1;
-        cursor: pointer;
+    &:hover {
+        background-color: #66AA66;
+        color: white;
 
-        &:hover {
-            color: #999;
+        #{$baseClass}__attendance {
+            &-firm {
+                background-color: white;
+            }
+
+            &-maybe {
+                background-color: rgba(white, 0.4);
+            }
+        }
+
+        #{$baseClass}__arrow {
+            opacity: 1;
         }
     }
-
 }
 
-// Active Event
+// Future Event
 #{$baseClass}#{$baseClass}--future {
     color: rgba(white, 1);
     border-left-color: #66AA66;
-    border-bottom: 1px solid #404040;
 
     #{$baseClass}__attendance {
         color: inherit;
