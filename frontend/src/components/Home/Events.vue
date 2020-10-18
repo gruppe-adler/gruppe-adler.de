@@ -181,7 +181,7 @@ button {
     // 3 * event height
     max-height: 3 * 5.75rem;
     overflow: hidden;
-    transition: all .4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition: max-height .4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     padding: 0;
     margin: 0;
     box-sizing: border-box;
