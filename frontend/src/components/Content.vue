@@ -20,7 +20,7 @@ export default class ContentVue extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-$offset: 12.5rem;
+$offset: 6.5rem;
 
 .grad-content {
     margin-top: -$offset;
