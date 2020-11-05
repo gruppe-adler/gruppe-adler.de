@@ -9,12 +9,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-const DEFAULT_VIDEO = 'default.webm';
+const DEFAULT_VIDEO = 'default.mp4';
 
 /* eslint-disable quote-props */
 const videos: { [key: string]: string } = {
     'technik': 'technik.mp4',
-    'ueber-uns': 'ueber-uns.webm'
+    'ueber-uns': 'ueber-uns.mp4',
+    'mitspielen': 'overwatch.mp4'
 };
 /* eslint-enable quote-props */
 
