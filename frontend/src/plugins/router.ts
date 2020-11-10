@@ -4,7 +4,7 @@ import ErrorVue from '@/components/Error.vue';
 import LoaderVue from '@/components/Loader.vue';
 
 const AsyncCMSPage: AsyncComponent = () => ({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
         /* webpackChunkName: "page" */
@@ -18,7 +18,7 @@ const AsyncCMSPage: AsyncComponent = () => ({
 });
 
 const AsyncEditPage: AsyncComponent = () => ({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
         /* webpackChunkName: "admin" */
@@ -32,7 +32,7 @@ const AsyncEditPage: AsyncComponent = () => ({
 });
 
 const AsyncHomePage: AsyncComponent = () => ({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
         /* webpackChunkName: "home" */

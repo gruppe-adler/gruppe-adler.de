@@ -63,11 +63,11 @@ export async function fetchEvents (): Promise<ArmaEvent[]> {
         if (topic.deleted === 1) {
             console.warn(`Skipping topic ${topic.titleRaw} (ID: ${topic.tid}), because it was deleted`);
             continue;
-        };
+        }
         if (!regex.test(topic.titleRaw)) {
             console.warn(`Skipping topic ${topic.titleRaw} (ID: ${topic.tid}), because its title did not match the required pattern.`);
             continue;
-        };
+        }
 
         rawEvents.push({
             date: new Date(topic.titleRaw.substr(0, 10)),

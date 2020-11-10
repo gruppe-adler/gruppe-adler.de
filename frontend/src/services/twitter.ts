@@ -36,10 +36,6 @@ interface TweetConstructorArguments {
     hidden: boolean;
 }
 
-interface RetweetConstructorArguments extends TweetConstructorArguments {
-    tweet: Tweet;
-}
-
 export class Tweet {
     public type: string = TWEET_TYPE;
     public date: Date;
@@ -57,6 +53,10 @@ export class Tweet {
         this.media = media;
         this.hidden = hidden;
     }
+}
+
+interface RetweetConstructorArguments extends TweetConstructorArguments {
+    tweet: Tweet;
 }
 
 export class Retweet extends Tweet {
@@ -140,7 +140,7 @@ const getHiddenTweets = async (): Promise<number[]> => {
 
     if (hiddenTweetsPromise === null) {
         hiddenTweetsPromise = fetchJSON<number[]>(`${API_URI}/api/v1/twitter/hidden`).then(arr => { hiddenTweets = arr; return arr; });
-    };
+    }
 
     return hiddenTweetsPromise;
 };
@@ -200,11 +200,10 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
             retweetedStatus = mainTweet.quoted_status;
 
             if (Object.prototype.hasOwnProperty.call(mainTweet, 'quoted_status_permalink')) {
-                // eslint-disable-next-line @typescript-eslint/camelcase, @typescript-eslint/no-non-null-assertion
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const url = mainTweet.quoted_status_permalink!.url;
 
                 // the full_text of the mainTweet will include a link of the quoted tweet, and we dont want that
-                // eslint-disable-next-line @typescript-eslint/camelcase
                 mainTweet.full_text = mainTweet.full_text.replace(url, '');
 
                 mainTweet.entities.urls = (mainTweet.entities.urls || []).filter(e => e.url !== url);

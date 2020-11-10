@@ -92,7 +92,7 @@ export default class CMSPageVue extends Vue {
      * @returns {boolean} User logged in?
      */
     private get isLoggedIn (): boolean {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return this.$root.isLoggedIn() || false;
     }

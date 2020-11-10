@@ -20,7 +20,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import ActionButtonVue from '@/components/ActionButton.vue';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import ColorPickerVue from '@caohenghu/vue-colorpicker';
 

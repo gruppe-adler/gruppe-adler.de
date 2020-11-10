@@ -50,7 +50,7 @@ export default class EditableImageVue extends Vue {
         reader.onload = (e: ProgressEvent) => {
             if (e.target === null) return;
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             this.img = e.target.result;
         };

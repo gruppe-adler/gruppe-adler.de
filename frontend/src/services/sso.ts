@@ -2,6 +2,14 @@ import { fetchJSON } from './utils';
 
 const SSO_URL = 'https://sso.gruppe-adler.de';
 
+interface UserGroup {
+    id: number;
+    tag: string;
+    color: string;
+    label: string;
+    hidden: boolean;
+}
+
 export interface SSOUser {
     id: number;
     username: string;
@@ -10,14 +18,6 @@ export interface SSOUser {
     admin: boolean;
     groups: UserGroup[];
     primaryGroup: UserGroup;
-}
-
-interface UserGroup {
-    id: number;
-    tag: string;
-    color: string;
-    label: string;
-    hidden: boolean;
 }
 
 export async function authenticate (): Promise<SSOUser|null> {

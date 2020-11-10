@@ -13,7 +13,6 @@ const defaultRender = md.renderer.rules.link_open || function (tokens, idx, opti
     return self.renderToken(tokens, idx, options);
 };
 
-// eslint-disable-next-line @typescript-eslint/camelcase
 md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     tokens[idx].attrPush(['target', '_blank']); // add new attribute
 

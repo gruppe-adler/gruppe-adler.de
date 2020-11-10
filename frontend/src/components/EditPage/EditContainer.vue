@@ -128,18 +128,18 @@ export default class EditContainerVue extends Vue {
 
         for (const key in this.values) {
             if (Object.prototype.hasOwnProperty.call(this.values, key)) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 const value = this.values[key];
 
                 if (value === undefined) continue;
 
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 if (!Object.prototype.hasOwnProperty.call(this.container, key) || !equal(this.container[key], value)) {
                     // key is not present in original container -> we assume it has to be "updated"
                     // value is not the same as it was on the original container -> it has to be updated
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     updatedValues[key] = value;
                 }
