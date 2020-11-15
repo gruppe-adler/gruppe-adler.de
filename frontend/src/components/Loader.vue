@@ -23,9 +23,9 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class LoaderVue extends Vue {
     private timeoutDone = false;
     private mounted () {
-        // show loader only after 200ms to prevent "flashing" of
-        // the loader for normal (< 200ms) loading times
-        window.setTimeout(() => { this.timeoutDone = true; }, 200);
+        // show loader only after 100ms to prevent "flashing" of
+        // the loader for normal (< 100ms) loading times
+        window.setTimeout(() => { this.timeoutDone = true; }, 100);
     }
 }
 </script>
