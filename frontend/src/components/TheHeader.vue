@@ -15,8 +15,8 @@ const DEFAULT_VIDEO = 'default.mp4';
 const videos: { [key: string]: string } = {
     'technik': 'technik.mp4',
     'ueber-uns': 'ueber-uns.mp4',
-    'mitspielen': 'overwatch.mp4',
-    'kontakt': 'Nightfall_Small.mp4'
+    'mitspielen': 'roadblock.mp4',
+    'kontakt': 'nightfall.mp4'
 };
 /* eslint-enable quote-props */
 
