@@ -16,7 +16,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img="500" :data-src="m.url" alt="twitter-media" />
+                    <img v-lazy-img :data-src="m.url" alt="twitter-media" />
                 </a>
             </div>
             <p v-if="isRetweet" class="grad-tweet__retweet-author">
@@ -55,7 +55,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img="500" :data-src="m.url" alt="twitter-media" />
+                    <img v-lazy-img :data-src="m.url" alt="twitter-media" />
                 </a>
             </div>
             <div>
