@@ -1,19 +1,21 @@
 <template>
     <Content>
-        <Events />
-        <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
-            <Tweet
-                v-for="tweet in visibleTweets"
-                :model="tweet"
-                :key="`tweet-${tweet.id}`"
-            />
-        </transition-group>
-        <Error v-if="loadingError">
-            Scheint so als ob beim Laden der Tweets etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
-        </Error>
-        <Loader v-else-if="loading" />
-        <a v-else-if="!nothingLeft" key="load-more" class="grad-blog__load-more" @click="loadMore">Mehr laden</a>
-        <span v-else key="end" class="grad-blog__end">Sieht so aus als ob du am Anfang angekommen bist.</span>
+        <template>
+            <Events />
+            <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
+                <Tweet
+                    v-for="tweet in visibleTweets"
+                    :model="tweet"
+                    :key="`tweet-${tweet.id}`"
+                />
+            </transition-group>
+            <Error v-if="loadingError">
+                Scheint so als ob beim Laden der Tweets etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
+            </Error>
+            <Loader v-else-if="loading" />
+            <a v-else-if="!nothingLeft" class="grad-blog__load-more" @click="loadMore">Mehr laden</a>
+            <span v-else class="grad-blog__end">Sieht so aus als ob du am Anfang angekommen bist.</span>
+        </template>
         <template v-slot:right>
             <div class="grad-blog__social-media">
                 <a
@@ -66,7 +68,7 @@ export default class HomeVue extends Vue {
 
         // fetch tweets
         const oldestTweet: Tweet = this.tweets[this.tweets.length - 1];
-        const oldestTweetId = oldestTweet && oldestTweet.id;
+        const oldestTweetId: string|undefined = oldestTweet && oldestTweet.id;
         let newTweets: Tweet[] = [];
         try {
             newTweets = await fetchTweets(oldestTweetId);
