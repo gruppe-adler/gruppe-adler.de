@@ -30,5 +30,4 @@ export default class AppVue extends Vue {}
 #app > .grad-header + *  {
     min-height: calc(100vh - 25rem);
 }
-
 </style>

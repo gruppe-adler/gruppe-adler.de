@@ -4,8 +4,8 @@
             v-for="(c, i) in containers"
             :class="[i == currentId ? 'grad-toc--active' : '']"
             :key="i"
-            v-smooth-scroll="{ offset }"
             :href="`#grad-container-${i}`"
+            @click="onLinkClicked($event, `grad-container-${i}`)"
         >
             {{c.heading}}
         </a>
@@ -23,21 +23,34 @@ export default class TableOfContents extends Vue {
     private scrollTimeout: number | null = null;
     private offset = -120;
 
-    private mounted () {
+    private created () {
         window.addEventListener('scroll', this.handleScroll);
         this.updateCurrentContainer();
 
         if (this.$route.hash.length > 0) {
             this.$nextTick(() => {
-                const el = document.getElementById(this.$route.hash.substr(1));
-                if (el === null) return;
-
-                const { top } = el.getBoundingClientRect();
-                const offsetPosition = top + this.offset;
-
-                window.scrollTo({ top: offsetPosition });
+                this.scrollTo(this.$route.hash.substr(1));
             });
         }
+    }
+
+    private onLinkClicked (event: MouseEvent, id: string) {
+        event.preventDefault();
+
+        const hash = `#${id}`.toLowerCase();
+        if (this.$route.hash.toLowerCase() !== hash) this.$router.push({ hash });
+
+        this.scrollTo(id);
+    }
+
+    private scrollTo (id: string) {
+        const el = document.getElementById(id);
+        if (el === null) return;
+
+        const { top } = el.getBoundingClientRect();
+        const offsetPosition = top + this.offset + window.scrollY;
+
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
 
     private beforeDestroy () {

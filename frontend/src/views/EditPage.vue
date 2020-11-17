@@ -33,7 +33,7 @@ import EditContainerVue from '@/components/EditPage/EditContainer.vue';
 import SnackbarVue from '@/components/EditPage/Snackbar.vue';
 
 import { Page, Container, loadPage, createContainer, updateContainer, createPage, deleteContainer } from '@/services/page';
-import ResponseError from '../services/utils/ResponseError';
+import ResponseError from '@/services/utils/ResponseError';
 
 @Component({
     components: {

@@ -70,10 +70,6 @@ export default class TheHeaderVue extends Vue {
         height: 100%;
     }
 
-    &__image {
-        max-width: 100%;
-    }
-
     &__logo {
         height: 10rem;
         position: absolute;

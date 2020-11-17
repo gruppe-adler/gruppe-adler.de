@@ -23,7 +23,7 @@ renderer.link = function (href, title, text) {
     const titleStr = title === null ? '' : ` title="${title}"`;
 
     if (external) {
-        return `<a target="_blank" href="${href}"${titleStr}>${text}</a>`;
+        return `<a target="_blank" rel="noreferrer" href="${href}"${titleStr}>${text}</a>`;
     } else {
         return `<a href="${href}"${titleStr}>${text}</a>`;
     }
