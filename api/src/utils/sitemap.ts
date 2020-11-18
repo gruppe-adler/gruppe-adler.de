@@ -3,12 +3,12 @@ import { createGzip } from 'zlib';
 import { Page } from '../models';
 
 let cachedSitemap: Buffer|null = null;
-let cachedSitemapTimestamp: number = 0;
+let cachedSitemapTimestamp = 0;
 
 const generateSitemap = async (): Promise<Buffer> => {
-    const smStream = new SitemapStream({ hostname: 'https://dev.gruppe-adler.de/' })
-    const pipeline = smStream.pipe(createGzip())
- 
+    const smStream = new SitemapStream({ hostname: 'https://dev.gruppe-adler.de/' });
+    const pipeline = smStream.pipe(createGzip());
+
     const pages = await Page.findAll();
 
     for (const { slug } of pages) {
@@ -16,9 +16,9 @@ const generateSitemap = async (): Promise<Buffer> => {
     }
 
     const prom = streamToPromise(pipeline);
-    smStream.end()
+    smStream.end();
     return prom;
-}
+};
 
 export const getSitemap = async (): Promise<Buffer> => {
     if (cachedSitemap === null) {
@@ -35,4 +35,4 @@ export const getSitemap = async (): Promise<Buffer> => {
     }
 
     return cachedSitemap;
-}
+};

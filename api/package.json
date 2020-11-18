@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint --ext .js,.ts ./src",
     "serve": "ts-node-dev --inspect --respawn --transpile-only ./src/index.ts",
     "build": "npm run lint && tsc",
     "prod": "node ./build/index.js"
