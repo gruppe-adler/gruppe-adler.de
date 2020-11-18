@@ -25,11 +25,14 @@ export default class TableOfContents extends Vue {
 
     private created () {
         window.addEventListener('scroll', this.handleScroll);
-        this.updateCurrentContainer();
 
         if (this.$route.hash.length > 0) {
             this.$nextTick(() => {
                 this.scrollTo(this.$route.hash.substr(1));
+            });
+        } else {
+            this.$nextTick(() => {
+                this.updateCurrentContainer();
             });
         }
     }
