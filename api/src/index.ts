@@ -15,6 +15,7 @@ import * as compression from 'compression';
 import v1Router from './v1';
 
 import './database';
+import { getSitemap } from './utils/sitemap';
 
 const app = express();
 
@@ -45,6 +46,20 @@ app.use(compression());
 app.use('/api/v1', v1Router);
 
 app.use('/uploads', express.static(join(__dirname, '../data/uploads')));
+
+app.get('/sitemap.xml', async (req, res) => {
+    res.header('Content-Type', 'application/xml');
+    res.header('Content-Encoding', 'gzip');
+
+    try {
+        const sitemap = await getSitemap();
+        res.send(sitemap);
+    } catch (err) {
+        console.error(err);
+        res.status(500).end();
+    }
+});
+
 
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
