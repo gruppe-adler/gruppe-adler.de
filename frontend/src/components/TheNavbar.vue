@@ -85,6 +85,11 @@ const SMALL_BREAKPOINT = 710;
         NavClose: NavCloseVue,
         NavBack: NavBackVue,
         SmallMenu: SmallMenuVue
+    },
+    metaInfo () {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return this.metaInfoMethod();
     }
 })
 export default class TheNavbarVue extends Vue {
@@ -113,6 +118,24 @@ export default class TheNavbarVue extends Vue {
     private beforeDestroy () {
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    private metaInfoMethod () {
+        if (this.activeSubLink !== null) {
+            return {
+                title: this.activeSubLink.text,
+                titleTemplate: '%s - Gruppe Adler'
+            };
+        }
+
+        if (this.activeLink.text.length > 0) {
+            return {
+                title: this.activeLink.text,
+                titleTemplate: '%s - Gruppe Adler'
+            };
+        }
+
+        return {};
     }
 
     @Watch('$route')
