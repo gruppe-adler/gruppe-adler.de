@@ -1,8 +1,8 @@
 <template>
     <Tooltip :text="tooltip">
-        <div class="grad-action-button" :style="`--color: ${color}`" @click="$emit('click', $event)">
+        <button class="grad-action-button" :style="`--color: ${color}`" @click="$emit('click', $event)">
             <i class="material-icons">{{ icon }}</i>
-        </div>
+        </button>
     </Tooltip>
 </template>
 

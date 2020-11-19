@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: /edit/
 
 Sitemap: https://dev.gruppe-adler.de/sitemap.xml

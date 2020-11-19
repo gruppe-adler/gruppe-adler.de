@@ -14,12 +14,13 @@
                 :headerColor="c.headerColor"
             >
                 <template v-slot:header v-if="c.heading">
-                    <span>{{c.heading}}</span>
+                    <h1 style="font-size: inherit; font-weight: inherit;">{{c.heading}}</h1>
                     <img
                         v-if="c.headerImage !== null"
                         v-lazy-img
                         class="grad-container__header-image"
                         alt="header-image"
+                        aria-hidden="true"
                         :data-src="c.headerImage"
                     />
                 </template>

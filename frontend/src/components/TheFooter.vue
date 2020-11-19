@@ -1,5 +1,5 @@
 <template>
-    <div class="grad-footer">
+    <footer class="grad-footer">
         <span class="grad-footer__desc">Gruppe Adler auf</span>
         <div>
             <a
@@ -50,7 +50,7 @@
         >
             LOGIN
         </a>
-    </div>
+    </footer>
 </template>
 
 <script lang="ts">

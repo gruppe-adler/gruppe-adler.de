@@ -1,5 +1,5 @@
 <template>
-    <article class="grad-container" ref="container">
+    <section class="grad-container" ref="container">
         <header v-if="$slots.header" class="grad-container__header">
             <slot name="header" />
         </header>
@@ -12,7 +12,7 @@
         <footer v-if="$slots.footer && $slots.footer !== ''" class="grad-container__footer">
             <slot name="footer" />
         </footer>
-    </article>
+    </section>
 </template>
 
 <script lang="ts">
