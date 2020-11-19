@@ -2,7 +2,7 @@
     <nav :class="['grad-nav', navShown ? '' : 'grad-nav--hidden']">
         <NavBack v-if="small && expandedLink" @click="back" />
         <div v-else class="grad-nav__header" @click="$router.push('/')">
-            <img src="@/assets/adlerkopp.svg" alt="adlerkopp" />
+            <img src="@/assets/adlerkopp.svg" alt="adlerkopp" aria-hidden="true" />
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
                 <span v-if="activeSubLink">{{activeSubLink.text}}</span>
@@ -18,35 +18,34 @@
             <SmallMenu v-show="expanded" :activeLink="activeLink" v-model="expandedLink" />
         </template>
         <template v-else>
-            <div class="grad-nav__links">
-                <template v-for="link in links">
-                    <div
-                        :key="link.url"
-                        class="grad-nav__link-wrapper"
+            <ul class="grad-nav__links">
+                <li
+                    v-for="link in links"
+                    :key="link.url"
+                    class="grad-nav__link-wrapper"
+                >
+                    <router-link
+                        class="grad-nav__link"
+                        :to="link.url"
+                        tag="a"
                     >
-                        <router-link
-                            class="grad-nav__link"
-                            :to="link.url"
-                            tag="a"
-                        >
-                            {{link.text}}
-                        </router-link>
-                        <template v-if="link.sublinks">
-                            <div class="grad-nav__sub-links">
+                        {{link.text}}
+                    </router-link>
+                    <template v-if="link.sublinks">
+                        <ul class="grad-nav__sub-links">
+                            <li v-for="sublink in link.sublinks" :key="sublink.url">
                                 <router-link
-                                    v-for="sublink in link.sublinks"
-                                    :key="sublink.url"
                                     class="grad-nav__link"
                                     :to="link.url + sublink.url"
                                     tag="a"
                                 >
                                     {{sublink.text}}
                                 </router-link>
-                            </div>
-                        </template>
-                    </div>
-                </template>
-                <div
+                            </li>
+                        </ul>
+                    </template>
+                </li>
+                <li
                     key="/en"
                     class="grad-nav__link-wrapper"
                 >
@@ -57,8 +56,8 @@
                     >
                         <img src="@/assets/en.svg" alt="english" />
                     </router-link>
-                </div>
-            </div>
+                </li>
+            </ul>
             <div class="grad-nav__sub-link-bar">
                 <span v-if="activeSubLink">{{activeSubLink.text}}</span>
                 <span v-else>{{activeLink.text}}</span>
@@ -339,6 +338,9 @@ $navbar-height: 4.5rem;
         justify-content: flex-end;
         height: 100%;
         font-size: 1.125rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
 
         > .grad-nav__link-wrapper {
             position: relative;
@@ -366,6 +368,9 @@ $navbar-height: 4.5rem;
         display: flex;
         height: 2.75rem;
         font-size: 0.75rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
 
         position: absolute;
         top: $navbar-height;

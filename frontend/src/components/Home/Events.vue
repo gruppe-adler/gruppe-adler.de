@@ -9,16 +9,16 @@
                     :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }"
                     @click="openEvent(event)"
                 >
-                    <span class="grad-arma-event__date">{{formatDate(event.date)}}</span>
+                    <time :datetime="event.date.toISOString().substr(0, 10)" class="grad-arma-event__date">{{formatDate(event.date)}}</time>
                     <h4 class="grad-arma-event__title">{{event.title}}</h4>
                     <div class="grad-arma-event__attendance">
-                        <div>
+                        <div aria-hidden="true">
                             <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>
                             <div v-for="i in event.attendance[1]" :key="i" class="grad-arma-event__attendance-maybe"></div>
                         </div>
                         <span>{{event.attendance[0]}} - {{event.attendance[0] + event.attendance[1]}} Zusagen</span>
                     </div>
-                    <i class="material-icons grad-arma-event__arrow">chevron_right</i>
+                    <i class="material-icons grad-arma-event__arrow" aria-hidden="true">chevron_right</i>
                 </li>
             </ul>
             <template v-if="small">
