@@ -28,6 +28,10 @@ export default class Page extends Model<Page> {
     @Column(DataType.BOOLEAN)
     public toc: boolean;
 
+    @Default(0.5)
+    @Column(DataType.NUMBER)
+    public priority: number;
+
     @HasMany(() => Container)
     public containers: Container[];
 }

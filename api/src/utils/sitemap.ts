@@ -11,8 +11,8 @@ const generateSitemap = async (): Promise<Buffer> => {
 
     const pages = await Page.findAll();
 
-    for (const { slug } of pages) {
-        smStream.write({ url: slug });
+    for (const { slug, priority } of pages) {
+        smStream.write({ url: slug, priority });
     }
 
     const prom = streamToPromise(pipeline);
