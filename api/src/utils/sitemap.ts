@@ -9,11 +9,14 @@ const generateSitemap = async (): Promise<Buffer> => {
     const smStream = new SitemapStream({ hostname: 'https://dev.gruppe-adler.de/' });
     const pipeline = smStream.pipe(createGzip());
 
+    // add CMS pages
     const pages = await Page.findAll();
-
-    for (const { slug, priority } of pages) {
-        smStream.write({ url: slug, priority });
+    for (const { slug, priority, updatedAt } of pages) {
+        smStream.write({ url: slug, priority, lastmod: updatedAt.toISOString() });
     }
+
+    // add home page
+    smStream.write({ url: '/home', priority: 0.5, changefreq: 'weekly' });
 
     const prom = streamToPromise(pipeline);
     smStream.end();

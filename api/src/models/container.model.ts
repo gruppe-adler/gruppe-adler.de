@@ -8,7 +8,10 @@ import {
     AutoIncrement,
     AllowNull,
     BelongsTo,
-    ForeignKey
+    ForeignKey,
+    AfterUpdate,
+    AfterCreate,
+    AfterDestroy
 } from 'sequelize-typescript';
 
 import { Page } from '.';
@@ -59,4 +62,18 @@ export default class Container extends Model<Container> {
 
     @BelongsTo(() => Page)
     public page: Page[];
+
+    // Update patents page's updatedAt field when this container changes
+    @AfterUpdate
+    @AfterCreate
+    @AfterDestroy
+    static updatePageUpdatedAt(instance: Container): Promise<void> {
+        return (Page.findByPk(instance.pageSlug) as Promise<Page|null>).then((page): Promise<void> => {
+            if (page === null) return Promise.resolve();
+
+            page.changed('updatedAt', true);
+
+            return page.save();
+        });
+    }
 }
