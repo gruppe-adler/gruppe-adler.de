@@ -54,6 +54,7 @@ export default class TheHeaderVue extends Vue {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #000000;
 
     &__fade {
         position: absolute;
