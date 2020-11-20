@@ -53,9 +53,21 @@ pageRouter.post('/', [
     res.status(201).json(page);
 }));
 
-// pageRouter.all('*', (req, res) => {
-//     res.status(404).end();
-// });
+pageRouter.delete('/*', [
+    ssoCheckAuthorized
+], wrapAsync(async (req, res) => {
+    const slug = req.path;
+
+    const page: Page|null = await Page.findByPk(slug);
+
+    if (page === null) {
+        throw new ReponseError(404, `Container with slug '${slug}' not found.`);
+    }
+
+    await page.destroy();
+
+    res.end();
+}));
 
 pageRouter.use(globalErrorHandler);
 
