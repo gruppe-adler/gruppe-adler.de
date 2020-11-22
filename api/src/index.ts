@@ -62,7 +62,18 @@ app.get('/sitemap.xml', async (req, res) => {
 
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
-    app.use('/', express.static(join(__dirname, '../frontend')));
+    app.use(
+        '/', 
+        express.static(join(__dirname, '../frontend'), {
+            setHeaders: (res: Response, path: string) => {
+                if (/.+\.(?!html).*$/i.test(path)) {
+                    res.header('Cache-Control', 'public, max-age=2678400');
+                } else {
+                    res.header('Cache-Control', 'no-store');
+                }
+            }
+        })
+    );
     app.get('*', (req: Request, res: Response, next: NextFunction) => {
         if (!req.accepts('application/html')) {
             next();
