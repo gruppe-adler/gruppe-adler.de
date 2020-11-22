@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-const DEFAULT_VIDEO = 'default.mp4';
+const DEFAULT_VIDEO = 'ieds.mp4';
 
 /* eslint-disable quote-props */
 const videos: { [key: string]: string } = {
