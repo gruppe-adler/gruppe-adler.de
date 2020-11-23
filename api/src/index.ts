@@ -63,7 +63,7 @@ app.get('/sitemap.xml', async (req, res) => {
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
     app.use(
-        '/', 
+        '/',
         express.static(join(__dirname, '../frontend'), {
             setHeaders: (res: Response, path: string) => {
                 if (/.+\.(?!html).*$/i.test(path)) {
