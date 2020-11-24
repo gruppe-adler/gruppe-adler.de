@@ -16,6 +16,7 @@ pageRouter.get('/*', wrapAsync(async (req, res) => {
         throw new ReponseError(404, `Page with slug '${slug}' not found.`);
     }
 
+    res.header('Cache-Control', 'no-cache');
     res.header('Last-Modified', page.updatedAt.toGMTString());
     res.json(page);
 }));
