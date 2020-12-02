@@ -13,7 +13,7 @@ const DEFAULT_VIDEO = 'roadblock.mp4';
 
 /* eslint-disable quote-props */
 const videos: { [key: string]: string } = {
-    'technik': 'technik.mp4',
+    'technik': 'repair.mp4',
     'ueber-uns': 'nightfall.mp4',
     'mitspielen': 'briefing_black_fix.mp4',
     'kontakt': 'ieds.mp4'
