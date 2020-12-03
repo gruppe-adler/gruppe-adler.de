@@ -10,7 +10,7 @@
                 target="_blank"
                 rel="noreferrer"
             >
-                <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" />
+                <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" :height="2.5 * 16" />
             </a>
         </div>
         <div>

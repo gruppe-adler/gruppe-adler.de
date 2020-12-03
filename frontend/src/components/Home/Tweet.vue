@@ -4,7 +4,7 @@
         <template v-slot:heading><a :href="`https://twitter.com/${model.author.username}`" target="_blank" rel="noreferrer">@{{model.author.username}}</a></template>
         <template v-slot:author>
             <a :href="`https://twitter.com/${model.author.username}`" target="_blank" rel="noreferrer">
-                <img v-lazy-img :data-src="model.author.picture" alt="avatar" />
+                <img v-lazy-img :data-src="model.author.picture" alt="avatar" :height="2.25 *16" :width="2.25 *16" />
             </a>
         </template>
         <template>
@@ -16,7 +16,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img :data-src="m.url" alt="twitter-media" />
+                    <img v-lazy-img :data-src="m.url" alt="twitter-media" :height="16 *16" :width="48 *16" />
                 </a>
             </div>
             <p v-if="isRetweet" class="grad-tweet__retweet-author">
@@ -197,7 +197,10 @@ export default class TweetVue extends Vue {
     }
 
     .grad-container__content .grad-tweet__media img {
+        background-color: #EEE;
         max-height: 16rem;
+        max-width: 100%;
+        width: auto;
     }
 
     .grad-container__footer {

@@ -2,7 +2,7 @@
     <nav :class="['grad-nav', navShown ? '' : 'grad-nav--hidden']">
         <NavBack v-if="small && expandedLink" @click="back" />
         <div v-else class="grad-nav__header" @click="$router.push('/')">
-            <img src="@/assets/adlerkopp.svg" alt="adlerkopp" aria-hidden="true" />
+            <img src="@/assets/adlerkopp.svg" alt="adlerkopp" aria-hidden="true" :height="3 * 16" :width="3 * 16" />
             <div v-if="small">
                 <span>{{activeLink.text}}</span>
                 <span v-if="activeSubLink">{{activeSubLink.text}}</span>
@@ -54,7 +54,7 @@
                         tag="a"
                         class="grad-nav__link"
                     >
-                        <img src="@/assets/en.svg" alt="english" />
+                        <img src="@/assets/en.svg" alt="english" height="18" width="36" />
                     </router-link>
                 </li>
             </ul>
@@ -295,6 +295,7 @@ $navbar-height: 4.5rem;
         img {
             margin-right: .5rem;
             height: 3rem;
+            width: auto;
         }
         span {
             font-size: .75rem;
@@ -326,6 +327,7 @@ $navbar-height: 4.5rem;
 
         > img {
             height: 1em;
+            width: auto;
         }
 
         &:hover {
