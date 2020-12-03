@@ -1,6 +1,8 @@
 <template>
-    <Loader v-if="loading" />
-    <Container v-else headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem;">
+    <Container headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem; overflow: hidden;">
+        <div v-if="loading"  style="background-color: red; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 100; background-color: #2C2C2C;">
+            <div class="grad-loader__progress" style="color: #66aa66;"></div>
+        </div>
         <div style="position: relative; margin-left: -2.25rem; width: calc(100% + 4.5rem); margin-top: -1.125rem; border-radius: .25rem .25rem 0 0; overflow: hidden;">
             <ul :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
                 <li
@@ -60,7 +62,27 @@ export default class Events extends Vue {
     private error = false;
     private scrollLeft = false;
     private scrollRight = false;
-    private events: ArmaEvent[] = [];
+    private events: ArmaEvent[] = [
+        {
+            date: new Date(0),
+            title: '',
+            url: '',
+            attendance: [0, 0]
+        },
+        {
+            date: new Date(0),
+            title: '',
+            url: '',
+            attendance: [0, 0]
+        },
+        {
+            date: new Date(0),
+            title: '',
+            url: '',
+            attendance: [0, 0]
+        }
+    ];
+
     private expanded = false;
     private small = true;
     private resizeObserver: null|ResizeObserver = null;
@@ -193,7 +215,7 @@ button {
         color: inherit;
         font-weight: normal;
         cursor: pointer;
-        transition: all .05s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        transition: color .05s cubic-bezier(0.455, 0.03, 0.515, 0.955) !important;
 
         &:hover {
             color: white;
@@ -249,6 +271,7 @@ $baseClass: '.grad-arma-event';
     border-right: 4px solid transparent;
     cursor: pointer;
     transition: all .1s ease-in;
+    transition-property: color, background-color;
 
     &__title {
         font-size: 1.125rem;

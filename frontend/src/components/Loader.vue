@@ -28,7 +28,7 @@ export default class LoaderVue extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .grad-loader {
     opacity: 1;
     width: 100%;
@@ -46,7 +46,6 @@ export default class LoaderVue extends Vue {
     &__progress {
         color: #D18D1F;
         height: 0.25rem;
-        background-color: rgba(#D18D1F, 0.4);
         width: 100%;
         position: absolute;
         top: 0;
@@ -54,6 +53,16 @@ export default class LoaderVue extends Vue {
         right: 0;
         overflow: hidden;
         border-radius: inherit;
+
+        &:before {
+            background-color: currentColor;
+            opacity: 0.4;
+            content: '';
+            display: block;;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
 
         &:after {
             background-color: currentColor;
