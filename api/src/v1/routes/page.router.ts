@@ -17,7 +17,7 @@ pageRouter.get('/*', wrapAsync(async (req, res) => {
     }
 
     res.header('Cache-Control', 'no-cache');
-    res.header('Last-Modified', page.updatedAt.toGMTString());
+    res.header('Last-Modified', page.updatedAt.toUTCString());
     res.json(page);
 }));
 

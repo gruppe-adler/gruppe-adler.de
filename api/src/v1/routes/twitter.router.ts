@@ -10,15 +10,19 @@ const twitterService = TwitterService.getInstance();
 const twitterRouter = Router();
 
 twitterRouter.get('/', [
-    query('count').optional().isInt({ gt: 0 }),
-    query('max_id').optional().isString(),
-    query('exclude_replies').optional().isBoolean(),
+    query('count').optional().isInt({ gt: 0 }).toInt(),
+    query('max_id').optional().isInt(),
+    query('exclude_replies').optional().isBoolean().toBoolean(),
     return422
 ], wrapAsync(async (req, res) => {
     // eslint-disable-next-line camelcase
-    const { count, max_id, exclude_replies } = matchedData(req) as { count: number, max_id?: string, exclude_replies?: boolean };
+    const { count, max_id, exclude_replies } = matchedData(req) as { count?: number, max_id?: string, exclude_replies?: boolean };
 
-    const tweets = await twitterService.getTweets(count, max_id, exclude_replies);
+    const { tweets, lastModified } = await twitterService.getTweets(max_id, count, exclude_replies);
+
+    res.header('Cache-Control', 'no-cache');
+    res.header('Last-Modified', lastModified.toUTCString());
+
     res.json(tweets);
 }));
 

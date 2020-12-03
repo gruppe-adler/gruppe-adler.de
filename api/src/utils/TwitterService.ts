@@ -2,6 +2,7 @@ import fetch, { Response } from 'node-fetch';
 import ReponseError from './ResponseError';
 
 import { Status as Tweet } from 'twitter-d/types/status';
+import * as equals from 'fast-deep-equal';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('../../config/config.json');
@@ -9,11 +10,18 @@ const config = require('../../config/config.json');
 export class TwitterService {
     private twitterBearerToken: string|null = null;
     private twitterBearerTokenCreated = 0;
+    private cachedTweets: Tweet[] = [];
+    private cachedDate: Date = new Date(0);
+    private cachePromise: Promise<void>;
+    private lastModified: Date = new Date(0);
     private static instance: TwitterService|null = null;
 
     // this constructor is actually important to make sure it is private (singleton pattern)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
-    private constructor() {}
+    private constructor() {
+        this.cachedDate = new Date();
+        this.cachePromise = this.cacheAllTweets()
+    }
 
     public static getInstance(): TwitterService {
         if (this.instance === null) {
@@ -23,15 +31,69 @@ export class TwitterService {
         return this.instance;
     }
 
-    public async getTweets(count?: number, maxId?: string, excludeReplies?: boolean): Promise<Tweet[]> {
+    public async getTweets(maxId?: string, count: number = 20, excludeReplies: boolean = false): Promise<{ tweets: Tweet[], lastModified: Date }> {
+        // fetch new tweets if last fetch is more than 15min ago
+        const now = new Date();
+        if (now.getTime() > this.cachedDate.getTime() + 900000) {
+            this.cachedDate = now;
+            this.cachePromise = this.cacheAllTweets();
+        }
+
+        await this.cachePromise;
+
+        let startIndex = 0;
+
+        if (maxId !== undefined) {
+            const maxIdIndex = this.cachedTweets.findIndex(t => t.id_str === maxId);
+            if (maxIdIndex > -1) startIndex = maxIdIndex;
+        }
+
+        let tweets: Tweet[] = [];
+        if (excludeReplies) {
+            let i = startIndex;
+
+            while (tweets.length < count && i < this.cachedTweets.length) {
+                const tweet = this.cachedTweets[i];
+                if (tweet.in_reply_to_status_id === null) tweets.push(tweet);
+                i++;
+            }
+        } else {
+            tweets = this.cachedTweets.slice(startIndex, startIndex + count);
+        }
+
+        return { tweets, lastModified: this.lastModified };
+    }
+
+    public async cacheAllTweets() {
+        const allTweets: Tweet[] = [];
+        let maxId: string|undefined;
+
+        while (true) {
+            let tweets = await this.fetchTweets(maxId);
+
+            if (tweets.length > 0 && tweets[0].id_str === maxId) tweets = tweets.slice(1);
+
+            if (tweets.length === 0) break;
+
+            allTweets.push(...tweets);
+
+            maxId = tweets[tweets.length - 1].id_str;
+        }
+
+        if (!equals(this.cachedTweets, allTweets)) {
+            this.cachedTweets = allTweets;
+            this.lastModified = new Date();
+        }
+    }
+
+    private async fetchTweets(maxId?: string): Promise<Tweet[]> {
         const url = new URL('https://api.twitter.com/1.1/statuses/user_timeline.json');
 
         url.searchParams.append('screen_name', config.twitter['screen-name']);
         url.searchParams.append('tweet_mode', 'extended');
+        url.searchParams.append('count', '200');
 
-        if (count !== undefined) url.searchParams.append('count', `${count}`);
         if (maxId !== undefined) url.searchParams.append('max_id', maxId);
-        if (excludeReplies !== undefined) url.searchParams.append('exclude_replies', `${excludeReplies}`);
 
         const bearerToken = await this.getToken();
 
@@ -48,7 +110,7 @@ export class TwitterService {
             throw new ReponseError(502);
         }
 
-        return await response.json() as Tweet[];
+        return response.json() as Promise<Tweet[]>;
     }
 
     private async getToken(): Promise<string> {
