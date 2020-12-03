@@ -58,9 +58,8 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 
-import ActionButtonsVue from '@/components/ActionButtons.vue';
-import ActionButtonVue from '@/components/ActionButton.vue';
 import TableOfContentsVue from '@/components/CMSPage/TableOfContents.vue';
+import MarkdownVue from '@/components/Markdown.vue';
 
 import { Page, loadPage, Container } from '@/services/page';
 import { headingToID } from '@/services/headingToID';
@@ -68,8 +67,15 @@ import { headingToID } from '@/services/headingToID';
 @Component({
     components: {
         TableOfContents: TableOfContentsVue,
-        ActionButtons: ActionButtonsVue,
-        ActionButton: ActionButtonVue
+        ActionButtons: () => import(
+            /* webpackChunkName: "admin", webpackMode: "lazy" */
+            '@/components/ActionButtons.vue'
+        ),
+        ActionButton: () => import(
+            /* webpackChunkName: "admin", webpackMode: "lazy" */
+            '@/components/ActionButton.vue'
+        ),
+        Markdown: MarkdownVue
     }
 })
 export default class CMSPageVue extends Vue {
@@ -118,6 +124,7 @@ export default class CMSPageVue extends Vue {
                 }
             }
 
+            // eslint-disable-next-line no-console
             console.error(err);
             this.loadingError = true;
         }

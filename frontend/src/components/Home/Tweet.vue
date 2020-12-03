@@ -72,10 +72,15 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Tweet, RETWEET_TYPE, hideTweet } from '@/services/twitter';
 import BlogEntryVue, { parseDate } from './BlogEntry.vue';
-import ActionButtonVue from '../ActionButton.vue';
 
 @Component({
-    components: { BlogEntry: BlogEntryVue, ActionButton: ActionButtonVue }
+    components: {
+        BlogEntry: BlogEntryVue,
+        ActionButton: () => import(
+            /* webpackChunkName: "admin", webpackMode: "lazy" */
+            '@/components/ActionButton.vue'
+        )
+    }
 })
 export default class TweetVue extends Vue {
     @Prop() private model?: Tweet;

@@ -7,8 +7,7 @@ const AsyncCMSPage: AsyncComponent = () => ({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
-        /* webpackChunkName: "page" */
-        /* webpackMode: "eager" */
+        /* webpackChunkName: "cms-page", webpackMode: "lazy" */
         '@/views/CMSPage.vue'
     ),
     loading: LoaderVue,
@@ -21,8 +20,7 @@ const AsyncEditPage: AsyncComponent = () => ({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
-        /* webpackChunkName: "admin" */
-        /* webpackMode: "lazy" */
+        /* webpackChunkName: "admin", webpackMode: "lazy" */
         '@/views/EditPage.vue'
     ),
     loading: LoaderVue,
@@ -35,8 +33,7 @@ const AsyncHomePage: AsyncComponent = () => ({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
-        /* webpackChunkName: "home" */
-        /* webpackMode: "eager" */
+        /* webpackChunkName: "home", webpackMode: "lazy" */
         '@/views/Home.vue'
     ),
     loading: LoaderVue,

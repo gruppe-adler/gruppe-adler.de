@@ -15,10 +15,12 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import EditableFieldVue from './EditableField.vue';
+import MarkdownVue from '@/components/Markdown.vue';
 
 @Component({
     components: {
-        EditableField: EditableFieldVue
+        EditableField: EditableFieldVue,
+        Markdown: MarkdownVue
     }
 })
 export default class MarkdownTextFieldVue extends Vue {
