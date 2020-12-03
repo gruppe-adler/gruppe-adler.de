@@ -10,7 +10,7 @@
                 target="_blank"
                 rel="noreferrer"
             >
-                <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" :height="2.5 * 16" />
+                <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" :height="2.5 * 16" :width="6.75 * 16" />
             </a>
         </div>
         <div>
@@ -179,7 +179,7 @@ export default class TheFooterVue extends Vue {
         opacity: 0.7;
 
         img {
-            height: 2.5rem;
+            width: auto;
             filter: saturate(0%);
         }
 

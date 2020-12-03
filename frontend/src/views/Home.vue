@@ -25,7 +25,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" />
+                    <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" :height="4 * 16" :width="10 * 16" />
                 </a>
             </div>
         </template>
@@ -192,8 +192,7 @@ export default class HomeVue extends Vue {
         max-width: 100%;
 
         img {
-            height: 4rem;
-            max-width: 100%;
+            width: auto;
             filter: saturate(0%);
         }
 

@@ -55,7 +55,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img :data-src="m.url" alt="twitter-media" />
+                    <img v-lazy-img :data-src="m.url" alt="twitter-media" :height="5 * 16" :width="10 * 16" />
                 </a>
             </div>
             <div>
@@ -223,6 +223,8 @@ export default class TweetVue extends Vue {
 
             img {
                 max-height: 5rem;
+                width: auto;
+                background-color: #EEE;
             }
         }
     }
