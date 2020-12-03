@@ -71,6 +71,9 @@ export default class LoaderVue extends Vue {
             height: 100%;
             width: 100%;
             position: absolute;
+            will-change: left, transform;
+            left: 0px;
+            transform: scaleX(1);
             animation: grad-loader-progress infinite 2s linear;
         }
 

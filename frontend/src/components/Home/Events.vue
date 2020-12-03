@@ -3,7 +3,7 @@
         <div v-if="loading"  style="background-color: red; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 100; background-color: #2C2C2C;">
             <div class="grad-loader__progress" style="color: #66aa66;"></div>
         </div>
-        <div style="position: relative; margin-left: -2.25rem; width: calc(100% + 4.5rem); margin-top: -1.125rem; border-radius: .25rem .25rem 0 0; overflow: hidden;">
+        <div v-if="!error" style="position: relative; margin-left: -2.25rem; width: calc(100% + 4.5rem); margin-top: -1.125rem; border-radius: .25rem .25rem 0 0; overflow: hidden;">
             <ul :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
                 <li
                     v-for="(event, i) in events"
