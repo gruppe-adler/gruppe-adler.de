@@ -20,7 +20,7 @@ export class TwitterService {
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
     private constructor() {
         this.cachedDate = new Date();
-        this.cachePromise = this.cacheAllTweets()
+        this.cachePromise = this.cacheAllTweets();
     }
 
     public static getInstance(): TwitterService {
@@ -31,7 +31,7 @@ export class TwitterService {
         return this.instance;
     }
 
-    public async getTweets(maxId?: string, count: number = 20, excludeReplies: boolean = false): Promise<{ tweets: Tweet[], lastModified: Date }> {
+    public async getTweets(maxId?: string, count = 20, excludeReplies = false): Promise<{ tweets: Tweet[], lastModified: Date }> {
         // fetch new tweets if last fetch is more than 15min ago
         const now = new Date();
         if (now.getTime() > this.cachedDate.getTime() + 900000) {
@@ -64,7 +64,7 @@ export class TwitterService {
         return { tweets, lastModified: this.lastModified };
     }
 
-    public async cacheAllTweets() {
+    public async cacheAllTweets(): Promise<void> {
         const allTweets: Tweet[] = [];
         let maxId: string|undefined;
 
