@@ -4,8 +4,8 @@
             v-for="(c, i) in containers"
             :class="[i == currentId ? 'grad-toc--active' : '']"
             :key="i"
-            :href="`#grad-container-${i}`"
-            @click="onLinkClicked($event, `grad-container-${i}`)"
+            :href="`#${headingToID(c)}`"
+            @click="onLinkClicked($event, headingToID(c))"
         >
             {{c.heading}}
         </a>
@@ -15,6 +15,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Container } from '@/services/page';
+import { headingToID } from '@/services/headingToID';
 
 @Component
 export default class TableOfContents extends Vue {
@@ -73,7 +74,7 @@ export default class TableOfContents extends Vue {
 
         // itereate all containers and find the one first one which is more than 50px from top of screen
         for (let index = 0; index < this.containers.length; index++) {
-            const container = document.getElementById(`grad-container-${index}`);
+            const container = document.getElementById(headingToID(this.containers[index].heading));
             if (container) {
                 const top = container.getBoundingClientRect().top;
 
@@ -83,6 +84,10 @@ export default class TableOfContents extends Vue {
                 }
             }
         }
+    }
+
+    private headingToID (container: Container): string {
+        return headingToID(container.heading);
     }
 }
 </script>

@@ -8,9 +8,9 @@
         </template>
         <template>
             <Container
-                v-for="(c, i) in page.containers"
+                v-for="c in page.containers"
                 :key="c.id"
-                :id="`grad-container-${i}`"
+                :id="headingToID(c)"
                 :headerColor="c.headerColor"
             >
                 <template v-slot:header v-if="c.heading">
@@ -62,7 +62,8 @@ import ActionButtonsVue from '@/components/ActionButtons.vue';
 import ActionButtonVue from '@/components/ActionButton.vue';
 import TableOfContentsVue from '@/components/CMSPage/TableOfContents.vue';
 
-import { Page, loadPage } from '@/services/page';
+import { Page, loadPage, Container } from '@/services/page';
+import { headingToID } from '@/services/headingToID';
 
 @Component({
     components: {
@@ -120,6 +121,10 @@ export default class CMSPageVue extends Vue {
             console.error(err);
             this.loadingError = true;
         }
+    }
+
+    private headingToID (container: Container): string {
+        return headingToID(container.heading);
     }
 }
 </script>
