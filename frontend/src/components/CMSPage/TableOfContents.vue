@@ -21,7 +21,6 @@ import { headingToID } from '@/services/headingToID';
 export default class TableOfContents extends Vue {
     @Prop({ default: () => [], type: Array }) private containers!: Container[];
     private currentId = -1;
-    private scrollTimeout: number | null = null;
     private offset = -120;
 
     private created () {
@@ -61,14 +60,13 @@ export default class TableOfContents extends Vue {
         window.removeEventListener('scroll', this.handleScroll);
     }
 
-    private handleScroll () {
-        if (this.scrollTimeout) window.clearTimeout(this.scrollTimeout);
-        this.scrollTimeout = window.setTimeout(this.updateCurrentContainer, 200);
-    }
-
     /**
      * Find the first container which is completely shown and sets it's id as this.currentId
      */
+    private handleScroll () {
+        this.updateCurrentContainer();
+    }
+
     private updateCurrentContainer () {
         if (!this.containers) return;
 

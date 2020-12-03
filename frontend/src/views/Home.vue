@@ -47,7 +47,6 @@ import EventsVue from '@/components/Home/Events.vue';
 export default class HomeVue extends Vue {
     private loadingError = false;
     private loading = true;
-    private scrollTimeout: number|null = null;
     private scrollListenerAdded = false;
     private nothingLeft = false;
     private footerItems = footerItems;
@@ -102,19 +101,10 @@ export default class HomeVue extends Vue {
     }
 
     /**
-     * @description Scroll event callback. Calls function to check wether bottom of page hase been reached via a timeout
+     * @description Checks wether bottom of page hase been reached and initiates fetching new posts
      * @author DerZade
      */
     private handleScroll (): void {
-        if (this.scrollTimeout) window.clearTimeout(this.scrollTimeout);
-        this.scrollTimeout = window.setTimeout(this.checkIfBottom, 200);
-    }
-
-    /**
-     * @description Checks wether bottom of page hase been reached and  initiates fetching new posts
-     * @author DerZade
-     */
-    private checkIfBottom (): void {
         if (this.loading) return;
         if (this.nothingLeft) return;
 
