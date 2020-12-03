@@ -199,7 +199,6 @@ export default class TweetVue extends Vue {
     .grad-container__content .grad-tweet__media img {
         background-color: #EEE;
         max-height: 16rem;
-        max-width: 100%;
         width: auto;
     }
 
