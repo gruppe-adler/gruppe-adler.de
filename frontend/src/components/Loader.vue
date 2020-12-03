@@ -9,6 +9,7 @@
                 <div style="height: 19rem;"></div>
             </template>
         </Container>
+        <div v-if="!timeoutDone" style="height: 19rem;"></div>
         <div class="grad-loader__mask"></div>
     </div>
 </template>
