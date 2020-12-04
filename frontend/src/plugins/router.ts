@@ -7,7 +7,7 @@ const AsyncCMSPage: AsyncComponent = () => ({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
-        /* webpackChunkName: "cms-page", webpackMode: "lazy" */
+        /* webpackChunkName: "cms-page", webpackMode: "eager" */
         '@/views/CMSPage.vue'
     ),
     loading: LoaderVue,
@@ -33,7 +33,7 @@ const AsyncHomePage: AsyncComponent = () => ({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     component: import(
-        /* webpackChunkName: "home", webpackMode: "lazy" */
+        /* webpackChunkName: "home", webpackMode: "eager" */
         '@/views/Home.vue'
     ),
     loading: LoaderVue,
