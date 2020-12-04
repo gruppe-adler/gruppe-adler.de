@@ -55,10 +55,10 @@ export async function createPage (p: Page): Promise<Page> {
 export async function createContainer (c: Container): Promise<Container> {
     const promises: Promise<void>[] = [];
     if (c.pinnedImage !== undefined && c.pinnedImage !== null) {
-        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }).catch(() => { debugger; }));
+        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }));
     }
     if (c.headerImage !== undefined && c.headerImage !== null) {
-        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }).catch(() => { debugger; }));
+        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }));
     }
     await Promise.all(promises);
 
@@ -72,10 +72,10 @@ export async function createContainer (c: Container): Promise<Container> {
 export async function updateContainer (c: Partial<Container> & Pick<Container, 'id'>): Promise<Container> {
     const promises: Promise<void>[] = [];
     if (c.pinnedImage !== undefined && c.pinnedImage !== undefined && c.pinnedImage !== null) {
-        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }).catch(() => { debugger; }));
+        promises.push(uploadImage(c.pinnedImage).then(url => { c.pinnedImage = url; }));
     }
     if (c.headerImage !== undefined && c.headerImage !== undefined && c.headerImage !== null) {
-        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }).catch(() => { debugger; }));
+        promises.push(uploadImage(c.headerImage).then(url => { c.headerImage = url; }));
     }
     await Promise.all(promises);
 
