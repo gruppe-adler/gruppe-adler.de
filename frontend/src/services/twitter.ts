@@ -21,10 +21,11 @@ interface TwitterUser {
     picture: string;
 }
 
-interface TweetMedia {
+export interface TweetMedia {
     id: number;
     url: string;
     target: string;
+    sizes: Array<{ name: string, w: number, h: number }>
 }
 
 interface TweetConstructorArguments {
@@ -151,6 +152,23 @@ export async function hideTweet (id: string, hidden: boolean): Promise<void> {
     if (!response.ok) throw new ResponseError(response);
 }
 
+function entityToTweetMedia (entity: MediaEntity): TweetMedia {
+    const sizes = [];
+    for (const name of ['small', 'medium', 'large'] as Array<'small'|'medium'|'large'>) {
+        if (!Object.prototype.hasOwnProperty.call(entity.sizes, name)) continue;
+
+        const { h, w } = entity.sizes[name];
+        sizes.push({ name, h, w });
+    }
+
+    return {
+        id: entity.id,
+        url: entity.media_url_https,
+        target: entity.expanded_url,
+        sizes
+    };
+}
+
 /**
  * @async
  * @description Retrieves tweets
@@ -180,13 +198,7 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
         // media of main tweet
         let mainMedia: TweetMedia[] = [];
         if (mainTweet.extended_entities && mainTweet.extended_entities.media) {
-            mainMedia = mainTweet.extended_entities.media.map(m => {
-                return {
-                    id: m.id,
-                    url: m.media_url_https,
-                    target: m.expanded_url
-                };
-            });
+            mainMedia = mainTweet.extended_entities.media.map(entityToTweetMedia);
         }
 
         // content of main tweet
@@ -223,13 +235,7 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
             // retweeted media
             let retweetedMedia: TweetMedia[] = [];
             if (retweetedStatus.extended_entities && retweetedStatus.extended_entities.media) {
-                retweetedMedia = retweetedStatus.extended_entities.media.map(m => {
-                    return {
-                        id: m.id,
-                        url: m.media_url_https,
-                        target: m.expanded_url
-                    };
-                });
+                retweetedMedia = retweetedStatus.extended_entities.media.map(entityToTweetMedia);
             }
 
             const retweetedTweet = new Tweet({

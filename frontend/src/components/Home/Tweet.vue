@@ -9,15 +9,11 @@
         </template>
         <template>
             <div class="grad-tweet__media" v-if="model.media.length > 0">
-                <a
+                <TweetMedia
                     v-for="m in model.media"
                     :key="m.id"
-                    :href="m.target"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <img v-lazy-img :data-src="m.url" alt="twitter-media" :height="16 *16" :width="48 *16" />
-                </a>
+                    :model="m"
+                />
             </div>
             <p v-if="isRetweet" class="grad-tweet__retweet-author">
                 Retweet von <a :href="`https://twitter.com/${model.retweetedTweet.author.username}`" target="_blank" rel="noreferrer">@{{model.retweetedTweet.author.displayName}}</a>
@@ -48,15 +44,13 @@
                 <path opacity="0.2" d="M14.4141 14.2012C14.8438 12.4238 15.5469 10.1973 16.5234 7.52148C17.5195 4.82617 18.5352 2.375 19.5703 0.167969H25.9863C24.6973 5.38281 23.7109 10.2754 23.0273 14.8457H14.8242L14.4141 14.2012ZM0.732422 14.2012C1.16211 12.4238 1.86523 10.1973 2.8418 7.52148C3.83789 4.82617 4.85352 2.375 5.88867 0.167969H12.3047C11.0156 5.38281 10.0293 10.2754 9.3457 14.8457H1.14258L0.732422 14.2012Z" fill="black"/>
             </svg>
             <div class="grad-tweet__media" v-if="model.retweetedTweet.media.length > 0">
-                <a
+                <TweetMedia
                     v-for="m in model.retweetedTweet.media"
                     :key="m.id"
-                    :href="m.target"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <img v-lazy-img :data-src="m.url" alt="twitter-media" :height="5 * 16" :width="10 * 16" />
-                </a>
+                    :model="m"
+                    :width="10 * 16"
+                    :height="5 * 16"
+                />
             </div>
             <div>
                 <p class="grad-tweet__retweet-author">
@@ -72,10 +66,12 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Tweet, RETWEET_TYPE, hideTweet } from '@/services/twitter';
 import BlogEntryVue, { parseDate } from './BlogEntry.vue';
+import TweetMediaVue from './TweetMedia.vue';
 
 @Component({
     components: {
         BlogEntry: BlogEntryVue,
+        TweetMedia: TweetMediaVue,
         ActionButton: () => import(
             /* webpackChunkName: "admin", webpackMode: "lazy" */
             '@/components/ActionButton.vue'
@@ -125,27 +121,6 @@ export default class TweetVue extends Vue {
         display: flex;
         justify-content: space-evenly;
         overflow: hidden;
-
-        > a {
-            overflow: hidden;
-            width: auto;
-            display: flex;
-            justify-content: center;
-
-            &:not(:last-child) {
-                margin-right: .125rem;
-            }
-
-            &:only-child {
-                border-radius: inherit;
-            }
-
-            > img {
-                overflow: hidden;
-                max-width: none;
-                flex: none;
-            }
-        }
     }
 
     &__overlay {
@@ -202,9 +177,7 @@ export default class TweetVue extends Vue {
     }
 
     .grad-container__content .grad-tweet__media img {
-        background-color: #EEE;
         max-height: 16rem;
-        width: auto;
     }
 
     .grad-container__footer {
@@ -228,8 +201,6 @@ export default class TweetVue extends Vue {
 
             img {
                 max-height: 5rem;
-                width: auto;
-                background-color: #EEE;
             }
         }
     }
