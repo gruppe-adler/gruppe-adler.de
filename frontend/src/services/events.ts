@@ -28,5 +28,7 @@ export function isInFuture (date: Date): boolean {
 }
 
 export async function fetchEvents (): Promise<ArmaEvent[]> {
-    return fetchJSON<ArmaEvent[]>(`${API_URI}/api/v1/events`);
+    const events = await fetchJSON<Array<Omit<ArmaEvent, 'date'> & { date: string }>>(`${API_URI}/api/v1/events`);
+
+    return events.map(e => ({ ...e, date: new Date(e.date) }));
 }
