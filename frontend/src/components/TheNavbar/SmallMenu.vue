@@ -33,7 +33,7 @@
             tag="a"
             class="grad-nav__link"
         >
-            <img src="@/assets/en.svg" alt="english" />
+            <img src="@/assets/en.svg" alt="english" width="40" height="20" />
         </router-link>
     </transition-group>
 </template>
