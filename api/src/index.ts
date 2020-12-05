@@ -80,6 +80,7 @@ if (existsSync(join(__dirname, '../frontend'))) {
             return;
         }
 
+        res.header('Cache-Control', 'no-store');
         res.sendFile(join(__dirname, '../frontend/index.html'));
     });
 }
