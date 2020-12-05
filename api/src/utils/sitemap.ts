@@ -3,9 +3,18 @@ import { createGzip } from 'zlib';
 import { Page } from '../models';
 
 let cachedSitemap: Buffer|null = null;
-let cachedSitemapTimestamp = 0;
 
-const generateSitemap = async (): Promise<Buffer> => {
+const initialCachePromise = cacheStiemap();
+
+Page.addHook('afterCreate', cacheStiemap);
+Page.addHook('afterDestroy', cacheStiemap);
+Page.addHook('afterUpdate', cacheStiemap);
+
+async function cacheStiemap(): Promise<void> {
+    cachedSitemap = await generateSitemap();
+}
+
+async function generateSitemap(): Promise<Buffer> {
     const smStream = new SitemapStream({ hostname: 'https://dev.gruppe-adler.de/' });
     const pipeline = smStream.pipe(createGzip());
 
@@ -21,21 +30,9 @@ const generateSitemap = async (): Promise<Buffer> => {
     const prom = streamToPromise(pipeline);
     smStream.end();
     return prom;
-};
+}
 
-export const getSitemap = async (): Promise<Buffer> => {
-    if (cachedSitemap === null) {
-        const sitemap = await generateSitemap();
-        cachedSitemap = sitemap;
-        cachedSitemapTimestamp = (new Date()).valueOf();
-    }
-
-    // generate new sitemap if last generation is longer than an hour ago
-    if ((new Date()).valueOf() - cachedSitemapTimestamp < 216000000) { // 1 hour
-        const sitemap = await generateSitemap();
-        cachedSitemap = sitemap;
-        cachedSitemapTimestamp = (new Date()).valueOf();
-    }
-
+export async function getSitemap(): Promise<Buffer> {
+    await initialCachePromise;
     return cachedSitemap;
-};
+}
