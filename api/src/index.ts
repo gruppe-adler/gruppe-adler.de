@@ -16,6 +16,7 @@ import v1Router from './v1';
 
 import './database';
 import { getSitemap } from './utils/sitemap';
+import { Page } from './models';
 
 const app = express();
 
@@ -74,10 +75,30 @@ if (existsSync(join(__dirname, '../frontend'))) {
             }
         })
     );
+
+    let pages: string[] = [];
+    const cachePages = async () => {
+        const newPages = await Page.findAll({ attributes: ['slug'] }) as Array<Pick<Page, 'slug'>>;
+
+        const slugs = newPages.map(p => p.slug);
+        slugs.push('/home');
+
+        pages = slugs;
+    };
+
+    Page.addHook('afterCreate', cachePages);
+    Page.addHook('afterDestroy', cachePages);
+    cachePages();
     app.get('*', (req: Request, res: Response, next: NextFunction) => {
         if (!req.accepts('application/html')) {
             next();
             return;
+        }
+
+        const page = req.path;
+
+        if (pages.length > 0 && !pages.includes(page)) {
+            res.status(404);
         }
 
         res.header('Cache-Control', 'no-store');
