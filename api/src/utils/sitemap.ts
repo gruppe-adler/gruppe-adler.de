@@ -15,7 +15,7 @@ async function cacheStiemap(): Promise<void> {
 }
 
 async function generateSitemap(): Promise<Buffer> {
-    const smStream = new SitemapStream({ hostname: 'https://dev.gruppe-adler.de/' });
+    const smStream = new SitemapStream({ hostname: 'https://gruppe-adler.de/' });
     const pipeline = smStream.pipe(createGzip());
 
     // add CMS pages
