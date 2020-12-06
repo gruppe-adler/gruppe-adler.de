@@ -104,6 +104,10 @@ export default class ContainerVue extends Vue {
         margin-bottom: 1.125rem;
         line-height: 1.7em;
 
+        /* These are technically the same, but use both */
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+
         > div {
             width: 100%;
         }
