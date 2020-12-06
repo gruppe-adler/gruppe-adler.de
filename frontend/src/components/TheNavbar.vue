@@ -61,7 +61,7 @@
             </ul>
         </template>
         <div v-if="!small || activeLink.sublinks" class="grad-nav__sub-link-bar">
-            <ul v-if="small" class="grad-nav__sub-links">
+            <ul v-if="small" class="grad-nav__sub-links" style="margin-left: auto;">
                 <li v-for="sublink in activeLink.sublinks" :key="sublink.url">
                     <router-link
                         class="grad-nav__link"
@@ -73,7 +73,7 @@
                 </li>
             </ul>
             <template v-else>
-                <span style="margin-left: 1.25rem;">
+                <span>
                     <template v-if="activeSubLink">{{activeSubLink.text}}</template>
                     <template v-else>{{activeLink.text}}</template>
                 </span>
@@ -390,7 +390,8 @@ $navbar-height: 4.5rem;
 
     &__sub-link-bar {
         font-size: 1.25rem;
-        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-left: 2.25rem;
         display: flex;
         align-items: center;
 
