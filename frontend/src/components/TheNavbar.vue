@@ -1,28 +1,29 @@
 <template>
-    <nav :class="['grad-nav', navShown ? '' : 'grad-nav--hidden']">
-        <NavBack v-if="small && expandedLink" @click="back" />
-        <div v-else class="grad-nav__header" @click="$router.push('/')">
-            <img src="@/assets/adlerkopp.svg" alt="adlerkopp" aria-hidden="true" :height="3 * 16" :width="3 * 16" />
-            <div v-if="small">
-                <span>{{activeLink.text}}</span>
-                <span v-if="activeSubLink">{{activeSubLink.text}}</span>
-            </div>
-            <div v-else class="grad-nav--min1000">
-                <span>Gruppe Adler</span>
-                <span>Deutsche Arma3 Coop & TvT Community</span>
-            </div>
+    <nav class="grad-nav" :style="navShown ? '' : 'transform: translateY(-100%);'">
+        <img src="@/assets/adlerkopp.svg" alt="adlerkopp" aria-hidden="true" :height="3 * 16" :width="3 * 16" />
+        <h1 v-if="small && !expanded" style="font-weight: initial; margin: 0;">{{activeLink.text}}</h1>
+        <div v-else class="grad-nav__header">
+            <h1>Gruppe Adler</h1>
+            <h2 style="opacity: .5;">Deutsche Arma3 Coop & TvT Community</h2>
         </div>
-        <template v-if="small">
-            <NavClose v-if="expanded" @click="close" />
-            <NavMenu v-else @click="open" />
-            <SmallMenu v-show="expanded" :activeLink="activeLink" v-model="expandedLink" />
-        </template>
-        <template v-else>
-            <ul class="grad-nav__links">
+        <button v-if="small" class="grad-nav__menu-btn" @click="expanded = !expanded">
+            <svg v-if="expanded" width="28" height="28" viewBox="0 0 28 28">
+                <rect fill="currentColor" width="28" height="2" x="0" y="13" transform="rotate(45,14,14)"></rect>
+                <rect fill="currentColor" width="28" height="2" x="0" y="13" transform="rotate(-45,14,14)"></rect>
+            </svg>
+            <svg v-else width="28" height="28" viewBox="0 0 28 28">
+                <rect fill="currentColor" width="28" height="2" x="0" y="3"></rect>
+                <rect fill="currentColor" width="28" height="2" x="0" y="13"></rect>
+                <rect fill="currentColor" width="28" height="2" x="0" y="23"></rect>
+            </svg>
+        </button>
+        <template>
+            <ul v-if="!small || expanded" :class="['grad-nav__links', small ? 'grad-nav--small' : '']">
                 <li
                     v-for="link in links"
                     :key="link.url"
                     class="grad-nav__link-wrapper"
+                    @click="expanded = false;"
                 >
                     <router-link
                         class="grad-nav__link"
@@ -31,7 +32,7 @@
                     >
                         {{link.text}}
                     </router-link>
-                    <template v-if="link.sublinks">
+                    <template v-if="link.sublinks && !small">
                         <ul class="grad-nav__sub-links">
                             <li v-for="sublink in link.sublinks" :key="sublink.url">
                                 <router-link
@@ -58,33 +59,37 @@
                     </router-link>
                 </li>
             </ul>
-            <div class="grad-nav__sub-link-bar">
-                <span v-if="activeSubLink">{{activeSubLink.text}}</span>
-                <span v-else>{{activeLink.text}}</span>
-            </div>
         </template>
+        <div v-if="!small || activeLink.sublinks" class="grad-nav__sub-link-bar">
+            <ul v-if="small" class="grad-nav__sub-links">
+                <li v-for="sublink in activeLink.sublinks" :key="sublink.url">
+                    <router-link
+                        class="grad-nav__link"
+                        :to="activeLink.url + sublink.url"
+                        tag="a"
+                    >
+                        {{sublink.text}}
+                    </router-link>
+                </li>
+            </ul>
+            <template v-else>
+                <span style="margin-left: 1.25rem;">
+                    <template v-if="activeSubLink">{{activeSubLink.text}}</template>
+                    <template v-else>{{activeLink.text}}</template>
+                </span>
+            </template>
+        </div>
     </nav>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import NavBackVue from './TheNavbar/small-menu-btn/Back.vue';
-import NavMenuVue from './TheNavbar/small-menu-btn/Menu.vue';
-import NavCloseVue from './TheNavbar/small-menu-btn/Close.vue';
-import SmallMenuVue from './TheNavbar/SmallMenu.vue';
 import { Route } from 'vue-router';
 import links, { GradLink } from '@/assets/navLinks';
 
 const SMALL_BREAKPOINT = 710;
 
 @Component({
-    name: 'navbar',
-    components: {
-        NavMenu: NavMenuVue,
-        NavClose: NavCloseVue,
-        NavBack: NavBackVue,
-        SmallMenu: SmallMenuVue
-    },
     metaInfo () {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -99,11 +104,10 @@ export default class TheNavbarVue extends Vue {
     private small = false;
     private expanded = false; // Indicates whether the main nav is shown (only in small)
     private resizeTimeout: number | undefined;
-    private expandedLink: GradLink | null = null; // v-model of small menu
     private pageYOffset = 0; // for hiding nav bar when scrolling
     private navShown = true; // for hiding nav bar when scrolling
 
-    private mounted () {
+    private created () {
         this.updateActiveLink(this.$route);
         window.addEventListener('resize', this.handleResize);
         window.addEventListener('scroll', this.handleScroll);
@@ -145,11 +149,6 @@ export default class TheNavbarVue extends Vue {
         this.updateActiveLink(to);
     }
 
-    @Watch('expanded')
-    private resetExpandedLink (expanded: boolean) {
-        if (!expanded) this.expandedLink = null;
-    }
-
     /**
      * @description Update active link
      * @author DerZade
@@ -161,30 +160,6 @@ export default class TheNavbarVue extends Vue {
 
         this.activeLink = this.links.find(l => l.url === url) || { text: '', url: '' };
         this.activeSubLink = (this.activeLink.sublinks || []).find(l => l.url === suburl) || null;
-    }
-
-    /**
-     * @description Click callback of open button in small menu
-     * @author DerZade
-     */
-    private open () {
-        this.expanded = true;
-    }
-
-    /**
-     * @description Click callback of close button in small menu
-     * @author DerZade
-     */
-    private close () {
-        this.expanded = false;
-    }
-
-    /**
-     * @description Click callback of back button in small menu
-     * @author DerZade
-     */
-    private back () {
-        this.expandedLink = null;
     }
 
     /**
@@ -265,9 +240,12 @@ $navbar-height: 4.5rem;
 .grad-nav {
     user-select: none;
     height: $navbar-height;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: [adlerkopp] auto [header] 1fr [links] auto;
     align-items: center;
+    padding: 0 1rem;
+    grid-column-gap: .5rem;
+    transition: transform .25s ease-in-out;
 
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
@@ -279,35 +257,20 @@ $navbar-height: 4.5rem;
     left: 0;
     right: 0;
     z-index: 2;
-    transition: top .25s ease-in-out;
-
-    &.grad-nav--hidden {
-        top: - $navbar-height;
-    }
 
     &__header {
-        cursor: pointer;
-        flex: none;
+        font-size: .75rem;
         display: flex;
-        align-items: center;
-        margin-left: 1rem;
+        flex-direction: column;
 
-        img {
-            margin-right: .5rem;
-            height: 3rem;
-            width: auto;
-        }
-        span {
+        > * {
             font-size: .75rem;
-            display: block;
+            margin: 0;
+            font-weight: initial;
+        }
 
-            &:nth-child(2) {
-                opacity: 0.5;
-            }
-
-            &:only-child {
-                font-size: 1.75rem;
-            }
+        @media (max-width: 900px) {
+            display: none;
         }
     }
 
@@ -321,6 +284,7 @@ $navbar-height: 4.5rem;
         margin: 0 .5rem;
         opacity: 0.7;
 
+        border-color: transparent;
         border-top: .25rem solid transparent;
         border-bottom: .25rem solid transparent;
         padding: 0 .125rem;
@@ -336,8 +300,8 @@ $navbar-height: 4.5rem;
     }
 
     &__links {
+        grid-column: links;
         display: flex;
-        justify-content: flex-end;
         height: 100%;
         font-size: 1.125rem;
         list-style-type: none;
@@ -350,6 +314,7 @@ $navbar-height: 4.5rem;
             > .grad-nav__link.grad-nav--active { // active link in main links
                 opacity: 1;
                 border-top-color: #D18D1F;
+                border-left-color: #D18D1F;
             }
 
             &:hover .grad-nav__sub-links {
@@ -361,6 +326,36 @@ $navbar-height: 4.5rem;
         &:hover .grad-nav--active + .grad-nav__sub-links {
             // when user hovers any link -> hide sub links of active link
             visibility: hidden;
+        }
+    }
+
+    &__links#{&}--small {
+        position: fixed;
+        top: $navbar-height;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: auto;
+        flex-direction: column;
+        justify-content: flex-start;
+        z-index: 1000;
+        background-color: black;
+
+        > .grad-nav__link-wrapper {
+            margin-top: .5rem;
+            margin-bottom: .5rem;
+
+            > .grad-nav__link {
+                line-height: 1.25rem;
+                font-size: 1.25rem;
+                padding: .25rem 0 .25rem 1.5rem;
+                margin-left: 0;
+                margin-right: 0;
+                border-left-style: solid;
+                border-left-width: .25rem;
+                border-top: none;
+                border-bottom: none;
+            }
         }
     }
 
@@ -395,7 +390,7 @@ $navbar-height: 4.5rem;
 
     &__sub-link-bar {
         font-size: 1.25rem;
-        padding-left: 2.25rem;
+        padding-left: 1rem;
         display: flex;
         align-items: center;
 
@@ -408,13 +403,25 @@ $navbar-height: 4.5rem;
         background: linear-gradient(270deg, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.08) 100%);
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
-    }
 
-    @media (max-width: 1000px) {
-        .grad-nav--min1000 {
-            display: none;
+        > .grad-nav__sub-links {
+            visibility: initial;
+            position: initial;
         }
     }
 
+    &__menu-btn {
+        grid-column: links;
+        padding: .75rem;
+        background-color: transparent;
+        border-radius: initial;
+        color: white;
+        opacity: .7;
+
+        > svg {
+            width: 2.25rem;
+            height: 2.25rem;
+        }
+    }
 }
 </style>
