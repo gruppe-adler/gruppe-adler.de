@@ -161,6 +161,7 @@ export default class HomeVue extends Vue {
     font-size: 1.1em;
     font-weight: bold;
     opacity: 0.7;
+    text-align: center;
 }
 
 .grad-blog__load-more {
