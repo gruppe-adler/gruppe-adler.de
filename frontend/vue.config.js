@@ -1,6 +1,6 @@
 module.exports = {
     pwa: {
-        themeColor: '#000000',
+        themeColor: '#F0EEEC',
         name: 'Gruppe Adler'
     },
     chainWebpack: config => {

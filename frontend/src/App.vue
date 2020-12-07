@@ -23,7 +23,37 @@ import TheFooterVue from '@/components/TheFooter.vue';
         title: 'Gruppe Adler'
     }
 })
-export default class AppVue extends Vue {}
+export default class AppVue extends Vue {
+    private mounted () {
+        this.makeOverscrollPretty();
+    }
+
+    private makeOverscrollPretty () {
+        let animFrame: number;
+        let isTop = true;
+
+        const updateColor = () => {
+            if (animFrame !== undefined) window.cancelAnimationFrame(animFrame);
+            const color = isTop ? '#000000' : '';
+
+            animFrame = window.requestAnimationFrame(() => {
+                document.body.style.backgroundColor = color;
+                document.documentElement.style.backgroundColor = color;
+            });
+        };
+
+        updateColor();
+
+        document.addEventListener('scroll', () => {
+            const top = (window.scrollY < 600);
+
+            if (top === isTop) return;
+
+            isTop = top;
+            updateColor();
+        });
+    }
+}
 </script>
 
 <style lang="scss">
