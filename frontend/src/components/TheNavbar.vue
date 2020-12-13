@@ -1,8 +1,6 @@
 <template>
     <nav class="grad-nav" :style="navShown ? '' : 'transform: translateY(-100%);'">
-        <router-link tag="a" to="/home" style="display: flex;">
-          <img src="@/assets/adlerkopp.svg" alt="adlerkopp" aria-hidden="true" :height="3 * 16" :width="3 * 16" />
-        </router-link>
+        <img src="@/assets/adlerkopp.svg" alt="adlerkopp" style="cursor: pointer;" aria-hidden="true" :height="3 * 16" :width="3 * 16" @click="$router.push('/home');" />
         <h1 v-if="small && !expanded" style="font-weight: initial; margin: 0;">{{activeLink.text}}</h1>
         <div v-else class="grad-nav__header">
             <h1>Gruppe Adler</h1>
