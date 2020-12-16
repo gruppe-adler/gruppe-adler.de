@@ -53,8 +53,11 @@ $offset: 6.5rem;
 }
 @media (max-width: 1150px) {
     .grad-content {
-        display: flex;
-        justify-content: center;
+        grid-template-columns: 100%;
+        justify-items: center;
+        overflow-x: hidden;
+        overflow-y: hidden;
+
         &__main {
             width: 50rem;
             max-width: calc(100% - 1.25rem);
