@@ -26,7 +26,7 @@ $offset: 6.5rem;
     margin-top: -$offset;
     display: grid;
     grid-template-columns: 0.5fr auto 0.5fr;
-    margin-bottom: 6rem;
+    padding-bottom: 6rem;
     position: relative;
 
     &__main {
