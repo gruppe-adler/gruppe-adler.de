@@ -25,7 +25,7 @@ async function generateSitemap(): Promise<Buffer> {
     }
 
     // add home page
-    smStream.write({ url: '/home', priority: 0.5, changefreq: 'weekly' });
+    smStream.write({ url: '/', priority: 0.5, changefreq: 'weekly' });
 
     const prom = streamToPromise(pipeline);
     smStream.end();
