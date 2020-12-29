@@ -13,6 +13,8 @@ Vue.config.productionTip = false;
 const ieHint = document.getElementById('IEHint');
 if (ieHint) ieHint.remove();
 
+Vue.config.ignoredElements = ['grad-navbar'];
+
 new Vue({
     router,
     render: h => h(App),

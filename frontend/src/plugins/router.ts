@@ -85,7 +85,6 @@ for (const [from, to] of Object.entries(redirects)) {
 
 const router = new VueRouter({
     mode: 'history',
-    linkActiveClass: 'grad-nav--active',
     scrollBehavior (to: Route, from: Route) {
         if (to.path === from.path) return;
         return { x: 0, y: 0 };
