@@ -4,13 +4,13 @@ import { Page } from '../models';
 
 let cachedSitemap: Buffer|null = null;
 
-const initialCachePromise = cacheStiemap();
+const initialCachePromise = cacheSitemap();
 
-Page.addHook('afterCreate', cacheStiemap);
-Page.addHook('afterDestroy', cacheStiemap);
-Page.addHook('afterUpdate', cacheStiemap);
+Page.addHook('afterCreate', cacheSitemap);
+Page.addHook('afterDestroy', cacheSitemap);
+Page.addHook('afterUpdate', cacheSitemap);
 
-async function cacheStiemap(): Promise<void> {
+async function cacheSitemap(): Promise<void> {
     cachedSitemap = await generateSitemap();
 }
 
