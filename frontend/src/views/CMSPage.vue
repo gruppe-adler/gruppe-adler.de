@@ -76,6 +76,11 @@ import { headingToID } from '@/services/headingToID';
             '@/components/ActionButton.vue'
         ),
         Markdown: MarkdownVue
+    },
+    metaInfo () {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return this.metaInfoMethod();
     }
 })
 export default class CMSPageVue extends Vue {
@@ -132,6 +137,17 @@ export default class CMSPageVue extends Vue {
 
     private headingToID (container: Container): string {
         return headingToID(container.heading);
+    }
+
+    private metaInfoMethod () {
+        if (this.page === null) return {};
+        if (this.page.containers.length === 0) return {};
+        if (this.page.containers.length > 1) return {};
+
+        return {
+            title: this.page.containers[0].heading,
+            titleTemplate: '%s - Gruppe Adler'
+        };
     }
 }
 </script>
