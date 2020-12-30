@@ -42,8 +42,14 @@ export default class ContainerVue extends Vue {
 <style lang="scss">
 .grad-container {
     background-color: white;
+    @media (prefers-color-scheme: dark) {
+            background-color: rgb(44, 44, 44);
+        }
     border-radius: .25rem;
     box-shadow: 0 .25rem 3.75rem rgba(155,96,0,0.15), 0 .125rem 1.25rem rgba(155,96,0,0.15);
+    @media (prefers-color-scheme: dark) {
+        box-shadow: none;
+    }
     font-size: 1.125rem;
     width: 100%;
     display: inline-block;
@@ -55,6 +61,9 @@ export default class ContainerVue extends Vue {
 
     &__header {
         background-color: var(--grad-container-header-color, rgba(240, 236, 232, 0.7));
+        @media (prefers-color-scheme: dark) {
+            background-color: var(--grad-container-header-color, rgba(0, 0, 0, 0));
+        }
         z-index: 1;
         position: relative;
         display: flex;
@@ -67,9 +76,16 @@ export default class ContainerVue extends Vue {
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
         color: rgba(0,0,0,0.5);
+        @media (prefers-color-scheme: dark) {
+            color: rgba(255,255,255,0.2);
+        }
 
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
+        @media (prefers-color-scheme: dark) {
+            -webkit-backdrop-filter: initial;
+            backdrop-filter: initial;
+        }
 
         border-top-left-radius: .25rem;
         border-top-right-radius: .25rem;
@@ -100,6 +116,9 @@ export default class ContainerVue extends Vue {
 
     &__content {
         color: #666666;
+        @media (prefers-color-scheme: dark) {
+            color: rgba(255, 255, 255, 0.45);
+        }
         margin-top: 1.125rem;
         margin-bottom: 1.125rem;
         line-height: 1.7em;
@@ -114,6 +133,9 @@ export default class ContainerVue extends Vue {
 
         a {
             color: #2F80ED;
+            @media (prefers-color-scheme: dark) {
+                color: #438CEE;
+            }
             font-weight: bold;
             text-decoration: none;
             transition: color .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
@@ -132,6 +154,9 @@ export default class ContainerVue extends Vue {
         padding-top: 1.125rem;
         padding-bottom: 1.125rem;
         background: rgba(240, 236, 232, 0.7);
+        @media (prefers-color-scheme: dark) {
+            background: rgba(0, 0, 0, 0.1);
+        }
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
         color: #666666;

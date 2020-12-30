@@ -1,3 +1,5 @@
+$action-color: #1DA1F2;
+
 html, body {
     margin: 0;
     padding: 0;
@@ -8,6 +10,9 @@ html, body {
 
 #app {
     background-color: #F0EEEC;
+    @media (prefers-color-scheme: dark) {
+        background-color: #000;
+    }
 }
 
 ::selection,
@@ -33,8 +38,14 @@ a:hover {
 button {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #F0F0F0;
+    @media (prefers-color-scheme: dark) {
+        background-color: rgba(0,0,0,0.15);
+    }
     border-radius: 6.25rem;
     color: #2F80ED;
+    @media (prefers-color-scheme: dark) {
+        color: #438CEE;
+    }
     height: 2.5rem;
     padding: 0 1.25rem;
     border-style: none;
