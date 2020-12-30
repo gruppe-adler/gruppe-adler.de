@@ -97,6 +97,42 @@ export default class ContainerVue extends Vue {
         }
     }
 
+    #gastspieler &__header {
+        @media (prefers-color-scheme: dark) {
+            color: #2c2c2c;
+        }
+    }
+
+    #stammspieler &__header {
+        @media (prefers-color-scheme: dark) {
+            color: #2c2c2c;
+        }
+    }
+
+    #anwärter &__header {
+        @media (prefers-color-scheme: dark) {
+            color: #2c2c2c;
+        }
+    }
+
+    #adler &__header {
+        @media (prefers-color-scheme: dark) {
+            color: #2c2c2c;
+        }
+    }
+
+    #führung &__header {
+        @media (prefers-color-scheme: dark) {
+            color: rgba(255,255,255,0.6);
+        }
+    }
+
+    #adler-a\.d\. &__header {
+        @media (prefers-color-scheme: dark) {
+            color: #2c2c2c;
+        }
+    }
+
     &__image {
         z-index: 0;
         position: relative;

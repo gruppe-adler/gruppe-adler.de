@@ -210,5 +210,15 @@ export default class TheFooterVue extends Vue {
         right: 0;
         color: black;
     }
+    &__link {
+        filter: invert(50);
+    }
+    &__link:hover{
+        filter: grayscale(50);
+        background-color: rgba(255,255,255,0.2);
+        border-radius: 4px;
+        margin: 0rem;
+        padding: 1.25rem;
+    }
 }
 </style>
