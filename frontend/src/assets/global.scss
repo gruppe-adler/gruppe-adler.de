@@ -1,4 +1,4 @@
-$action-color: #1DA1F2;
+@import "colors.scss";
 
 html, body {
     margin: 0;
@@ -42,10 +42,7 @@ button {
         background-color: rgba(0,0,0,0.15);
     }
     border-radius: 6.25rem;
-    color: #2F80ED;
-    @media (prefers-color-scheme: dark) {
-        color: #438CEE;
-    }
+    color: $action-color;
     height: 2.5rem;
     padding: 0 1.25rem;
     border-style: none;

@@ -40,16 +40,17 @@ export default class ContainerVue extends Vue {
 </script>
 
 <style lang="scss">
+@import "../assets/colors.scss";
+@media (prefers-color-scheme: dark) {
+    @import "../assets/colors-dark.scss";
+}
 .grad-container {
     background-color: white;
     @media (prefers-color-scheme: dark) {
             background-color: rgb(44, 44, 44);
         }
     border-radius: .25rem;
-    box-shadow: 0 .25rem 3.75rem rgba(155,96,0,0.15), 0 .125rem 1.25rem rgba(155,96,0,0.15);
-    @media (prefers-color-scheme: dark) {
-        box-shadow: none;
-    }
+    box-shadow: $tile-shadow;
     font-size: 1.125rem;
     width: 100%;
     display: inline-block;
