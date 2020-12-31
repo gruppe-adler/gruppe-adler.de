@@ -40,14 +40,13 @@ export default class ContainerVue extends Vue {
 </script>
 
 <style lang="scss">
-@import "../assets/colors.scss";
-@import "../assets/colors-dark.scss";
+@import "@/assets/colors.scss";
 
 .grad-container {
     background-color: white;
     @media (prefers-color-scheme: dark) {
-            background-color: rgb(44, 44, 44);
-        }
+        background-color: rgb(44, 44, 44);
+    }
     border-radius: .25rem;
     box-shadow: $tile-shadow;
     font-size: 1.125rem;
@@ -61,9 +60,6 @@ export default class ContainerVue extends Vue {
 
     &__header {
         background-color: var(--grad-container-header-color, rgba(240, 236, 232, 0.7));
-        @media (prefers-color-scheme: dark) {
-            background-color: var(--grad-container-header-color, rgba(0, 0, 0, 0));
-        }
         z-index: 1;
         position: relative;
         display: flex;
@@ -76,19 +72,19 @@ export default class ContainerVue extends Vue {
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
         color: rgba(0,0,0,0.5);
-        @media (prefers-color-scheme: dark) {
-            color: rgba(255,255,255,0.2);
-        }
 
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
-        @media (prefers-color-scheme: dark) {
-            -webkit-backdrop-filter: initial;
-            backdrop-filter: initial;
-        }
 
         border-top-left-radius: .25rem;
         border-top-right-radius: .25rem;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: var(--grad-container-header-color, rgba(0, 0, 0, 0));
+            color: rgba(255,255,255,0.2);
+            -webkit-backdrop-filter: initial;
+            backdrop-filter: initial;
+        }
 
         &-image {
             max-height: 3rem;

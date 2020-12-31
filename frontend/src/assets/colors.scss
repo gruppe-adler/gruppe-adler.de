@@ -1,2 +1,11 @@
-$action-color: #1DA1F2;
-$tile-shadow: 0 .25rem 3.75rem rgba(155,96,0,0.15), 0 .125rem 1.25rem rgba(155,96,0,0.15);
+@media (prefers-color-scheme: dark) {
+    :root {
+        // DARK VALUES
+        --active-color: #438CEE;
+        --tile-shadow: 0 .25rem 3.75rem rgba(0,0,0,0.15), 0 .125rem 1.25rem rgba(0,0,0,0.15) !important;
+    }
+}
+
+// LIGHT VALUES
+$action-color: var(--active-color, #1DA1F2);
+$tile-shadow: var(--tile-shadow, 0 .25rem 3.75rem rgba(155,96,0,0.15), 0 .125rem 1.25rem rgba(155,96,0,0.15));
