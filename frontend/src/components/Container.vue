@@ -41,9 +41,8 @@ export default class ContainerVue extends Vue {
 
 <style lang="scss">
 @import "../assets/colors.scss";
-@media (prefers-color-scheme: dark) {
-    @import "../assets/colors-dark.scss";
-}
+@import "../assets/colors-dark.scss";
+
 .grad-container {
     background-color: white;
     @media (prefers-color-scheme: dark) {
