@@ -1,11 +1,28 @@
 @media (prefers-color-scheme: dark) {
     :root {
         // DARK VALUES
-        --active-color: #438CEE;
-        --tile-shadow: 0 .25rem 3.75rem rgba(0,0,0,0.15), 0 .125rem 1.25rem rgba(0,0,0,0.15) !important;
+        --action-color: #438CEE;
+        --tile-shadow: 0 .25rem 3.75rem rgba(0,0,0,0.15), 0 .125rem 1.25rem rgba(0,0,0,0.15);
+        --button-color: rgba(0,0,0,0.15);
+        --button-color-hover: #438CEE;
+        --background-color: #000;
+        --background-container: rgb(44, 43, 43);
+        --action-color-hover: #fff;
+        
+        --background-container-header: rgba(255, 255, 255, 0.3);
+        --background-container-footer: rgba(0, 0, 0, 0.1);
+        --color-container: rgba(255, 255, 255, 0.45);
     }
 }
 
 // LIGHT VALUES
-$action-color: var(--active-color, #1DA1F2);
+$action-color: var(--action-color, #1DA1F2);
+$action-color-hover: var(--action-color-hover, #000);
 $tile-shadow: var(--tile-shadow, 0 .25rem 3.75rem rgba(155,96,0,0.15), 0 .125rem 1.25rem rgba(155,96,0,0.15));
+$button-color: var(--button-color, rgba(0,0,0,0.07));
+$button-color-hover: var(--button-color-hover, #2F80ED);
+$background-color: var(--background-color, #F0EEEC);
+$background-container: var(--background-container, #fff);
+$background-container-header: var(--background-container-header, rgba(0, 0, 0, 0.5));
+$background-container-footer: var(--background-container-footer, rgba(240, 236, 232, 0.7));
+$color-container: var(--color-container, #666);

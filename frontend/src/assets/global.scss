@@ -9,10 +9,7 @@ html, body {
 }
 
 #app {
-    background-color: #F0EEEC;
-    @media (prefers-color-scheme: dark) {
-        background-color: #000;
-    }
+    background-color: $background-color;
 }
 
 ::selection,
@@ -37,10 +34,7 @@ a:hover {
 
 button {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: #F0F0F0;
-    @media (prefers-color-scheme: dark) {
-        background-color: rgba(0,0,0,0.15);
-    }
+    background-color: $button-color;
     border-radius: 6.25rem;
     color: $action-color;
     height: 2.5rem;
@@ -56,7 +50,7 @@ button {
     transition: all .1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
     &:hover {
-        background-color: #2F80ED;
+        background-color: $button-color-hover;
         color: #fff;
 
         > img {

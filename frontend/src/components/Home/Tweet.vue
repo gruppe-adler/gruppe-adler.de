@@ -114,6 +114,7 @@ export default class TweetVue extends Vue {
 }
 </script>
 <style lang="scss">
+@import "@/assets/colors.scss";
 .grad-tweet {
     &__media {
         border-radius: .5rem;
@@ -163,26 +164,17 @@ export default class TweetVue extends Vue {
     .grad-container__content,
     .grad-container__footer {
         a {
-            color: #1DA1F2;
-            @media (prefers-color-scheme: dark) {
-                color: #438CEE;
-            }
+            color: $action-color;
             font-weight: bold;
         }
         a:hover {
-            color: #000;
-            @media (prefers-color-scheme: dark) {
-                color: #fff;
-            }
+            color: $action-color-hover;
             font-weight: bold;
         }
     }
 
     .grad-container__header {
-        color: rgba(0, 0, 0, 0.5);
-        @media (prefers-color-scheme: dark) {
-            color: rgba(255, 255, 255, 0.3);
-        }
+        color: $background-container-header;
         background-image: url('~@/assets/twitter.svg');
         background-repeat: no-repeat;
         background-position: center;

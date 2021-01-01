@@ -43,10 +43,7 @@ export default class ContainerVue extends Vue {
 @import "@/assets/colors.scss";
 
 .grad-container {
-    background-color: white;
-    @media (prefers-color-scheme: dark) {
-        background-color: rgb(44, 44, 44);
-    }
+    background-color: $background-container;
     border-radius: .25rem;
     box-shadow: $tile-shadow;
     font-size: 1.125rem;
@@ -147,10 +144,7 @@ export default class ContainerVue extends Vue {
     }
 
     &__content {
-        color: #666666;
-        @media (prefers-color-scheme: dark) {
-            color: rgba(255, 255, 255, 0.45);
-        }
+        color: $color-container;
         margin-top: 1.125rem;
         margin-bottom: 1.125rem;
         line-height: 1.7em;
@@ -185,10 +179,7 @@ export default class ContainerVue extends Vue {
         align-items: center;
         padding-top: 1.125rem;
         padding-bottom: 1.125rem;
-        background: rgba(240, 236, 232, 0.7);
-        @media (prefers-color-scheme: dark) {
-            background: rgba(0, 0, 0, 0.1);
-        }
+        background: $background-container-footer;
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
         color: #666666;
