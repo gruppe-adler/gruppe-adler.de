@@ -29,6 +29,7 @@ export default class LoaderVue extends Vue {
 </script>
 
 <style lang="scss">
+@import "@/assets/colors.scss";
 .grad-loader {
     opacity: 1;
     width: 100%;
@@ -40,7 +41,10 @@ export default class LoaderVue extends Vue {
         height: 19rem;
         top: 12.5rem;
         position: absolute;
-        background-image: linear-gradient(rgba(#F0EEEC, 0), #F0EEEC, #F0EEEC, #F0EEEC);
+        background-image: linear-gradient(rgba($background-color, 0), $background-color, $background-color, $background-color);
+        @media (prefers-color-scheme: dark) {
+            background-image: linear-gradient(rgba($background-color, 0), $background-color, $background-color, $background-color);
+        }
     }
 
     &__progress {
