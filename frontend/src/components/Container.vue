@@ -144,7 +144,7 @@ export default class ContainerVue extends Vue {
     }
 
     &__content {
-        color: $color-container;
+        color: $text-color-primary;
         margin-top: 1.125rem;
         margin-bottom: 1.125rem;
         line-height: 1.7em;
@@ -182,7 +182,7 @@ export default class ContainerVue extends Vue {
         background: $background-container-footer;
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
-        color: #666666;
+        color: $text-color-secondary;
         border-bottom-left-radius: .25rem;
         border-bottom-right-radius: .25rem;
 
