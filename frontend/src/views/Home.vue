@@ -191,17 +191,29 @@ export default class HomeVue extends Vue {
         cursor: pointer;
         opacity: 0.7;
         max-width: 100%;
+        filter: saturate(0%);
 
         img {
             width: auto;
             filter: saturate(0%);
+            @media (prefers-color-scheme: dark) {
+                padding: 0.25rem;
+                filter: invert(50);
+            }
         }
 
         &:hover {
             opacity: 1;
             img {
                 filter: saturate(100%);
+                @media (prefers-color-scheme: dark) {
+                    filter: grayscale(50);
+                    background-color: rgba(255,255,255,0.2);
+                    border-radius: 4px;
+                    padding: 0.25rem;
+                }
             }
+
         }
     }
 }
