@@ -13,6 +13,7 @@
         --background-container-footer: rgba(0, 0, 0, 0.1);
         --text-color-primary: rgba(255,255,255,0.8);
         --text-color-secondary: rgba(255,255,255,0.5);
+        --text-color-tertiary: rgba(255,255,255,0.25);
     }
 }
 
@@ -28,3 +29,4 @@ $background-container-header: var(--background-container-header, rgba(0, 0, 0, 0
 $background-container-footer: var(--background-container-footer, rgba(240, 236, 232, 0.7));
 $text-color-primary: var(--text-color-primary, rgba(0,0,0,0.8));
 $text-color-secondary: var(--text-color-secondary, rgba(0,0,0,0.5));
+$text-color-tertiary: var(--text-color-tertiary, rgba(0,0,0,0.45));
