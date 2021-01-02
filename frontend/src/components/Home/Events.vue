@@ -209,17 +209,17 @@ button {
     box-sizing: border-box;
 
     &__more {
+        font-size: 1rem;
         display: block;
         text-align: center;
         margin-top: .5rem;
-        color: inherit;
+        color: #999;
         font-weight: normal;
         cursor: pointer;
         transition: color .05s cubic-bezier(0.455, 0.03, 0.515, 0.955) !important;
 
         &:hover {
             color: white;
-            text-decoration: underline;
         }
     }
 
