@@ -158,6 +158,7 @@ export default class TheFooterVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/colors.scss";
 .grad-footer {
     margin-top: 3rem;
     position: relative;
@@ -191,12 +192,14 @@ export default class TheFooterVue extends Vue {
         }
     }
     &__desc {
+        color: $text-color-tertiary;
         margin: 1.25rem;
         padding-bottom: 0;
         opacity: 0.7;
     }
     &__login,
     &__copyright {
+        color: $text-color-tertiary;
         position: absolute;
         bottom: 0;
         left: 0;
