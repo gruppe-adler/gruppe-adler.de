@@ -107,9 +107,6 @@ export default class TableOfContents extends Vue {
         > a {
             display: block;
             cursor: pointer;
-            @media (prefers-color-scheme: dark) {
-                color: $text-color-tertiary;
-            }
         }
     }
 

@@ -56,7 +56,7 @@ export default class ContainerVue extends Vue {
     }
 
     &__header {
-        background-color: var(--grad-container-header-color, rgba(240, 236, 232, 0.7));
+        background-color: var(--grad-container-header-color, $background-container-header);
         z-index: 1;
         position: relative;
         display: flex;
@@ -68,7 +68,7 @@ export default class ContainerVue extends Vue {
         font-size: 1.3125rem;
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
-        color: rgba(0,0,0,0.5);
+        color: $text-color-secondary;
 
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
@@ -77,8 +77,6 @@ export default class ContainerVue extends Vue {
         border-top-right-radius: .25rem;
 
         @media (prefers-color-scheme: dark) {
-            background-color: var(--grad-container-header-color, rgba(0, 0, 0, 0));
-            color: rgba(255,255,255,0.2);
             -webkit-backdrop-filter: initial;
             backdrop-filter: initial;
         }

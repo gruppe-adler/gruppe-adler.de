@@ -173,7 +173,8 @@ export default class TheFooterVue extends Vue {
         justify-content: center;
     }
     &__link {
-        margin: 1.25rem;
+        padding: 1.25rem;
+        border-radius: .25rem;
         flex: none;
         color: black;
         cursor: pointer;
@@ -190,16 +191,24 @@ export default class TheFooterVue extends Vue {
                 filter: saturate(100%);
             }
         }
+
+        @media (prefers-color-scheme: dark) {
+            filter: invert(50);
+            &:hover{
+                filter: grayscale(50);
+                background-color: rgba(255,255,255,0.2);
+            }
+        }
     }
     &__desc {
-        color: $text-color-tertiary;
+        color: $text-color-primary;
         margin: 1.25rem;
         padding-bottom: 0;
         opacity: 0.7;
     }
     &__login,
     &__copyright {
-        color: $text-color-tertiary;
+        color: $text-color-primary;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -214,20 +223,6 @@ export default class TheFooterVue extends Vue {
     }
     &__login:hover {
         color: $text-color-primary;
-    }
-    &__link {
-        @media (prefers-color-scheme: dark) {
-            filter: invert(50);
-        }
-    }
-    &__link:hover{
-        @media (prefers-color-scheme: dark) {
-            filter: grayscale(50);
-            background-color: rgba(255,255,255,0.2);
-            border-radius: 4px;
-            margin: 0rem;
-            padding: 1.25rem;
-        }
     }
 }
 </style>
