@@ -41,7 +41,7 @@ export default class LoaderVue extends Vue {
         height: 19rem;
         top: 12.5rem;
         position: absolute;
-        background-image: linear-gradient(rgba($background-color, 0), $background-color, $background-color, $background-color);
+        background-image: linear-gradient(rgba($background-color-rgb, 0), $background-color, $background-color, $background-color);
     }
 
     &__progress {
