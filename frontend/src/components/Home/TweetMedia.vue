@@ -66,5 +66,9 @@ img {
     max-width: none;
     width: auto;
     background-color: #eee;
+
+    @media (prefers-color-scheme: dark) {
+        background-color: #353535;
+    }
 }
 </style>

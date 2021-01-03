@@ -156,18 +156,14 @@ export default class ContainerVue extends Vue {
         }
 
         a {
-            color: #2F80ED;
-            @media (prefers-color-scheme: dark) {
-                color: #438CEE;
-            }
+            color: $action-color;
             font-weight: bold;
             text-decoration: none;
             transition: color .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-        }
 
-        a:hover {
-            color: #2057A1;
-            transition: color .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            &:hover {
+                color: $action-color-hover;
+            }
         }
 
     }

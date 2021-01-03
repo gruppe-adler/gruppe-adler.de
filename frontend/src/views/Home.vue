@@ -144,6 +144,8 @@ export default class HomeVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/color-macros.scss";
+
 .grad-blog-wrapper {
     width: 100%;
     display: flex;
@@ -174,7 +176,7 @@ export default class HomeVue extends Vue {
 }
 
 .grad-blog__end {
-    color: black;
+    color: $text-color-primary;
 }
 
 .grad-blog__social-media {

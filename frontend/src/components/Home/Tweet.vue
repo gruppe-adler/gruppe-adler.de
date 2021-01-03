@@ -164,12 +164,12 @@ export default class TweetVue extends Vue {
     .grad-container__content,
     .grad-container__footer {
         a {
-            color: $action-color;
+            color: #1da1f2;
             font-weight: bold;
-        }
-        a:hover {
-            color: $action-color-hover;
-            font-weight: bold;
+
+            &:hover {
+                color: #1da1f2;
+            }
         }
     }
 

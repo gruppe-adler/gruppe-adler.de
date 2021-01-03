@@ -159,6 +159,7 @@ export default class TheFooterVue extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/color-macros.scss";
+
 .grad-footer {
     margin-top: 3rem;
     position: relative;
