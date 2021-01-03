@@ -1,12 +1,12 @@
 :root {
     // LIGHT THEME COLORS
-    --tile-shadow: 0 .25rem 3.75rem rgba(155, 96, 0, 0.15), 0 .125rem 1.25rem rgba(155, 96, 0, 0.15);
     --action-color: #1DA1F2;
     --action-color-hover: #000;
     --button-color: rgba(0, 0, 0, 0.07);
     --button-color-hover: #2F80ED;
     --background-color: #F0EEEC;
     --background-container: #fff;
+    --shadow-container: rgba(155, 96, 0, 0.15);
     --background-container-header: rgba(0, 0, 0, 0.5);
     --background-container-footer: rgba(240, 236, 232, 0.7);
     --text-color-primary: rgba(0, 0, 0, 0.8);
@@ -17,13 +17,13 @@
 @media (prefers-color-scheme: dark) {
     :root {
         // DARK THEME COLORS
-        --tile-shadow: 0 .25rem 3.75rem rgba(0, 0, 0,0.15), 0 .125rem 1.25rem rgba(0, 0, 0, 0.15);
         --action-color: #438CEE;
         --action-color-hover: white;
         --button-color: rgba(0, 0, 0,0.15);
         --button-color-hover: #438CEE;
         --background-color: #121111;
         --background-container: rgb(44, 43, 43);
+        --shadow-container: rgba(0, 0, 0,0.15);
         --background-container-header: rgba(255, 255, 255, 0.3);
         --background-container-footer: rgba(0, 0, 0, 0.1);
         --text-color-primary: rgba(255, 255, 255, 0.8);

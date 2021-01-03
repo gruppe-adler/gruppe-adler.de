@@ -45,7 +45,7 @@ export default class ContainerVue extends Vue {
 .grad-container {
     background-color: $background-container;
     border-radius: .25rem;
-    box-shadow: $tile-shadow;
+    box-shadow: 0 .25rem 3.75rem $container-shadow, 0 .125rem 1.25rem $container-shadow;
     font-size: 1.125rem;
     width: 100%;
     display: inline-block;
