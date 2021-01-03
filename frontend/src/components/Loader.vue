@@ -29,7 +29,7 @@ export default class LoaderVue extends Vue {
 </script>
 
 <style lang="scss">
-@import "@/assets/colors.scss";
+@import "@/assets/color-macros.scss";
 .grad-loader {
     opacity: 1;
     width: 100%;

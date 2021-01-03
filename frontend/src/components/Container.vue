@@ -40,7 +40,7 @@ export default class ContainerVue extends Vue {
 </script>
 
 <style lang="scss">
-@import "@/assets/colors.scss";
+@import "@/assets/color-macros.scss";
 
 .grad-container {
     background-color: $background-container;

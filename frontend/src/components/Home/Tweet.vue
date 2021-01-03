@@ -114,7 +114,7 @@ export default class TweetVue extends Vue {
 }
 </script>
 <style lang="scss">
-@import "@/assets/colors.scss";
+@import "@/assets/color-macros.scss";
 .grad-tweet {
     &__media {
         border-radius: .5rem;

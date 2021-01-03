@@ -91,7 +91,7 @@ export default class TableOfContents extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import "@/assets/color-macros.scss";
 .grad-toc {
 
     &__container {
