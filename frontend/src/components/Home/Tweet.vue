@@ -174,7 +174,6 @@ export default class TweetVue extends Vue {
     }
 
     .grad-container__header {
-        color: $background-container-header;
         background-image: url('~@/assets/twitter.svg');
         background-repeat: no-repeat;
         background-position: center;

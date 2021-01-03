@@ -76,11 +76,6 @@ export default class ContainerVue extends Vue {
         border-top-left-radius: .25rem;
         border-top-right-radius: .25rem;
 
-        @media (prefers-color-scheme: dark) {
-            -webkit-backdrop-filter: initial;
-            backdrop-filter: initial;
-        }
-
         &-image {
             max-height: 3rem;
             filter: saturate(0%);

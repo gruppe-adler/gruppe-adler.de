@@ -202,14 +202,12 @@ export default class TheFooterVue extends Vue {
         }
     }
     &__desc {
-        color: $text-color-primary;
         margin: 1.25rem;
         padding-bottom: 0;
         opacity: 0.7;
     }
     &__login,
     &__copyright {
-        color: $text-color-primary;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -221,9 +219,6 @@ export default class TheFooterVue extends Vue {
         left: auto;
         cursor: pointer;
         right: 0;
-    }
-    &__login:hover {
-        color: $text-color-primary;
     }
 }
 </style>
