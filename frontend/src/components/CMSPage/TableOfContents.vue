@@ -108,18 +108,14 @@ export default class TableOfContents extends Vue {
             display: block;
             cursor: pointer;
             @media (prefers-color-scheme: dark) {
-                color: $text-color-tertiary !important;
+                color: $text-color-tertiary;
             }
         }
     }
 
     &--active {
-        color: black !important;
         font-weight: bold;
-        @media (prefers-color-scheme: dark) {
-            color: $text-color-primary !important;
-            opacity: 1;
-        }
+        color: $text-color-primary !important;
     }
 }
 </style>
