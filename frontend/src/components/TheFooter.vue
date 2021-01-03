@@ -29,7 +29,7 @@
                 IMPRESSUM
             </router-link>
         </div>
-        <div class="grad-footer__copyright">© 2020 Gruppe Adler</div>
+        <div class="grad-footer__copyright">© 2021 Gruppe Adler</div>
         <a
             v-if="$root.isLoggedIn()"
             class="grad-footer__login"
