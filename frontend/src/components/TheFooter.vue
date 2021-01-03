@@ -211,7 +211,9 @@ export default class TheFooterVue extends Vue {
         left: auto;
         cursor: pointer;
         right: 0;
-        color: black;
+    }
+    &__login:hover {
+        color: $text-color-primary;
     }
     &__link {
         @media (prefers-color-scheme: dark) {
