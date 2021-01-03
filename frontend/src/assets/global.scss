@@ -63,13 +63,3 @@ button {
 .grad-container__content img {
     max-width: 100%;
 }
-
-.grad-history > .grad-history__dot {
-    grid-column: dot;
-    width: .75rem;
-    height: .75rem;
-    background-color: $background-container !important;
-    border-radius: 50%;
-    border: 2px solid #999;
-    justify-self: center;
-}
