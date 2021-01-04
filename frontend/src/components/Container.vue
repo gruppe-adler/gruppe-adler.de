@@ -17,12 +17,13 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import { contrastColor } from '@/services/color';
 
 @Component
 export default class ContainerVue extends Vue {
     @Prop() private headerColor?: string;
 
-    private mounted () {
+    private created () {
         this.updateHeaderColor();
     }
 
@@ -31,8 +32,12 @@ export default class ContainerVue extends Vue {
         this.$nextTick(() => {
             if (this.headerColor) {
                 (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-color', this.headerColor);
+
+                const textColor = contrastColor(this.headerColor);
+                (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-text-color', textColor || '');
             } else {
                 (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-color', '');
+                (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-text-color', '');
             }
         });
     }
@@ -57,6 +62,7 @@ export default class ContainerVue extends Vue {
 
     &__header {
         background-color: var(--grad-container-header-color, $background-container-header);
+        color: var(--grad-container-header-text-color, $text-color-secondary);
         z-index: 1;
         position: relative;
         display: flex;
@@ -68,7 +74,6 @@ export default class ContainerVue extends Vue {
         font-size: 1.3125rem;
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
-        color: $text-color-secondary;
 
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
@@ -80,42 +85,6 @@ export default class ContainerVue extends Vue {
             max-height: 3rem;
             filter: saturate(0%);
             opacity: 0.4;
-        }
-    }
-
-    #gastspieler &__header {
-        @media (prefers-color-scheme: dark) {
-            color: #2c2c2c;
-        }
-    }
-
-    #stammspieler &__header {
-        @media (prefers-color-scheme: dark) {
-            color: #2c2c2c;
-        }
-    }
-
-    #anwärter &__header {
-        @media (prefers-color-scheme: dark) {
-            color: #2c2c2c;
-        }
-    }
-
-    #adler &__header {
-        @media (prefers-color-scheme: dark) {
-            color: #2c2c2c;
-        }
-    }
-
-    #führung &__header {
-        @media (prefers-color-scheme: dark) {
-            color: rgba(255,255,255,0.6);
-        }
-    }
-
-    #adler-a\.d\. &__header {
-        @media (prefers-color-scheme: dark) {
-            color: #2c2c2c;
         }
     }
 
