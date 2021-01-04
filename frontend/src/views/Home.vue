@@ -25,7 +25,10 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" :height="4 * 16" :width="10 * 16" />
+                    <picture v-lazy-img :data-alt="item.image">
+                        <source :srcset="`/img/footer/dark/${item.image}.svg`" media="(prefers-color-scheme: dark)">
+                        <source :srcset="`/img/footer/${item.image}.svg`">
+                    </picture>
                 </a>
             </div>
         </template>
@@ -143,7 +146,7 @@ export default class HomeVue extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/color-macros.scss";
 
 .grad-blog-wrapper {
@@ -193,29 +196,22 @@ export default class HomeVue extends Vue {
         cursor: pointer;
         opacity: 0.7;
         max-width: 100%;
-        filter: saturate(0%);
 
-        img {
+        picture {
             width: auto;
             filter: saturate(0%);
-            @media (prefers-color-scheme: dark) {
-                padding: 0.25rem;
-                filter: invert(50);
+            height: 4rem;
+
+            > img {
+                height: inherit;
             }
         }
 
         &:hover {
             opacity: 1;
-            img {
+            picture {
                 filter: saturate(100%);
-                @media (prefers-color-scheme: dark) {
-                    filter: grayscale(50);
-                    background-color: rgba(255,255,255,0.2);
-                    border-radius: 4px;
-                    padding: 0.25rem;
-                }
             }
-
         }
     }
 }

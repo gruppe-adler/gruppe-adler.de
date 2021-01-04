@@ -10,7 +10,10 @@
                 target="_blank"
                 rel="noreferrer"
             >
-                <img v-lazy-img :data-src="`/img/footer/${item.image}.svg`" :alt="item.image" :height="2.5 * 16" :width="6.75 * 16" />
+                <picture v-lazy-img :data-alt="item.image">
+                    <source :srcset="`/img/footer/dark/${item.image}.svg`" media="(prefers-color-scheme: dark)">
+                    <source :srcset="`/img/footer/${item.image}.svg`">
+                </picture>
             </a>
         </div>
         <div>
@@ -157,7 +160,7 @@ export default class TheFooterVue extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/color-macros.scss";
 
 .grad-footer {
@@ -177,29 +180,27 @@ export default class TheFooterVue extends Vue {
         padding: 1.25rem;
         border-radius: .25rem;
         flex: none;
-        color: black;
+        color: $text-color-primary;
         cursor: pointer;
         opacity: 0.7;
 
-        img {
+        picture {
+            height: 2.5rem;
             width: auto;
             filter: saturate(0%);
+
+            > img {
+                height: inherit;
+            }
         }
 
         &:hover {
             opacity: 1;
-            img {
+            picture {
                 filter: saturate(100%);
             }
         }
 
-        @media (prefers-color-scheme: dark) {
-            filter: invert(50);
-            &:hover{
-                filter: grayscale(50);
-                background-color: rgba(255,255,255,0.2);
-            }
-        }
     }
     &__desc {
         margin: 1.25rem;
