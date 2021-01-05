@@ -4,6 +4,24 @@
             <ActionButton icon="add" tooltip="Container hinzufügen" @click="addContainer" />
         </ActionButtons>
         <template>
+            <Container>
+                <template>
+                <form class="grad-edit-page__form">
+                    <label for="page-title">Titel</label>
+                    <input type="text" id="page-title" v-model="values.title" />
+                    <span>Kurzer Name wird im Browser Tab angezeigt. (Bitte ohne "- Gruppe Adler" angeben)</span>
+                    <label for="page-description">Beschreibung</label>
+                    <textarea id="page-description" type="text" v-model="values.description" rows="5" />
+                    <span>Für Google. Sollte min 100 Zeichen und max. 155 Zeichen lang sein.</span>
+                    <input type="checkbox" id="page-toc" v-model="values.toc" />
+                    <label for="page-toc">Inhaltsverzeichnis anzeigen</label>
+                    <span>Ein Inhaltsverzeichnis wird nur bei Seiten mit mehreren Containern angezeigt.</span>
+                </form>
+                <div class="grad-edit-page__setting-actions">
+                    <ActionButton v-if="saveShown" icon="save" tooltip="Einstellungen speichern" color="#66AA66" @click="save" />
+                </div>
+                </template>
+            </Container>
             <EditContainer
                 v-for="(c, i) in page.containers"
                 :key="c.id"
@@ -32,7 +50,7 @@ import ActionButtonVue from '@/components/ActionButton.vue';
 import EditContainerVue from '@/components/EditPage/EditContainer.vue';
 import SnackbarVue from '@/components/EditPage/Snackbar.vue';
 
-import { Page, Container, loadPage, createContainer, updateContainer, createPage, deleteContainer } from '@/services/page';
+import { Page, Container, loadPage, updatePage, createContainer, updateContainer, createPage, deleteContainer } from '@/services/page';
 import ResponseError from '@/services/utils/ResponseError';
 
 @Component({
@@ -49,6 +67,11 @@ export default class PageVue extends Vue {
     private newPage = false;
     private snackbar = '';
     private snackbarColor = '#66AA66';
+    private values: Pick<Page, 'toc'|'title'|'description'> = {
+        toc: false,
+        title: '',
+        description: ''
+    }
 
     private created () {
         this.fetchPageData();
@@ -102,26 +125,11 @@ export default class PageVue extends Vue {
 
         // this a new page so we have to create the page first
         if (this.newPage) {
-            let page: Page;
-
             try {
-                page = await createPage(this.page);
+                await this.createPage();
             } catch (err) {
-                if (err.type === 'ResponseError') {
-                    const e = err as ResponseError;
-
-                    this.snackbarColor = 'rgb(201, 17, 6)';
-                    this.snackbar = `Beim Speichern des Containers ist ein Fehler aufgetreten (${e.response.status} - ${e.response.statusText})`;
-                    return;
-                }
-
-                throw err;
+                return;
             }
-
-            page.containers = this.page.containers;
-
-            this.page = page;
-            this.newPage = false;
         }
 
         let newContainer: Container;
@@ -188,6 +196,12 @@ export default class PageVue extends Vue {
 
         try {
             this.page = await loadPage(slug);
+
+            this.values = {
+                toc: this.page.toc,
+                title: this.page.title,
+                description: this.page.description
+            };
         } catch (err) {
             if (err.type === 'ResponseError') {
                 if (err.response.status === 404) {
@@ -195,7 +209,9 @@ export default class PageVue extends Vue {
                     this.page = {
                         slug: slug,
                         toc: true,
-                        containers: []
+                        containers: [],
+                        description: '',
+                        title: ''
                     };
                     return;
                 }
@@ -205,5 +221,130 @@ export default class PageVue extends Vue {
             this.loadingError = true;
         }
     }
+
+    private async createPage () {
+        if (this.page === null) return;
+
+        let page: Page;
+
+        try {
+            page = await createPage(this.page);
+        } catch (err) {
+            if (err.type === 'ResponseError') {
+                const e = err as ResponseError;
+
+                this.snackbarColor = 'rgb(201, 17, 6)';
+                this.snackbar = `Beim Speichern des Containers ist ein Fehler aufgetreten (${e.response.status} - ${e.response.statusText})`;
+                return;
+            }
+
+            throw err;
+        }
+
+        page.containers = this.page.containers;
+
+        this.page = page;
+        this.newPage = false;
+    }
+
+    private async save () {
+        if (this.page === null) return;
+
+        if (this.newPage) {
+            try {
+                await this.createPage();
+            } catch (err) {
+                return;
+            }
+        }
+
+        const data: Partial<Pick<Page, 'toc'|'title'|'description'>> & Pick<Page, 'slug'> = {
+            slug: this.page.slug,
+            toc: (this.values.toc !== this.page.toc) ? this.values.toc : undefined,
+            title: (this.values.title !== this.page.title) ? this.values.title : undefined,
+            description: (this.values.description !== this.page.description) ? this.values.description : undefined
+        };
+
+        try {
+            const updatedPage = await updatePage(data);
+
+            updatedPage.containers = this.page.containers;
+
+            this.page = updatedPage;
+        } catch (err) {
+            if (err.type === 'ResponseError') {
+                const e = err as ResponseError;
+
+                this.snackbarColor = 'rgb(201, 17, 6)';
+                this.snackbar = `Beim Speichern der Einstellungen ist ein Fehler aufgetreten (${e.response.status} - ${e.response.statusText})`;
+                return;
+            }
+
+            throw err;
+        }
+
+        this.snackbarColor = '#66AA66';
+        this.snackbar = 'Speichern erfolgreich!';
+    }
+
+    private get saveShown (): boolean {
+        if (this.page === null) return false;
+
+        return (this.page.title !== this.values.title || this.page.toc !== this.values.toc || this.page.description !== this.values.description);
+    }
 }
 </script>
+
+<style lang="scss" scoped>
+.grad-edit-page__form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: .5rem;
+    justify-content: center;
+    align-items: center;
+
+    textarea,
+    label,
+    span,
+    input[type=text] {
+        grid-column: 1 / 3;
+    }
+
+    input[type=checkbox] + label {
+        grid-column: 2;
+    }
+
+    span {
+        margin-top: .25rem;
+        margin-bottom: 1rem;
+        font-size: .75em;
+        line-height: 1em;
+    }
+
+    input, textarea {
+        font-size: 1rem;
+        border: 1px solid rgba(black, 0.2);
+        outline: none;
+        border-radius: .25rem;
+        padding: .5rem;
+        transition: border-color .2s ease-in-out;
+
+        &:focus, &:active {
+            border: 1px solid black;
+        }
+    }
+
+    input[type=checkbox] {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+}
+
+.grad-edit-page__setting-actions  {
+    position: absolute;
+    top: 0px;
+    left: calc(100% + 0.5rem);
+    bottom: 0px;
+    width: auto !important;
+}
+</style>

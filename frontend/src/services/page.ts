@@ -86,6 +86,14 @@ export async function updateContainer (c: Partial<Container> & Pick<Container, '
     return updatedContainer;
 }
 
+export async function updatePage (p: Partial<Page> & Pick<Page, 'slug'>): Promise<Page> {
+    const { slug, ...data } = p;
+
+    const page = await fetchJSON<Page>(`${API_URL}/page${slug}`, { method: 'PUT', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
+
+    return page;
+}
+
 export async function deleteContainer (id: number): Promise<void> {
     const response = await fetch(`${API_URL}/container/${id}`, { method: 'DELETE', credentials: 'include' });
 
