@@ -1,6 +1,9 @@
 <template>
     <Content>
         <template>
+            <div class="introtext">Wir sind ein deutscher Arma 3 Clan und spielen Milsim Coop sowie taktische TvT Missionen mit Mods wie ACE, TFAR und RHS. <router-link to="/ueber-uns"><span class="material-icons">
+arrow_forward
+</span> Mehr lesen</router-link></div>
             <Events />
             <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
                 <Tweet
@@ -148,6 +151,35 @@ export default class HomeVue extends Vue {
 
 <style lang="scss">
 @import "@/assets/color-macros.scss";
+
+.grad-content__main {
+    margin-top: -4rem;
+}
+
+.introtext {
+        color: #f0f0f0;
+        padding: 10px;
+        /*text-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 1);*/
+        font-weight: 500;
+        font-size: 1.3rem;
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(1px);
+        -webkit-backdrop-filter: blur(1px);
+        border-radius: 4px;
+        margin-bottom: 1rem;
+
+        a {
+            color: $action-color;
+            margin-left: .5em;
+            font-size: 16px;
+            float: right;
+        }
+
+        .material-icons {
+            transform: translate(3px, 4px);
+            font-size: 1.2em;
+        }
+}
 
 .grad-blog-wrapper {
     width: 100%;

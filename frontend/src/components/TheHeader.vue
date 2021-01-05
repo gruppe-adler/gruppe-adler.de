@@ -1,7 +1,8 @@
 <template>
     <header class="grad-header">
         <video autobuffer autoplay playsinline muted loop class="grad-header__video" :src="`${baseUrl}video/header/${video}`"></video>
-        <div class="grad-header__fade"></div>
+        <div class="grad-header__fade">
+</div>
         <img class="grad-header__logo" :src="`${baseUrl}logo.svg`" alt="logo" aria-hidden="true" />
     </header>
 </template>
@@ -62,6 +63,9 @@ export default class TheHeaderVue extends Vue {
         bottom: 0;
         right: 0;
         background: linear-gradient(360deg, #000000 0%, rgba(51, 51, 51, 0) 50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     &__video {
