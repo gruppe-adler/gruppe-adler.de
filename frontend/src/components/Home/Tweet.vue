@@ -178,6 +178,7 @@ export default class TweetVue extends Vue {
         background-repeat: no-repeat;
         background-position: center;
         background-size: 3%;
+        color: $text-color-secondary;
     }
 
     .grad-container__content .grad-tweet__media img {
