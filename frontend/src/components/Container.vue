@@ -85,6 +85,10 @@ export default class ContainerVue extends Vue {
             max-height: 3rem;
             filter: saturate(0%);
             opacity: 0.4;
+
+            @media (prefers-color-scheme: dark) {
+                filter: saturate(0%) invert(1);
+            }
         }
     }
 
@@ -118,18 +122,6 @@ export default class ContainerVue extends Vue {
         > div {
             width: 100%;
         }
-
-        a {
-            color: $action-color;
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.05s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-
-            &:hover {
-                color: $action-color-hover;
-            }
-        }
-
     }
 
     &__footer {
@@ -146,6 +138,18 @@ export default class ContainerVue extends Vue {
 
         > div {
             width: 100%;
+        }
+    }
+
+    &__footer a,
+    &__content a {
+        color: $action-color;
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.05s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+        &:hover {
+            color: $action-color-hover;
         }
     }
 

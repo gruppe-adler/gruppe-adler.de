@@ -178,6 +178,7 @@ export default class TweetVue extends Vue {
         display: flex;
         position: relative;
         line-height: 2em;
+        color: $text-color-primary;
 
         > svg {
             position: absolute;
