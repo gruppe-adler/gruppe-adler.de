@@ -19,6 +19,8 @@ export interface Page {
     slug: string;
     toc: boolean;
     containers: Container[];
+    title: string;
+    description: string;
 }
 
 export async function uploadImage (dataUrl: string): Promise<string> {
