@@ -123,7 +123,7 @@ export default class ContainerVue extends Vue {
             color: $action-color;
             font-weight: bold;
             text-decoration: none;
-            transition: color .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            transition: color 0.05s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
             &:hover {
                 color: $action-color-hover;

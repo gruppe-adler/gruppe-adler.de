@@ -161,18 +161,6 @@ export default class TweetVue extends Vue {
         font-weight: bold;
     }
 
-    .grad-container__content,
-    .grad-container__footer {
-        a {
-            color: #1da1f2;
-            font-weight: bold;
-
-            &:hover {
-                color: #1da1f2;
-            }
-        }
-    }
-
     .grad-container__header {
         background-image: url('~@/assets/twitter.svg');
         background-repeat: no-repeat;
