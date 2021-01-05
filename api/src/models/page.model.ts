@@ -32,6 +32,14 @@ export default class Page extends Model<Page> {
     @Column(DataType.NUMBER)
     public priority: number;
 
+    @Default('')
+    @Column(DataType.TEXT)
+    public description: string;
+
+    @Default('')
+    @Column(DataType.TEXT)
+    public title: string;
+
     @HasMany(() => Container)
     public containers: Container[];
 }
