@@ -63,6 +63,7 @@ import MarkdownVue from '@/components/Markdown.vue';
 
 import { Page, loadPage, Container } from '@/services/page';
 import { headingToID } from '@/services/headingToID';
+import { MetaInfo, MetaPropertyName } from 'vue-meta';
 
 @Component({
     components: {
@@ -139,15 +140,31 @@ export default class CMSPageVue extends Vue {
         return headingToID(container.heading);
     }
 
-    private metaInfoMethod () {
-        if (this.page === null) return {};
-        if (this.page.containers.length === 0) return {};
-        if (this.page.containers.length > 1) return {};
-
-        return {
-            title: this.page.containers[0].heading,
+    private metaInfoMethod (): MetaInfo {
+        const defaults: Partial<MetaInfo> = {
             titleTemplate: '%s - Gruppe Adler'
         };
+
+        if (this.pageNotFound) return { ...defaults, title: 'Seite nicht gefunden' };
+        if (this.page === null) return {};
+
+        const meta: MetaPropertyName[] = [];
+
+        if (this.page.description.length > 0) {
+            meta.push({
+                name: 'description',
+                content: this.page.description
+            });
+        }
+
+        let title: string|undefined;
+        if (this.page.title.length > 0) {
+            title = this.page.title;
+        } else if (this.page.containers.length === 1) {
+            title = this.page.containers[0].heading;
+        }
+
+        return { ...defaults, title, meta };
     }
 }
 </script>

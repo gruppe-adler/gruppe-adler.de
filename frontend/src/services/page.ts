@@ -19,6 +19,8 @@ export interface Page {
     slug: string;
     toc: boolean;
     containers: Container[];
+    title: string;
+    description: string;
 }
 
 export async function uploadImage (dataUrl: string): Promise<string> {
@@ -82,6 +84,14 @@ export async function updateContainer (c: Partial<Container> & Pick<Container, '
     const updatedContainer = await fetchJSON<Container>(`${API_URL}/container/${c.id}`, { method: 'PUT', body: JSON.stringify(c), headers: { 'Content-Type': 'application/json' } });
 
     return updatedContainer;
+}
+
+export async function updatePage (p: Partial<Page> & Pick<Page, 'slug'>): Promise<Page> {
+    const { slug, ...data } = p;
+
+    const page = await fetchJSON<Page>(`${API_URL}/page${slug}`, { method: 'PUT', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
+
+    return page;
 }
 
 export async function deleteContainer (id: number): Promise<void> {

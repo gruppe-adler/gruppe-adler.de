@@ -18,9 +18,6 @@ import TheFooterVue from '@/components/TheFooter.vue';
         TheNavbar: TheNavbarVue,
         TheHeader: TheHeaderVue,
         TheFooter: TheFooterVue
-    },
-    metaInfo: {
-        title: 'Gruppe Adler'
     }
 })
 export default class AppVue extends Vue {

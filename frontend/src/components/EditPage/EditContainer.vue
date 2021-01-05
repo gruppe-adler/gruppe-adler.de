@@ -156,6 +156,7 @@ export default class EditContainerVue extends Vue {
     width: 100%;
     position: relative;
 
+    .grad-container + &,
     & + & {
         margin-top: 2rem;
     }

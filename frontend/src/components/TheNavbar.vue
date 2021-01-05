@@ -13,15 +13,8 @@ import { GradNavbar, GradPathChangedEvent } from '@gruppe-adler/navbar-component
 
 customElements.define('grad-navbar', GradNavbar);
 
-@Component({
-    metaInfo () {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return this.metaInfoMethod();
-    }
-})
+@Component
 export default class TheNavbarVue extends Vue {
-    private activeDisplayName = '';
     private pageYOffset = 0; // for hiding nav bar when scrolling
     private navCollapsed = false; // for hiding nav bar when scrolling
 
@@ -38,19 +31,7 @@ export default class TheNavbarVue extends Vue {
             this.$router.push(event.gradPath);
         }
 
-        this.activeDisplayName = event.gradDisplayName;
         event.preventDefault();
-    }
-
-    private metaInfoMethod () {
-        if (this.activeDisplayName.length > 0) {
-            return {
-                title: this.activeDisplayName,
-                titleTemplate: '%s - Gruppe Adler'
-            };
-        }
-
-        return {};
     }
 
     /**

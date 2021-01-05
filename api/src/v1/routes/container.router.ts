@@ -12,18 +12,10 @@ const defaultContainerRules = [
     body('headerColor').optional().custom(val => val === null || typeof val === 'string'),
     body('headerImage').optional().custom(val => val === null || typeof val === 'string'),
     body('pinnedImage').optional().custom(val => val === null || typeof val === 'string'),
-    body('index').optional().isInt()
+    body('index').optional().isInt().toInt()
 ];
 
-type defaultContainerData = {
-    heading?: string,
-    footer?: string,
-    content?: string,
-    headerColor?: string|null,
-    headerImage?: string|null,
-    pinnedImage?: string|null,
-    index?: number,
-};
+type OptionalContainerFields = Partial<Pick<Container, 'heading'|'footer'|'content'|'headerColor'|'headerImage'|'pinnedImage'|'index'>>;
 
 const containerRouter = Router();
 
@@ -33,7 +25,7 @@ containerRouter.post('/', [
     body('pageSlug').isString(),
     return422
 ], wrapAsync(async (req, res) => {
-    const data = matchedData(req) as defaultContainerData & { pageSlug: string };
+    const data = matchedData(req) as OptionalContainerFields & Pick<Container, 'pageSlug'>;
 
     const container = await Container.create(data);
 
@@ -42,12 +34,12 @@ containerRouter.post('/', [
 
 containerRouter.put('/:id', [
     ssoCheckAuthorized,
-    param('id').isInt(),
+    param('id').isInt().toInt(),
     ...defaultContainerRules,
     body('pageSlug').optional().isString(),
     return422
 ], wrapAsync(async (req, res) => {
-    const { id, ...updateData } = matchedData(req) as defaultContainerData & { id: number, pageSlug?: string };
+    const { id, ...updateData } = matchedData(req) as OptionalContainerFields & Partial<Pick<Container, 'pageSlug'>> & Pick<Container, 'id'>;
 
     const container: Container|null = await Container.findByPk(id);
 
@@ -62,7 +54,7 @@ containerRouter.put('/:id', [
 
 containerRouter.delete('/:id', [
     ssoCheckAuthorized,
-    param('id').isInt(),
+    param('id').isInt().toInt(),
     return422
 ], wrapAsync(async (req, res) => {
     const { id } = matchedData(req) as { id: number };

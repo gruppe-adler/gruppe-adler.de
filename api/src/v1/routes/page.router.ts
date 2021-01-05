@@ -23,14 +23,15 @@ pageRouter.get('/*', wrapAsync(async (req, res) => {
 
 pageRouter.put('/*', [
     ssoCheckAuthorized,
-    body('slug').optional().isString(),
-    body('toc').optional().isBoolean(),
-    body('priority').optional().isFloat({ min: 0, max: 1 }),
+    body('toc').optional().isBoolean().toBoolean(),
+    body('description').optional(),
+    body('title').optional(),
+    body('priority').optional().isFloat({ min: 0, max: 1 }).toFloat(),
     return422
 ], wrapAsync(async (req, res) => {
     const slug = req.path;
 
-    const updateData = matchedData(req) as { slug: string, toc?: boolean, priority?: number };
+    const updateData = matchedData(req) as Partial<Pick<Page, 'toc'|'description'|'title'|'priority'>>;
 
     const page: Page|null = await Page.findByPk(slug);
 
@@ -46,11 +47,13 @@ pageRouter.put('/*', [
 pageRouter.post('/', [
     ssoCheckAuthorized,
     body('slug').isString(),
-    body('toc').optional().isBoolean(),
-    body('priority').optional().isFloat({ min: 0, max: 1 }),
+    body('toc').optional().isBoolean().toBoolean(),
+    body('description').optional(),
+    body('title').optional(),
+    body('priority').optional().isFloat({ min: 0, max: 1 }).toFloat(),
     return422
 ], wrapAsync(async (req, res) => {
-    const data = matchedData(req) as { slug: string, toc?: boolean, priority?: number };
+    const data = matchedData(req) as Partial<Pick<Page, 'toc'|'description'|'title'|'priority'>> & Pick<Page, 'slug'>;
 
     const page = await Page.create(data);
 
