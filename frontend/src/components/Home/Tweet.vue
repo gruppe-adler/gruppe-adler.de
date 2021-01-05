@@ -40,8 +40,8 @@
             </template>
         </template>
         <template v-if="isRetweet" v-slot:footer>
-            <svg width="26" height="15" viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path opacity="0.2" d="M14.4141 14.2012C14.8438 12.4238 15.5469 10.1973 16.5234 7.52148C17.5195 4.82617 18.5352 2.375 19.5703 0.167969H25.9863C24.6973 5.38281 23.7109 10.2754 23.0273 14.8457H14.8242L14.4141 14.2012ZM0.732422 14.2012C1.16211 12.4238 1.86523 10.1973 2.8418 7.52148C3.83789 4.82617 4.85352 2.375 5.88867 0.167969H12.3047C11.0156 5.38281 10.0293 10.2754 9.3457 14.8457H1.14258L0.732422 14.2012Z" fill="black"/>
+            <svg width="26" height="15" viewBox="0 0 26 15" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.4141 14.2012C14.8438 12.4238 15.5469 10.1973 16.5234 7.52148C17.5195 4.82617 18.5352 2.375 19.5703 0.167969H25.9863C24.6973 5.38281 23.7109 10.2754 23.0273 14.8457H14.8242L14.4141 14.2012ZM0.732422 14.2012C1.16211 12.4238 1.86523 10.1973 2.8418 7.52148C3.83789 4.82617 4.85352 2.375 5.88867 0.167969H12.3047C11.0156 5.38281 10.0293 10.2754 9.3457 14.8457H1.14258L0.732422 14.2012Z"/>
             </svg>
             <div class="grad-tweet__media" v-if="model.retweetedTweet.media.length > 0">
                 <TweetMedia
@@ -114,6 +114,7 @@ export default class TweetVue extends Vue {
 }
 </script>
 <style lang="scss">
+@import "@/assets/color-macros.scss";
 .grad-tweet {
     &__media {
         border-radius: .5rem;
@@ -160,20 +161,12 @@ export default class TweetVue extends Vue {
         font-weight: bold;
     }
 
-    .grad-container__content,
-    .grad-container__footer {
-        a {
-            color: #1DA1F2;
-            font-weight: bold;
-        }
-    }
-
     .grad-container__header {
-        color: rgba(0, 0, 0, 0.5);
         background-image: url('~@/assets/twitter.svg');
         background-repeat: no-repeat;
         background-position: center;
         background-size: 3%;
+        color: $text-color-secondary;
     }
 
     .grad-container__content .grad-tweet__media img {
@@ -190,6 +183,8 @@ export default class TweetVue extends Vue {
             position: absolute;
             left: 1.25rem;
             top: 1.25rem;
+            fill: $text-color-primary;
+            opacity: 0.2;
         }
 
         .grad-tweet__media {

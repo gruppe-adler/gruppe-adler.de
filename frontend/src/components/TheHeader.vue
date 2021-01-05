@@ -45,7 +45,6 @@ export default class TheHeaderVue extends Vue {
     margin-top: 2.5rem;
     position: relative;
     z-index: 0;
-    background-color: transparent;
     height: 28rem;
     width: 100%;
     overflow: hidden;

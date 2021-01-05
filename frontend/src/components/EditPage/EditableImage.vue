@@ -73,6 +73,11 @@ export default class EditableImageVue extends Vue {
 
     > #{&}__placeholder {
         background-color: #C4C4C4;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: #444;
+        }
+
         display: flex;
         justify-content: center;
         user-select: none;

@@ -56,6 +56,8 @@ export default class MarkdownTextFieldVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/color-macros.scss";
+
 textarea {
     width: 100%;
     font-size: 1rem;
@@ -64,5 +66,6 @@ textarea {
     outline: none;
     background-color: transparent;
     border: none;
+    color: $text-color-primary;
 }
 </style>

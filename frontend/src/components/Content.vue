@@ -20,6 +20,8 @@ export default class ContentVue extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/color-macros.scss";
+
 $offset: 6.5rem;
 
 .grad-content {
@@ -43,7 +45,7 @@ $offset: 6.5rem;
         flex-grow: 0;
         margin: 2.5rem;
         margin-top: $offset + 2.5rem;
-        color: rgba(0, 0, 0, 0.5);
+        color: $text-color-tertiary;
     }
 }
 @media (max-width: 1350px) {

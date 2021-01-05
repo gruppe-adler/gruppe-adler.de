@@ -1,6 +1,6 @@
 <template>
     <Container headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem; overflow: hidden;">
-        <div v-if="loading"  style="background-color: red; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 100; background-color: #2C2C2C;">
+        <div v-if="loading"  style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 100; background-color: #2C2C2C;">
             <div class="grad-loader__progress" style="color: #66aa66;"></div>
         </div>
         <div v-if="!error" style="position: relative; margin-left: -2.25rem; width: calc(100% + 4.5rem); margin-top: -1.125rem; border-radius: .25rem .25rem 0 0; overflow: hidden;">
@@ -209,17 +209,17 @@ button {
     box-sizing: border-box;
 
     &__more {
+        font-size: 1rem;
         display: block;
         text-align: center;
         margin-top: .5rem;
-        color: inherit;
+        color: #999;
         font-weight: normal;
         cursor: pointer;
         transition: color .05s cubic-bezier(0.455, 0.03, 0.515, 0.955) !important;
 
         &:hover {
             color: white;
-            text-decoration: underline;
         }
     }
 

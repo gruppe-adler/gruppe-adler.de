@@ -91,6 +91,7 @@ export default class TableOfContents extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/color-macros.scss";
 .grad-toc {
 
     &__container {
@@ -110,8 +111,8 @@ export default class TableOfContents extends Vue {
     }
 
     &--active {
-        color: black !important;
         font-weight: bold;
+        color: $text-color-primary !important;
     }
 }
 </style>

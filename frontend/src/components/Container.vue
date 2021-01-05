@@ -17,12 +17,13 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import { contrastColor } from '@/services/color';
 
 @Component
 export default class ContainerVue extends Vue {
     @Prop() private headerColor?: string;
 
-    private mounted () {
+    private created () {
         this.updateHeaderColor();
     }
 
@@ -31,8 +32,12 @@ export default class ContainerVue extends Vue {
         this.$nextTick(() => {
             if (this.headerColor) {
                 (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-color', this.headerColor);
+
+                const textColor = contrastColor(this.headerColor);
+                (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-text-color', textColor || '');
             } else {
                 (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-color', '');
+                (this.$refs.container as HTMLElement).style.setProperty('--grad-container-header-text-color', '');
             }
         });
     }
@@ -40,10 +45,12 @@ export default class ContainerVue extends Vue {
 </script>
 
 <style lang="scss">
+@import "@/assets/color-macros.scss";
+
 .grad-container {
-    background-color: white;
+    background-color: $background-container;
     border-radius: .25rem;
-    box-shadow: 0 .25rem 3.75rem rgba(155,96,0,0.15), 0 .125rem 1.25rem rgba(155,96,0,0.15);
+    box-shadow: 0 .25rem 3.75rem $container-shadow, 0 .125rem 1.25rem $container-shadow;
     font-size: 1.125rem;
     width: 100%;
     display: inline-block;
@@ -54,7 +61,8 @@ export default class ContainerVue extends Vue {
     }
 
     &__header {
-        background-color: var(--grad-container-header-color, rgba(240, 236, 232, 0.7));
+        background-color: var(--grad-container-header-color, $background-container-header);
+        color: var(--grad-container-header-text-color, $text-color-secondary);
         z-index: 1;
         position: relative;
         display: flex;
@@ -66,7 +74,6 @@ export default class ContainerVue extends Vue {
         font-size: 1.3125rem;
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
-        color: rgba(0,0,0,0.5);
 
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
@@ -99,7 +106,7 @@ export default class ContainerVue extends Vue {
     }
 
     &__content {
-        color: #666666;
+        color: $text-color-primary;
         margin-top: 1.125rem;
         margin-bottom: 1.125rem;
         line-height: 1.7em;
@@ -113,15 +120,14 @@ export default class ContainerVue extends Vue {
         }
 
         a {
-            color: #2F80ED;
+            color: $action-color;
             font-weight: bold;
             text-decoration: none;
-            transition: color .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-        }
+            transition: color 0.05s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
-        a:hover {
-            color: #2057A1;
-            transition: color .2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            &:hover {
+                color: $action-color-hover;
+            }
         }
 
     }
@@ -131,10 +137,10 @@ export default class ContainerVue extends Vue {
         align-items: center;
         padding-top: 1.125rem;
         padding-bottom: 1.125rem;
-        background: rgba(240, 236, 232, 0.7);
+        background: $background-container-footer;
         -webkit-backdrop-filter: blur(.25rem);
         backdrop-filter: blur(.25rem);
-        color: #666666;
+        color: $text-color-secondary;
         border-bottom-left-radius: .25rem;
         border-bottom-right-radius: .25rem;
 
