@@ -33,15 +33,15 @@ export default class LoaderVue extends Vue {
 .grad-loader {
     opacity: 1;
     width: 100%;
-    position: relative;
 
     &__mask {
-        left: -3rem;
-        right: -3rem;
+        left: 0;
+        right: 0;
         height: 19rem;
-        top: 12.5rem;
+        margin-top: -12.5rem;
         position: absolute;
-        background-image: linear-gradient(rgba($background-color-rgb, 0), $background-color, $background-color, $background-color);
+        background-image: linear-gradient(rgba($background-color-rgb, 0), $background-color, $background-color);
+
     }
 
     &__progress {

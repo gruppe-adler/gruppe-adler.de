@@ -1,6 +1,8 @@
 <template functional>
     <div class="grad-action-buttons">
-        <slot />
+        <div>
+            <slot />
+        </div>
     </div>
 </template>
 
@@ -12,14 +14,19 @@ export default class ActionButtonsVue extends Vue {}
 
 <style lang="scss">
 .grad-action-buttons {
-    position: absolute;
-    top: -3.75rem;
-    left: 0;
-    display: flex;
+    position: relative;
     width: 100%;
 
-    > *:not(:last-child) {
-        margin-right: .5rem;
+    > div {
+        position: absolute;
+        top: -3.25rem;
+        left: 0;
+        display: flex;
+        width: 100%;
+
+        > *:not(:last-child) {
+            margin-right: .5rem;
+        }
     }
 }
 </style>
