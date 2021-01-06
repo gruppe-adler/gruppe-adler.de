@@ -122,6 +122,10 @@ export default class ContainerVue extends Vue {
         > div {
             width: 100%;
         }
+
+        &:empty {
+            margin: 0;
+        }
     }
 
     &__footer {
