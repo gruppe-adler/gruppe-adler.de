@@ -29,7 +29,6 @@ $offset: 6.5rem;
     display: grid;
     grid-template-columns: 0.5fr auto 0.5fr;
     padding-bottom: 6rem;
-    position: relative;
 
     &__main {
         flex: none;
@@ -37,7 +36,6 @@ $offset: 6.5rem;
         align-items: center;
         display: flex;
         flex-direction: column;
-        position: relative;
     }
 
     &__left,
@@ -57,8 +55,6 @@ $offset: 6.5rem;
     .grad-content {
         grid-template-columns: 100%;
         justify-items: center;
-        overflow-x: hidden;
-        overflow-y: hidden;
 
         &__main {
             width: 50rem;

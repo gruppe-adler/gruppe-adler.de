@@ -55,6 +55,7 @@ export default class ContainerVue extends Vue {
     width: 100%;
     display: inline-block;
     position: relative;
+    word-wrap: break-word;
 
     > * {
         padding: 0 2.25rem;
