@@ -161,12 +161,12 @@ export default class HomeVue extends Vue {
 }
 
 .introtext {
-        color: #f0f0f0;
-        padding: 10px;
-        /*text-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 1);*/
+        color: rgba(255,255,255,0.8);
+        padding: 5px;
+        text-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, .5);
         font-weight: 500;
         font-size: 1.3rem;
-        background: rgba(0,0,0,0.4);
+        //background: rgba(0,0,0,0.4);
         backdrop-filter: blur(1px);
         -webkit-backdrop-filter: blur(1px);
         border-radius: 4px;
@@ -177,6 +177,10 @@ export default class HomeVue extends Vue {
             margin-left: .5em;
             font-size: 16px;
             float: right;
+        }
+
+        a:hover {
+            color: $action-color-hover;
         }
 
         .material-icons {
