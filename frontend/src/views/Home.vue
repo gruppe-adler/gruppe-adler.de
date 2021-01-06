@@ -176,7 +176,7 @@ export default class HomeVue extends Vue {
         color: $action-color;
         margin-left: .5em;
         font-size: 1rem;
-        line-height: 1em;
+        line-height: 1.7em;
         float: right;
         display: flex;
         justify-content: center;
@@ -188,7 +188,7 @@ export default class HomeVue extends Vue {
 
         > .material-icons {
             font-size: 1.2em;
-            line-height: 1em;
+            line-height: 1.5em;
             margin-right: .125rem;
         }
     }
