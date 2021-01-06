@@ -13,6 +13,9 @@
                     <label for="page-description">Beschreibung</label>
                     <textarea id="page-description" type="text" v-model="values.description" rows="5" />
                     <span>Für Google. Sollte min 100 Zeichen und max. 155 Zeichen lang sein.</span>
+                    <label for="page-priority">Priorität</label>
+                    <input type="number" max="1" min="0" step="0.1" id="page-title" v-model.number="values.priority" />
+                    <span>Priorität für sitemap.xml <a target="_blank" rel="noreferrer" href="https://www.sitemaps.org/protocol.html#prioritydef">(siehe hier)</a>. Standard ist 0.5 und sollte auch in den meisten Fällen so bleiben.</span>
                     <input type="checkbox" id="page-toc" v-model="values.toc" />
                     <label for="page-toc">Inhaltsverzeichnis anzeigen</label>
                     <span>Ein Inhaltsverzeichnis wird nur bei Seiten mit mehreren Containern angezeigt.</span>
@@ -67,10 +70,11 @@ export default class PageVue extends Vue {
     private newPage = false;
     private snackbar = '';
     private snackbarColor = '#66AA66';
-    private values: Pick<Page, 'toc'|'title'|'description'> = {
+    private values: Pick<Page, 'toc'|'title'|'description'|'priority'> = {
         toc: true,
         title: '',
-        description: ''
+        description: '',
+        priority: 0.5
     }
 
     private created () {
@@ -200,7 +204,8 @@ export default class PageVue extends Vue {
             this.values = {
                 toc: this.page.toc,
                 title: this.page.title,
-                description: this.page.description
+                description: this.page.description,
+                priority: this.page.priority
             };
         } catch (err) {
             if (err.type === 'ResponseError') {
@@ -256,10 +261,11 @@ export default class PageVue extends Vue {
             }
         }
 
-        const data: Partial<Pick<Page, 'toc'|'title'|'description'>> & Pick<Page, 'slug'> = {
+        const data: Partial<Pick<Page, 'toc'|'title'|'description'|'priority'>> & Pick<Page, 'slug'> = {
             slug: this.page.slug,
             toc: (this.values.toc !== this.page.toc) ? this.values.toc : undefined,
             title: (this.values.title !== this.page.title) ? this.values.title : undefined,
+            priority: (this.values.priority !== this.page.priority && (this.values.priority as unknown) !== '') ? this.values.priority : undefined,
             description: (this.values.description !== this.page.description) ? this.values.description : undefined
         };
 
@@ -288,12 +294,18 @@ export default class PageVue extends Vue {
     private get saveShown (): boolean {
         if (this.page === null) return false;
 
-        return (this.page.title !== this.values.title || this.page.toc !== this.values.toc || this.page.description !== this.values.description);
+        return (this.page.title !== this.values.title ||
+                this.page.toc !== this.values.toc ||
+                this.page.description !== this.values.description ||
+                (this.page.priority !== this.values.priority && this.values.priority as unknown !== '')
+        );
     }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/color-macros.scss';
+
 .grad-edit-page__form {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -304,8 +316,10 @@ export default class PageVue extends Vue {
     textarea,
     label,
     span,
-    input[type=text] {
+    input[type=text],
+    input[type=number] {
         grid-column: 1 / 3;
+        color: $text-color-primary;
     }
 
     input[type=checkbox] + label {
@@ -321,14 +335,15 @@ export default class PageVue extends Vue {
 
     input, textarea {
         font-size: 1rem;
-        border: 1px solid rgba(black, 0.2);
+        border: none;
         outline: none;
         border-radius: .25rem;
         padding: .5rem;
-        transition: border-color .2s ease-in-out;
+        transition: background-color .2s ease-in-out;
+        background-color: rgba($background-color-rgb, 0.3);
 
         &:focus, &:active {
-            border: 1px solid black;
+            background-color: rgba($background-color-rgb, 1);
         }
     }
 

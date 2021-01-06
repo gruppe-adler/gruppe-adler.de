@@ -21,6 +21,7 @@ export interface Page {
     containers: Container[];
     title: string;
     description: string;
+    priority: number;
 }
 
 export async function uploadImage (dataUrl: string): Promise<string> {
