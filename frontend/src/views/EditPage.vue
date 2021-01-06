@@ -68,7 +68,7 @@ export default class PageVue extends Vue {
     private snackbar = '';
     private snackbarColor = '#66AA66';
     private values: Pick<Page, 'toc'|'title'|'description'> = {
-        toc: false,
+        toc: true,
         title: '',
         description: ''
     }
@@ -208,10 +208,8 @@ export default class PageVue extends Vue {
                     this.newPage = true;
                     this.page = {
                         slug: slug,
-                        toc: true,
                         containers: [],
-                        description: '',
-                        title: ''
+                        ...this.values
                     };
                     return;
                 }
