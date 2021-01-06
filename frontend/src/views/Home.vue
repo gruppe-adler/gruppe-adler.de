@@ -163,6 +163,7 @@ export default class HomeVue extends Vue {
 @import "@/assets/color-macros.scss";
 
 .grad-blog__intro {
+    z-index: 1;
     color: rgba(255, 255, 255, 0.8);
     padding: .25rem;
     text-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, .5);
