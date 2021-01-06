@@ -45,6 +45,12 @@ import EventsVue from '@/components/Home/Events.vue';
     components: {
         Tweet: TweetVue,
         Events: EventsVue
+    },
+    metaInfo: {
+        title: 'Gruppe Adler: Deutscher Arma 3 COOP & TvT Clan',
+        meta: [
+            { name: 'description', content: 'Gruppe Adler ist ein deutscher Arma 3 Clan. Die Community spezialisiert sich auf Milsim Coop und taktische TvT Missionen mit Mods wie ACE, TFAR und RHS.' }
+        ]
     }
 })
 export default class HomeVue extends Vue {
