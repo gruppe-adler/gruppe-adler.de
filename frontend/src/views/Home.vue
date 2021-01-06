@@ -1,9 +1,13 @@
 <template>
     <Content>
         <template>
-            <div class="introtext">Wir sind ein deutscher Arma 3 Clan und spielen Milsim Coop sowie taktische TvT Missionen mit Mods wie ACE, TFAR und RHS. <router-link to="/ueber-uns"><span class="material-icons">
-arrow_forward
-</span> Mehr lesen</router-link></div>
+            <div class="introtext">
+                Wir sind ein deutscher Arma 3 Clan und spielen Milsim Coop sowie taktische TvT Missionen mit Mods wie ACE, TFAR und RHS.
+                <router-link to="/ueber-uns">
+                    <span class="material-icons">arrow_forward</span>
+                    Mehr lesen
+                </router-link>
+            </div>
             <Events />
             <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
                 <Tweet
