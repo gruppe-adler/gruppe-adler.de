@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import App from './App.vue';
-import './registerServiceWorker';
 import './plugins/globalComponents';
 import './plugins/globalDirectives';
 import './plugins/gtag';
