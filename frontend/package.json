@@ -45,6 +45,7 @@
     "sass-loader": "^8.0.2",
     "twitter-d": "^0.4.0",
     "typescript": "~3.8.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-assets-manifest": "^4.0.0"
   }
 }

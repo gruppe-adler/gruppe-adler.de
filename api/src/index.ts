@@ -63,12 +63,32 @@ app.get('/sitemap.xml', async (req, res) => {
 
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const assetsManifest: { [originalFilePath: string]: string } = require(join(__dirname, '../frontend', 'assets-manifest.json'));
+
+    const cacheHeaders: { [path: string]: string|undefined } = {};
+
+    for (const originalFilePath in assetsManifest) {
+        if (Object.prototype.hasOwnProperty.call(assetsManifest, originalFilePath)) {
+            const outputFilePath = assetsManifest[originalFilePath];
+            // we do not cache html files
+            if (!/.+\.(?!html).*$/i.test(outputFilePath)) continue;
+
+            // if the outputFilePath is not equal to the originalFilePath we consider the file as hashed so we can cache it indefinitely (= 1 year)
+            const cacheControl = outputFilePath === originalFilePath ? 'public, max-age=2678400' : 'public, max-age=31536000';
+
+            cacheHeaders[join(__dirname, '../frontend', outputFilePath)] = cacheControl;
+        }
+    }
+
     app.use(
         '/',
         express.static(join(__dirname, '../frontend'), {
             setHeaders: (res: Response, path: string) => {
                 if (/.+\.(?!html).*$/i.test(path)) {
-                    res.header('Cache-Control', 'public, max-age=2678400');
+                    const cacheControl = cacheHeaders[path] || 'public, max-age=2678400';
+
+                    res.header('Cache-Control', cacheControl);
                 } else {
                     res.header('Cache-Control', 'no-store');
                 }
