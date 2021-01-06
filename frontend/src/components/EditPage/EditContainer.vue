@@ -19,14 +19,14 @@
                 </EditableField>
                 <EditableImage v-model="values.headerImage" style="margin-left: 1rem;" placeholderStyle="height: 3rem; border-radius: .5rem; width: 4rem; font-size: 2rem;">
                     <template v-slot:img="{ img }">
-                        <img v-lazy-img :data-src="img" alt="preview-image" class="grad-container__header-image">
+                        <img v-lazy-img :data-src="img" alt="" class="grad-container__header-image">
                     </template>
                 </EditableImage>
             </template>
             <template v-slot:image>
                 <EditableImage v-model="values.pinnedImage" style="max-height: inherit;" placeholderStyle="min-height: 10rem; margin-top: 4.5rem; font-size: 3rem;">
                     <template v-slot:img="{ img }">
-                        <img v-lazy-img :data-src="img" alt="preview-image" style="max-width: 100%">
+                        <img v-lazy-img :data-src="img" alt="" style="max-width: 100%">
                     </template>
                 </EditableImage>
             </template>

@@ -25,7 +25,7 @@
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <picture v-lazy-img :data-alt="item.image">
+                    <picture v-lazy-img :data-alt="item.name">
                         <source :srcset="`/img/footer/dark/${item.image}.svg`" media="(prefers-color-scheme: dark)">
                         <source :srcset="`/img/footer/${item.image}.svg`">
                     </picture>

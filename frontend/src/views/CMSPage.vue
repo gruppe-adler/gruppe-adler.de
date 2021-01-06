@@ -19,13 +19,13 @@
                         v-if="c.headerImage !== null"
                         v-lazy-img
                         class="grad-container__header-image"
-                        alt="header-image"
+                        alt=""
                         aria-hidden="true"
                         :data-src="c.headerImage"
                     />
                 </template>
                 <template v-slot:image  v-if="c.pinnedImage !== null">
-                    <img v-lazy-img :data-src="c.pinnedImage" alt="pinned-image">
+                    <img v-lazy-img :data-src="c.pinnedImage" alt="">
                 </template>
                 <template v-if="c.content">
                     <Markdown :md="c.content" />

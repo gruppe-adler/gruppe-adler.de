@@ -4,7 +4,7 @@
         <template v-slot:heading><a :href="`https://twitter.com/${model.author.username}`" target="_blank" rel="noreferrer">@{{model.author.username}}</a></template>
         <template v-slot:author>
             <a :href="`https://twitter.com/${model.author.username}`" target="_blank" rel="noreferrer">
-                <img v-lazy-img :data-src="model.author.picture" alt="avatar" :height="2.25 *16" :width="2.25 *16" />
+                <img v-lazy-img :data-src="model.author.picture" alt="Tweet Avatar" :height="2.25 *16" :width="2.25 *16" />
             </a>
         </template>
         <template>

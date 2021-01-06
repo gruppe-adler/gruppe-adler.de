@@ -1,18 +1,19 @@
 <template>
     <Container headerColor="#2C2C2C" style="background-color: #2C2C2C; margin-bottom: 2rem; overflow: hidden;">
-        <div v-if="loading"  style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 100; background-color: #2C2C2C;">
+        <div v-if="loading" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 100; background-color: #2C2C2C;" aria-label="Lade Events" aria-busy="true">
             <div class="grad-loader__progress" style="color: #66aa66;"></div>
         </div>
         <div v-if="!error" style="position: relative; margin-left: -2.25rem; width: calc(100% + 4.5rem); margin-top: -1.125rem; border-radius: .25rem .25rem 0 0; overflow: hidden;">
-            <ul :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll">
+            <ul :class="{'grad-arma-events': true,  'grad-arma-events--small': small }" :style="expanded ? 'max-height: 2000px;' : ''" ref="list" @scroll="onContainerScroll" aria-label="Events">
                 <li
                     v-for="(event, i) in events"
                     :key="i"
                     :class="{'grad-arma-event': true, 'grad-arma-event--future': isInFuture(event) }"
                     @click="openEvent(event)"
+                    tabindex="0"
                 >
                     <time :datetime="event.date.toISOString().substr(0, 10)" class="grad-arma-event__date">{{formatDate(event.date)}}</time>
-                    <h4 class="grad-arma-event__title">{{event.title}}</h4>
+                    <span class="grad-arma-event__title" role="heading">{{event.title}}</span>
                     <div class="grad-arma-event__attendance">
                         <div aria-hidden="true">
                             <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>
@@ -24,10 +25,10 @@
                 </li>
             </ul>
             <template v-if="small">
-                <button v-if="scrollLeft" class="grad-arma-events__control grad-arma-events__control--left" @click="scroll(-1)">
+                <button v-if="scrollLeft" class="grad-arma-events__control grad-arma-events__control--left" @click="scroll(-1)" aria-label="Weiter">
                     <i class="material-icons">chevron_left</i>
                 </button>
-                <button  v-if="scrollRight" class="grad-arma-events__control" @click="scroll(1)">
+                <button v-if="scrollRight" class="grad-arma-events__control" @click="scroll(1)" aria-label="Zurück">
                     <i class="material-icons">chevron_right</i>
                 </button>
             </template>
@@ -45,7 +46,7 @@
         >
             Mehr Events im Forum
         </a>
-        <span v-else class="grad-arma-events__more" @click="expanded = true">Mehr anzeigen</span>
+        <span v-else class="grad-arma-events__more" @click="expanded = true" tabindex="0" role="button">Mehr anzeigen</span>
     </Container>
 </template>
 

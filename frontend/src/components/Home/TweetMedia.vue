@@ -4,7 +4,7 @@
         target="_blank"
         rel="noreferrer"
     >
-        <img v-lazy-img alt="twitter-media" :height="height" :width="width" :data-srcset="srcSet" :data-src="url()" />
+        <img v-lazy-img alt="Tweet Bild" :height="height" :width="width" :data-srcset="srcSet" :data-src="url()" />
     </a>
 </template>
 
