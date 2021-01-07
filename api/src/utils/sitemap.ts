@@ -12,7 +12,7 @@ if (fs.existsSync(BUILD_TIME_PATH)) {
     const seconds = Number.parseInt(str, 10);
 
     if (!Number.isNaN(seconds)) {
-        buildTime = new Date(seconds);
+        buildTime = new Date(seconds * 1000);
     }
 }
 

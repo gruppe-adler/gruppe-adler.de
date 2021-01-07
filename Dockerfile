@@ -66,4 +66,6 @@ VOLUME ["/usr/src/app/data"]
 
 ENTRYPOINT [ "npm", "run", "prod" ]
 
-RUN date +%s%N | cut -b1-13 > /build-date.txt
+RUN date +%s > /build-date.txt
+
+RUN cat /build-date.txt
