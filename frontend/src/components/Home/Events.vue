@@ -13,7 +13,7 @@
                     tabindex="0"
                 >
                     <time :datetime="event.date.toISOString().substr(0, 10)" class="grad-arma-event__date">{{formatDate(event.date)}}</time>
-                    <span class="grad-arma-event__title" role="heading">{{event.title}}</span>
+                    <span class="grad-arma-event__title" role="heading" aria-level="2">{{event.title}}</span>
                     <div class="grad-arma-event__attendance">
                         <div aria-hidden="true">
                             <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>

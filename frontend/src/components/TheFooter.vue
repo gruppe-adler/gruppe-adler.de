@@ -9,6 +9,7 @@
                 class="grad-footer__link"
                 target="_blank"
                 rel="noreferrer"
+                :aria-label="item.name"
             >
                 <picture v-lazy-img :data-alt="item.name">
                     <source :srcset="`/img/footer/dark/${item.image}.svg`" media="(prefers-color-scheme: dark)">
