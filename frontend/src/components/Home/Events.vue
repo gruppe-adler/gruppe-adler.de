@@ -19,7 +19,7 @@
                             <div v-for="i in event.attendance[0]" :key="`firm_${i}`" class="grad-arma-event__attendance-firm"></div>
                             <div v-for="i in event.attendance[1]" :key="i" class="grad-arma-event__attendance-maybe"></div>
                         </div>
-                        <span>{{event.attendance[0]}} - {{event.attendance[0] + event.attendance[1]}} Zusagen</span>
+                        <span>{{event.attendance[0]}}<template v-if="event.attendance[1] > 0"> - {{event.attendance[0] + event.attendance[1]}}</template> Zusagen</span>
                     </div>
                     <i class="material-icons grad-arma-event__arrow" aria-hidden="true">chevron_right</i>
                 </li>
