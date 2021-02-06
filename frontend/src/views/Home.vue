@@ -159,12 +159,6 @@ export default class HomeVue extends Vue {
 }
 </script>
 
-<style lang="scss">
-.grad-content__main {
-    margin-top: -4rem;
-}
-</style>
-
 <style lang="scss" scoped>
 @import "@/assets/color-macros.scss";
 
@@ -178,6 +172,7 @@ export default class HomeVue extends Vue {
     -webkit-backdrop-filter: blur(1px);
     border-radius: .25rem;
     margin-bottom: 1rem;
+    margin-top: -4rem;
 
     a {
         color: $action-color;
