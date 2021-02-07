@@ -175,8 +175,6 @@ export default class Events extends Vue {
 
         const { scrollLeft, scrollWidth, clientWidth } = list;
 
-        console.log(factor);
-
         const newScrollLeft = scrollLeft + (clientWidth / 2) * factor;
 
         list.scrollTo({
