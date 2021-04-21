@@ -19,6 +19,9 @@
                 Retweet von <a :href="`https://twitter.com/${model.retweetedTweet.author.username}`" target="_blank" rel="noreferrer">@{{model.retweetedTweet.author.displayName}}</a>
             </p>
             <p v-html="model.caption"></p>
+            <div v-if="model.cardUrl !== undefined" style="background-color: red;">
+                {{ model.cardUrl }}
+            </div>
             <template v-if="isLoggedIn">
                 <div v-if="model.hidden" class="grad-tweet__overlay">
                     <i class="material-icons">visibility_off</i>

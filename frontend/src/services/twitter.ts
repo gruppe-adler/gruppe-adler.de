@@ -33,6 +33,7 @@ interface TweetConstructorArguments {
     caption: string;
     author: TwitterUser;
     media: TweetMedia[];
+    cardUrl?: string;
     id: string;
     hidden: boolean;
 }
@@ -45,14 +46,16 @@ export class Tweet {
     public author: TwitterUser;
     public media: TweetMedia[];
     public hidden: boolean;
+    public cardUrl?: string;
 
-    constructor ({ date, caption, author, media, id, hidden }: TweetConstructorArguments) {
+    constructor ({ date, caption, author, media, id, hidden, cardUrl }: TweetConstructorArguments) {
         this.id = id;
         this.date = date;
         this.caption = caption;
         this.author = author;
         this.media = media;
         this.hidden = hidden;
+        this.cardUrl = cardUrl;
     }
 }
 
@@ -201,8 +204,32 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
             mainMedia = mainTweet.extended_entities.media.map(entityToTweetMedia);
         }
 
+        /*
+         * Twitter docs states:
+         * || In some circumstances, users may want to Tweet multiple URLs. Only one card may be shown in a Tweet.
+         * || Here is the order of precedence when processing multiple URLs:
+         * ||  1. Images or media attached to Tweets will have precedence over any card attached to a URL.
+         * ||  2. URLs with cards are processed in order of appearance in the Tweet, first to last
+         *
+         * But it seems that there are some exceptions to that order, more precise to the second rule:
+         * If there is a link right at the end of the tweet it will always be displayed as a card and
+         * the link will be removed entirely.
+         */
+        let mainCardUrl: string|undefined;
+        if (mainMedia.length === 0 && mainTweet.entities.urls) {
+            for (const { expanded_url: expandedUrl, url, indices } of mainTweet.entities.urls) {
+                if (mainCardUrl === undefined) {
+                    mainCardUrl = expandedUrl || url;
+                    continue;
+                }
+                if (indices && mainTweet.display_text_range && indices[1] === mainTweet.display_text_range[1]) {
+                    mainCardUrl = expandedUrl || url;
+                }
+            }
+        }
+
         // content of main tweet
-        let mainCaption;
+        let mainCaption: string;
 
         // quoted_status and retweeted_status both contain the tweet that was retweeted with the
         // only difference being that the parent tweet of quoted_status will contain a own comment
@@ -262,6 +289,7 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
                 caption: mainCaption,
                 media: mainMedia,
                 id: mainId,
+                cardUrl: mainCardUrl,
                 author: mainAuthor,
                 tweet: retweetedTweet,
                 hidden: hiddenTweets.includes(Number.parseInt(mainId, 10))
@@ -274,6 +302,7 @@ export async function fetchTweets (maxId?: string): Promise<Tweet[]> {
             caption: mainCaption,
             media: mainMedia,
             id: mainId,
+            cardUrl: mainCardUrl,
             author: mainAuthor,
             hidden: hiddenTweets.includes(Number.parseInt(mainId, 10))
         });
