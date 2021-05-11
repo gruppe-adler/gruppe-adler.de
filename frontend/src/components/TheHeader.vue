@@ -1,6 +1,6 @@
 <template>
     <header class="grad-header">
-        <video autobuffer autoplay playsinline muted loop class="grad-header__video" :src="`${baseUrl}video/header/${video}`"></video>
+        <video autobuffer autoplay playsinline muted loop class="grad-header__video" :src="`${baseUrl}video/header/${video}`" aria-hidden="true"></video>
         <div class="grad-header__fade"></div>
         <img class="grad-header__logo" :src="`${baseUrl}logo.svg`" alt="Gruppe Adler Logo" />
     </header>

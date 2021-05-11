@@ -1,12 +1,12 @@
 <template functional>
     <div class="grad-content">
-        <aside class="grad-content__left">
+        <aside v-if="$slots.left" class="grad-content__left">
             <slot name="left" />
         </aside>
         <main class="grad-content__main">
             <slot />
         </main>
-        <aside class="grad-content__right">
+        <aside v-if="$slots.right" class="grad-content__right">
             <slot name="right" />
         </aside>
     </div>
@@ -27,7 +27,7 @@ $offset: 6.5rem;
 .grad-content {
     margin-top: -$offset;
     display: grid;
-    grid-template-columns: 0.5fr auto 0.5fr;
+    grid-template-columns: [left] 0.5fr [main] auto [right] 0.5fr;
     padding-bottom: 6rem;
 
     &__main {
@@ -36,6 +36,7 @@ $offset: 6.5rem;
         align-items: center;
         display: flex;
         flex-direction: column;
+        grid-area: main;
     }
 
     &__left,
@@ -45,6 +46,14 @@ $offset: 6.5rem;
         margin-top: $offset + 2.5rem;
         color: $text-color-tertiary;
     }
+
+    &__left {
+        grid-area: left;
+    }
+
+    &__right {
+        grid-area: right;
+    }
 }
 @media (max-width: 1350px) {
     .grad-content__main {
@@ -53,7 +62,7 @@ $offset: 6.5rem;
 }
 @media (max-width: 1150px) {
     .grad-content {
-        grid-template-columns: 100%;
+        grid-template-columns: [main] 100%;
         justify-items: center;
 
         &__main {
