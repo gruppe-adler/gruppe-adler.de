@@ -78,8 +78,10 @@ export class ArmaEventsService {
         // events sorted with event furthest back in past as first item
         const sortedEvents = rawEvents.sort((a, b) => a.date.getTime() - b.date.getTime());
 
-        // we only want one future event and a max of 10 events
-        const filteredEvents = sortedEvents.slice(0, sortedEvents.findIndex(e => ArmaEventsService.isInFuture(e.date)) + 1).reverse().slice(0, 10);
+        // we only want one future event and a max of 10 events;
+        // if there is no future event we just want the 10 most recent events
+        const firstFutureEvent = sortedEvents.findIndex(e => ArmaEventsService.isInFuture(e.date)) + 1;
+        const filteredEvents = sortedEvents.slice(0, firstFutureEvent > 0 ? firstFutureEvent : sortedEvents.length).reverse().slice(0, 10);
 
         const promises = filteredEvents.map(({ tid, ...rest }) => ArmaEventsService.fetchAttendance(tid).then((attendance): ArmaEvent => ({ ...rest, attendance })));
 
