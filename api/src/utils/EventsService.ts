@@ -9,7 +9,7 @@ export interface ArmaEvent {
 }
 
 export class ArmaEventsService {
-    private static readonly ATTENDANCE_PLUGIN_ITNRODUCTION = 1483833600000;
+    private static readonly ATTENDANCE_PLUGIN_INTRODUCTION = 1483833600000;
     private static readonly FORUM_URI = 'https://forum.gruppe-adler.de';
     private static readonly TOPIC_TITLE_REGEX = /^\d{4}-\d{2}-\d{2}\s*,(\s*\w+\s*,)?\s*/i;
 
@@ -57,7 +57,7 @@ export class ArmaEventsService {
 
         const rawEvents: Array<Omit<ArmaEvent, 'attendance'> & { tid: number }> = [];
         for (const topic of topics) {
-            if (topic.timestamp < ArmaEventsService.ATTENDANCE_PLUGIN_ITNRODUCTION) continue;
+            if (topic.timestamp < ArmaEventsService.ATTENDANCE_PLUGIN_INTRODUCTION) continue;
             if (topic.deleted === 1) {
                 console.warn(`Skipping topic ${topic.titleRaw} (ID: ${topic.tid}), because it was deleted`);
                 continue;
