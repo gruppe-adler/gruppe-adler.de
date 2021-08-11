@@ -27,7 +27,7 @@ $offset: 6.5rem;
 .grad-content {
     margin-top: -$offset;
     display: grid;
-    grid-template-columns: [left] 0.5fr [main] auto [right] 0.5fr;
+    grid-template: "left main right" auto / .5fr auto .5fr;
     padding-bottom: 6rem;
 
     &__main {
@@ -62,7 +62,7 @@ $offset: 6.5rem;
 }
 @media (max-width: 1150px) {
     .grad-content {
-        grid-template-columns: [main] 100%;
+        grid-template: "main" auto / 1fr;
         justify-items: center;
 
         &__main {
