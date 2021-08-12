@@ -62,7 +62,7 @@ $offset: 6.5rem;
 }
 @media (max-width: 1150px) {
     .grad-content {
-        grid-template: "main" auto / 1fr;
+        grid-template: "main" auto / 100%;
         justify-items: center;
 
         &__main {
