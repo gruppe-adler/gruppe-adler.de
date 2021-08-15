@@ -231,7 +231,7 @@ export default class HomeVue extends Vue {
 
 .grad-blog__social-media {
     display: inline-grid;
-    margin-left: 3rem;
+    margin-left: 2rem;
     flex-shrink: 1;
     max-width: 100%;
     overflow: hidden;

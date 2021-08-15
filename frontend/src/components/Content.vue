@@ -55,12 +55,12 @@ $offset: 6.5rem;
         grid-area: right;
     }
 }
-@media (max-width: 1350px) {
+@media (max-width: 1390px) {
     .grad-content__main {
         width: 37rem;
     }
 }
-@media (max-width: 1150px) {
+@media (max-width: 1180px) {
     .grad-content {
         grid-template: "main" auto / 100%;
         justify-items: center;
