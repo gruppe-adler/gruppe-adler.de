@@ -74,7 +74,7 @@ const routes: Array<RouteConfig> = [
     {
         path: '/wiki',
         beforeEnter () {
-            window.location.href = 'https://gruppe-adler.github.io/wiki.gruppe-adler.de/de/';
+            window.location.href = 'https://wiki.gruppe-adler.de/';
         }
     }
 ];
