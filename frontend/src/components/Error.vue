@@ -20,6 +20,7 @@ export default class ErrorVue extends Vue {}
     display: flex;
     align-items: center;
     flex-direction: column;
+    z-index: 1;
     &__image {
         height: 20rem;
     }
