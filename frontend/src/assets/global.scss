@@ -1,12 +1,15 @@
 @import "colors.scss";
 @import "color-macros.scss";
+@import "~@/assets/fonts/Oswald/Oswald.css";
+@import "~@/assets/fonts/SourceSans3/SourceSans3VF-Roman.css";
+@import "~@/assets/fonts/MaterialIcons/MaterialIcons.css";
 
 html, body {
     margin: 0;
     padding: 0;
     background-color: $background-color;
     color: $text-color-primary;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans 3 VF', sans-serif;
     font-size: 16px;
 }
 
@@ -39,7 +42,7 @@ a:hover {
 }
 
 button {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans 3 VF', sans-serif;
     background-color: $button-color;
     border-radius: 6.25rem;
     color: $action-color;

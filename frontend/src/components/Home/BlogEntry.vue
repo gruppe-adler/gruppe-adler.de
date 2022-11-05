@@ -63,7 +63,7 @@ export function parseDate (date: Date): string {
     }
 
     &__date {
-        font-family: 'Source Sans Pro', sans-serif;
+        font-family: 'Source Sans 3 VF', sans-serif;
         opacity: 0.7;
         font-size: 0.58em;
         font-weight: bold;
@@ -87,7 +87,7 @@ export function parseDate (date: Date): string {
             box-sizing: border-box;
             align-items: center;
             background-color: rgba(0,0,0,0.2);
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Source Sans 3 VF', sans-serif;
             color: white;
 
             & ~ * {
