@@ -45,7 +45,7 @@ export default class TooltipVue extends Vue {
     position: relative;
     display: flex;
     justify-content: center;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans 3', sans-serif;
     text-transform: none;
 
     &__text {
