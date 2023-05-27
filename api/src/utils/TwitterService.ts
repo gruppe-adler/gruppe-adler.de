@@ -127,7 +127,7 @@ export class TwitterService {
     private async requestNewToken(): Promise<string> {
         let response: Response;
         try {
-            response = await fetch('https://api.twitter.com/oauth2/token', {
+            response = await fetch('https://api.twitter.com/oauth2/token?grant_type=client_credentials', {
                 method: 'POST',
                 headers: {
                     Authorization: `Basic ${config.twitter['base64-bearer-token-credentials']}`,
