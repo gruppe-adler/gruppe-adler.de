@@ -9,19 +9,6 @@
                 </router-link>
             </section>
             <Events />
-            <transition-group v-if="tweets.length > 0" name="grad-blog-entry--transition" tag="div" class="grad-blog-wrapper" ref="wrapper">
-                <Tweet
-                    v-for="tweet in visibleTweets"
-                    :model="tweet"
-                    :key="`tweet-${tweet.id}`"
-                />
-            </transition-group>
-            <Error v-if="loadingError">
-                Scheint so als ob beim Laden der Tweets etwas schief gelaufen ist.<br />Versuche es in ein paar Sekunden erneut!
-            </Error>
-            <Loader v-else-if="loading" />
-            <a v-else-if="!nothingLeft" class="grad-blog__load-more" @click="loadMore">Mehr laden</a>
-            <span v-else class="grad-blog__end">Sieht so aus als ob du am Anfang angekommen bist.</span>
         </template>
         <template v-slot:right>
             <div class="grad-blog__social-media">
@@ -43,14 +30,11 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { Tweet, fetchTweets } from '@/services/twitter';
-import TweetVue from '@/components/Home/Tweet.vue';
 import footerItems from '@/assets/footerItems';
 import EventsVue from '@/components/Home/Events.vue';
 
 @Component({
     components: {
-        Tweet: TweetVue,
         Events: EventsVue
     },
     metaInfo: {
@@ -61,90 +45,7 @@ import EventsVue from '@/components/Home/Events.vue';
     }
 })
 export default class HomeVue extends Vue {
-    private loadingError = false;
-    private loading = true;
-    private scrollListenerAdded = false;
-    private nothingLeft = false;
     private footerItems = footerItems;
-
-    private tweets: Tweet[] = [];
-    private visibleTweets: Tweet[] = [];
-
-    private created () {
-        this.fetchTweets();
-    }
-
-    private beforeDestroy () {
-        window.removeEventListener('scroll', this.handleScroll);
-    }
-
-    private async fetchTweets () {
-        this.loading = true;
-
-        // fetch tweets
-        const oldestTweet: Tweet = this.tweets[this.tweets.length - 1];
-        const oldestTweetId: string|undefined = oldestTweet && oldestTweet.id;
-        let newTweets: Tweet[] = [];
-        try {
-            newTweets = await fetchTweets(oldestTweetId);
-        } catch (err) {
-            console.error(err);
-            this.loadingError = true;
-            this.loading = false;
-            return;
-        }
-        this.tweets = [...this.tweets, ...newTweets];
-
-        if (newTweets.length === 0) {
-            this.nothingLeft = true;
-        }
-
-        this.loading = false;
-    }
-
-    /**
-     * @description Click callback for "load more" button fetches more blogpost and adds scroll event listener
-     * @author DerZade
-     */
-    private loadMore () {
-        this.fetchTweets();
-
-        if (this.scrollListenerAdded) return;
-
-        this.scrollListenerAdded = true;
-
-        window.addEventListener('scroll', this.handleScroll);
-    }
-
-    /**
-     * @description Checks wether bottom of page hase been reached and initiates fetching new posts
-     * @author DerZade
-     */
-    private handleScroll (): void {
-        if (this.loading) return;
-        if (this.nothingLeft) return;
-
-        const wrapper: Vue = this.$refs.wrapper as Vue;
-
-        if (!wrapper) return;
-
-        const wrapperBottom: number = wrapper.$el.getBoundingClientRect().bottom;
-        const bottomOfWindow: boolean = window.innerHeight + 100 > wrapperBottom;
-
-        if (!bottomOfWindow) return;
-
-        this.fetchTweets();
-    }
-
-    @Watch('tweets', { deep: true })
-    @Watch('isLoggedIn')
-    private updateVisibleTweets (): void {
-        if (this.isLoggedIn) {
-            this.visibleTweets = this.tweets;
-        } else {
-            this.visibleTweets = this.tweets.filter(x => !x.hidden);
-        }
-    }
 
     /**
      * @description Check if user is logged in
