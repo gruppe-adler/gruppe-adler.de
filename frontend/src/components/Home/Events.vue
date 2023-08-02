@@ -84,7 +84,7 @@ export default class Events extends Vue {
         }
     ];
 
-    private expanded = false;
+    private expanded = true;
     private small = true;
     private resizeObserver: null|ResizeObserver = null;
 
