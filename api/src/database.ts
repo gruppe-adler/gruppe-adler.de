@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { join } from 'path';
 import { Sequelize } from 'sequelize-typescript';
-import { Container, Page, HiddenTweet } from './models';
+import { Container, Page } from './models';
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -9,7 +9,7 @@ const sequelize = new Sequelize({
     logging: false
 });
 
-sequelize.addModels([Container, Page, HiddenTweet]);
+sequelize.addModels([Container, Page]);
 sequelize.sync();
 
 export default sequelize;
