@@ -29,7 +29,7 @@
     </Content>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import footerItems from '@/assets/footerItems';
 import EventsVue from '@/components/Home/Events.vue';
 
@@ -46,17 +46,6 @@ import EventsVue from '@/components/Home/Events.vue';
 })
 export default class HomeVue extends Vue {
     private footerItems = footerItems;
-
-    /**
-     * @description Check if user is logged in
-     * @author DerZade
-     * @returns {boolean} User logged in?
-     */
-    private get isLoggedIn (): boolean {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return this.$root.isLoggedIn() || false;
-    }
 }
 </script>
 
@@ -95,39 +84,6 @@ export default class HomeVue extends Vue {
             margin-right: .125rem;
         }
     }
-}
-
-.grad-blog-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.grad-blog-wrapper + .grad-loader {
-    margin-top: 2rem;
-}
-
-.grad-blog__load-more,
-.grad-blog__end {
-    margin-top: 3rem;
-    font-size: 1.1em;
-    font-weight: bold;
-    opacity: 0.7;
-    text-align: center;
-}
-
-.grad-blog__load-more {
-    cursor: pointer;
-    color: #D18D1F;
-
-    &:hover {
-        opacity: 1;
-    }
-}
-
-.grad-blog__end {
-    color: $text-color-primary;
 }
 
 .grad-blog__social-media {
