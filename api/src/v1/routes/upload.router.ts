@@ -15,7 +15,7 @@ uploadRouter.post('/', [
 ], wrapAsync(async (req, res) => {
     res.setHeader('Accept', UploadService.ALLOWED_MIME_TYPES.join(', '));
 
-    const contentTypeHeader = req.get('Content-Type');
+    const contentTypeHeader = req.get('Content-Type') ?? '';
     const mime = contentTypeHeader.toLowerCase();
 
     if (!UploadService.ALLOWED_MIME_TYPES.includes(mime)) {

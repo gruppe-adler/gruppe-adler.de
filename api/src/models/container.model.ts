@@ -19,7 +19,7 @@ import { Page } from '.';
 @Table({
     paranoid: true
 })
-export default class Container extends Model<Container> {
+export default class Container extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
@@ -73,7 +73,7 @@ export default class Container extends Model<Container> {
 
             page.changed('updatedAt', true);
 
-            return await page.save();
+            await page.save().then(() => {});
         });
     }
 }

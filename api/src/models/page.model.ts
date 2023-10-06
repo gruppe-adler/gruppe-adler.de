@@ -19,7 +19,7 @@ import { Container } from '.';
 @Table({
     paranoid: true
 })
-export default class Page extends Model<Page> {
+export default class Page extends Model {
     @PrimaryKey
     @Column(DataType.TEXT)
     public slug: string;

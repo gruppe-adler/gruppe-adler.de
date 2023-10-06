@@ -3,7 +3,7 @@ import { SitemapStream, streamToPromise } from 'sitemap';
 import { createGzip } from 'zlib';
 import { Page } from '../models';
 
-let cachedSitemap: Buffer | null = null;
+let cachedSitemap: Buffer;
 
 const BUILD_TIME_PATH = '/build-date.txt';
 let buildTime = new Date(0);
