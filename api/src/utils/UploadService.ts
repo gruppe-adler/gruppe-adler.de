@@ -33,9 +33,9 @@ export class UploadService {
     }
 
     public saveFile (buffer: Buffer, mimeType: string): string {
-        if (!UploadService.MINE_TYPES.has(mimeType.toLowerCase())) throw new Error(`MIME type '${mimeType}' is not allowed`);
+        const fileEnding = UploadService.MINE_TYPES.get(mimeType.toLowerCase());
 
-        const fileEnding: string = UploadService.MINE_TYPES.get(mimeType.toLowerCase());
+        if (fileEnding === undefined) throw new Error(`MIME type '${mimeType}' is not allowed`);
 
         // generate random name
         let name = UploadService.randomName();
