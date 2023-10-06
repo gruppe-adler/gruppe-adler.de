@@ -1,4 +1,4 @@
-import * as equals from 'fast-deep-equal';
+import equals from 'fast-deep-equal';
 import fetch from 'node-fetch';
 
 export interface ArmaEvent {

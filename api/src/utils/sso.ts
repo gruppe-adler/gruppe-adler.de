@@ -1,11 +1,12 @@
-import { type Request, type Response, type NextFunction } from 'express/index';
+import { type Request, type Response, type NextFunction } from 'express';
 
+import { fileURLToPath } from 'node:url';
+import { readFileSync } from 'node:fs';
 import fetch from 'node-fetch';
-import { globalErrorHandler } from './express';
-import ResponseError from './ResponseError';
+import { globalErrorHandler } from './express.js';
+import ResponseError from './ResponseError.js';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const config = require('../../config/config.json');
+const config = JSON.parse(readFileSync(fileURLToPath(new URL('../../config/config.json', import.meta.url)), { encoding: 'utf-8' }));
 
 interface SSOUser {
     admin: boolean

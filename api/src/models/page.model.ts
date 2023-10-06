@@ -9,7 +9,7 @@ import {
     HasMany
 } from 'sequelize-typescript';
 
-import { Container } from '.';
+import { Container } from './index.js';
 
 @DefaultScope({
     include: [

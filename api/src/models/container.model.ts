@@ -14,7 +14,7 @@ import {
     AfterDestroy
 } from 'sequelize-typescript';
 
-import { Page } from '.';
+import { Page } from './index.js';
 
 @Table({
     paranoid: true

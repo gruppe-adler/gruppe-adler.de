@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express';
+import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express.js';
 import { param, body, matchedData } from 'express-validator';
-import { Container } from '../../models';
-import { ssoCheckAuthorized } from '../../utils/sso';
-import ResponseError from '../../utils/ResponseError';
+import { Container } from '../../models/index.js';
+import { ssoCheckAuthorized } from '../../utils/sso.js';
+import ResponseError from '../../utils/ResponseError.js';
 
 const defaultContainerRules = [
     body('heading').optional().isString(),
