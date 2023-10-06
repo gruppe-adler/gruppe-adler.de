@@ -21,7 +21,7 @@ export class ArmaEventsService {
     // this constructor is actually important to make sure it is private (singleton pattern)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
     private constructor () {
-        this.cacheEvents();
+        void this.cacheEvents();
 
         // fetch new events every half an hour
         setInterval(this.cacheEvents.bind(this), 1000 * 60 * 30);

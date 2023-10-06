@@ -42,7 +42,7 @@ async function fetchUser (token: string): Promise<SSOUser | null> {
     return json.data.authenticate;
 }
 
-async function validateToken (token: string) {
+async function validateToken (token: string): Promise<void> {
     const user = await fetchUser(token);
 
     if (user === null) throw new ReponseError(401);
