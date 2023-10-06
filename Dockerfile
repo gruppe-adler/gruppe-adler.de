@@ -1,4 +1,4 @@
-FROM node:10 AS api-builder
+FROM node:20 AS api-builder
 
 # Create app directory
 WORKDIR /tmp/
@@ -43,7 +43,7 @@ RUN [ "npm", "run", "build" ]
 
 ##########################################################################################
 
-FROM node:10-alpine
+FROM node:20-alpine
 
 WORKDIR /usr/src/app/
 
