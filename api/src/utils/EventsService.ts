@@ -2,10 +2,10 @@ import * as equals from 'fast-deep-equal';
 import fetch from 'node-fetch';
 
 export interface ArmaEvent {
-    date: Date;
-    title: string;
-    url: string;
-    attendance: [number, number];
+    date: Date
+    title: string
+    url: string
+    attendance: [number, number]
 }
 
 export class ArmaEventsService {
@@ -13,21 +13,21 @@ export class ArmaEventsService {
     private static readonly FORUM_URI = 'https://forum.gruppe-adler.de';
     private static readonly TOPIC_TITLE_REGEX = /^\d{4}-\d{2}-\d{2}\s*,(\s*\w+\s*,)?\s*/i;
 
-    private static instance: ArmaEventsService|null = null;
+    private static instance: ArmaEventsService | null = null;
 
     private cachedEvents: ArmaEvent[] = [];
     private lastModified: Date = new Date(0);
 
     // this constructor is actually important to make sure it is private (singleton pattern)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
-    private constructor() {
+    private constructor () {
         this.cacheEvents();
 
         // fetch new events every half an hour
         setInterval(this.cacheEvents.bind(this), 1000 * 60 * 30);
     }
 
-    public static getInstance(): ArmaEventsService {
+    public static getInstance (): ArmaEventsService {
         if (this.instance === null) {
             this.instance = new ArmaEventsService();
         }
@@ -35,11 +35,11 @@ export class ArmaEventsService {
         return this.instance;
     }
 
-    public async getEvents(): Promise<{ events: ArmaEvent[], lastModified: Date }> {
+    public async getEvents (): Promise<{ events: ArmaEvent[], lastModified: Date }> {
         return { events: this.cachedEvents, lastModified: this.lastModified };
     }
 
-    public async cacheEvents(): Promise<void> {
+    public async cacheEvents (): Promise<void> {
         const events = await this.fetchEvents();
 
         if (!equals(this.cachedEvents, events)) {
@@ -48,12 +48,12 @@ export class ArmaEventsService {
         }
     }
 
-    private async fetchEvents(): Promise<ArmaEvent[]> {
+    private async fetchEvents (): Promise<ArmaEvent[]> {
         const response = await fetch(`${ArmaEventsService.FORUM_URI}/api/events/cid-3`);
         if (!response.ok) {
             throw new Error(`Error while trying to fetch events. Forum API responded with status code ${response.status}.`);
         }
-        const { topics } = await response.json() as { topics: Array<{ slug: string; titleRaw: string; tid: number; deleted: 1|0; timestamp: number }> };
+        const { topics } = await response.json() as { topics: Array<{ slug: string, titleRaw: string, tid: number, deleted: 1 | 0, timestamp: number }> };
 
         const rawEvents: Array<Omit<ArmaEvent, 'attendance'> & { tid: number }> = [];
         for (const topic of topics) {
@@ -83,9 +83,9 @@ export class ArmaEventsService {
         const firstFutureEvent = sortedEvents.findIndex(e => ArmaEventsService.isInFuture(e.date)) + 1;
         const filteredEvents = sortedEvents.slice(0, firstFutureEvent > 0 ? firstFutureEvent : sortedEvents.length).reverse().slice(0, 10);
 
-        const promises = filteredEvents.map(({ tid, ...rest }) => ArmaEventsService.fetchAttendance(tid).then((attendance): ArmaEvent => ({ ...rest, attendance })));
+        const promises = filteredEvents.map(async ({ tid, ...rest }) => await ArmaEventsService.fetchAttendance(tid).then((attendance): ArmaEvent => ({ ...rest, attendance })));
 
-        return Promise.all(promises);
+        return await Promise.all(promises);
     }
 
     /**
@@ -118,7 +118,7 @@ export class ArmaEventsService {
         if (!response.ok) {
             throw new Error(`Error while trying to fetch attendance for topic ${tid}. Forum API responded with status code ${response.status}.`);
         }
-        const { attendants } = await response.json() as { attendants: Array<{ probability: 0|0.5|1 }> };
+        const { attendants } = await response.json() as { attendants: Array<{ probability: 0 | 0.5 | 1 }> };
 
         let firm = 0;
         let maybe = 0;

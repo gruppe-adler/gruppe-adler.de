@@ -10,7 +10,7 @@ const pageRouter = Router();
 pageRouter.get('/*', wrapAsync(async (req, res) => {
     const slug = req.path;
 
-    const page = await Page.findByPk(slug) as Page|null;
+    const page = await Page.findByPk(slug);
 
     if (page === null) {
         throw new ReponseError(404, `Page with slug '${slug}' not found.`);
@@ -31,9 +31,9 @@ pageRouter.put('/*', [
 ], wrapAsync(async (req, res) => {
     const slug = req.path;
 
-    const updateData = matchedData(req) as Partial<Pick<Page, 'toc'|'description'|'title'|'priority'>>;
+    const updateData = matchedData(req) as Partial<Pick<Page, 'toc' | 'description' | 'title' | 'priority'>>;
 
-    const page: Page|null = await Page.findByPk(slug);
+    const page: Page | null = await Page.findByPk(slug);
 
     if (page === null) {
         throw new ReponseError(404, `Page with slug '${slug}' not found.`);
@@ -53,7 +53,7 @@ pageRouter.post('/', [
     body('priority').optional().isFloat({ min: 0, max: 1 }).toFloat(),
     return422
 ], wrapAsync(async (req, res) => {
-    const data = matchedData(req) as Partial<Pick<Page, 'toc'|'description'|'title'|'priority'>> & Pick<Page, 'slug'>;
+    const data = matchedData(req) as Partial<Pick<Page, 'toc' | 'description' | 'title' | 'priority'>> & Pick<Page, 'slug'>;
 
     const page = await Page.create(data);
 
@@ -65,7 +65,7 @@ pageRouter.delete('/*', [
 ], wrapAsync(async (req, res) => {
     const slug = req.path;
 
-    const page: Page|null = await Page.findByPk(slug);
+    const page: Page | null = await Page.findByPk(slug);
 
     if (page === null) {
         throw new ReponseError(404, `Container with slug '${slug}' not found.`);
