@@ -3,7 +3,7 @@ import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express';
 import { param, body, matchedData } from 'express-validator';
 import { Container } from '../../models';
 import { ssoCheckAuthorized } from '../../utils/sso';
-import ReponseError from '../../utils/ResponseError';
+import ResponseError from '../../utils/ResponseError';
 
 const defaultContainerRules = [
     body('heading').optional().isString(),
@@ -44,7 +44,7 @@ containerRouter.put('/:id', [
     const container: Container | null = await Container.findByPk(id);
 
     if (container === null) {
-        throw new ReponseError(404, `Container with id '${id}' not found.`);
+        throw new ResponseError(404, `Container with id '${id}' not found.`);
     }
 
     const updatedContainer = await container.update(updateData);
@@ -62,7 +62,7 @@ containerRouter.delete('/:id', [
     const container: Container | null = await Container.findByPk(id);
 
     if (container === null) {
-        throw new ReponseError(404, `Container with id '${id}' not found.`);
+        throw new ResponseError(404, `Container with id '${id}' not found.`);
     }
 
     await container.destroy();
