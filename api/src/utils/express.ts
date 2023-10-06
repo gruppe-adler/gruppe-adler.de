@@ -2,7 +2,9 @@ import { type Request, type Response, type NextFunction, type RequestHandler } f
 import { validationResult } from 'express-validator';
 import ResponseError from './ResponseError';
 
-export const wrapAsync = (fn: RequestHandler): RequestHandler => (req: Request, res: Response, next: NextFunction): void => {
+type AsyncRequestHandler = (...params: Parameters<RequestHandler>) => Promise<ReturnType<RequestHandler>>;
+
+export const wrapAsync = (fn: AsyncRequestHandler): RequestHandler => (req: Request, res: Response, next: NextFunction): void => {
     // Make sure to `.catch()` any errors and pass them along to the `next()`
     // middleware in the chain, in this case the error handler.
     fn(req, res, next).catch(next);

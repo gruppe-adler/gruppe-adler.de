@@ -16,6 +16,7 @@ import v1Router from './v1';
 
 import './database';
 import { getSitemap } from './utils/sitemap';
+import { wrapAsync } from './utils/express';
 import { Page } from './models';
 
 const app = express();
@@ -24,11 +25,11 @@ const app = express();
 app.use(cors({
     credentials: true,
     origin: [
-        new RegExp('gruppe-adler.de$', 'i'),
-        new RegExp('localhost:[0-9]+$', 'i'),
-        new RegExp('127.0.0.1:[0-9]+$', 'i'),
-        new RegExp('127.0.0.1$', 'i'),
-        new RegExp('localhost$', 'i')
+        /gruppe-adler.de$/i,
+        /localhost:[0-9]+$/i,
+        /127.0.0.1:[0-9]+$/i,
+        /127.0.0.1$/i,
+        /localhost$/i
     ]
 }));
 
@@ -48,7 +49,7 @@ app.use('/api/v1', v1Router);
 
 app.use('/uploads', express.static(join(__dirname, '../data/uploads')));
 
-app.get('/sitemap.xml', async (req, res) => {
+app.get('/sitemap.xml', wrapAsync(async (req, res) => {
     res.header('Content-Type', 'application/xml');
     res.header('Content-Encoding', 'gzip');
 
@@ -59,7 +60,7 @@ app.get('/sitemap.xml', async (req, res) => {
         console.error(err);
         res.status(500).end();
     }
-});
+}));
 
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
@@ -86,7 +87,7 @@ if (existsSync(join(__dirname, '../frontend'))) {
         express.static(join(__dirname, '../frontend'), {
             setHeaders: (res: Response, path: string) => {
                 if (/.+\.(?!html).*$/i.test(path)) {
-                    const cacheControl = cacheHeaders[path] || 'public, max-age=2678400';
+                    const cacheControl = cacheHeaders[path] ?? 'public, max-age=2678400';
 
                     res.header('Cache-Control', cacheControl);
                 } else {
@@ -97,7 +98,7 @@ if (existsSync(join(__dirname, '../frontend'))) {
     );
 
     let pages: string[] = [];
-    const cachePages = async () => {
+    const cachePages = async (): Promise<void> => {
         const newPages = await Page.findAll({ attributes: ['slug'] }) as Array<Pick<Page, 'slug'>>;
 
         const slugs = newPages.map(p => p.slug);
@@ -108,7 +109,7 @@ if (existsSync(join(__dirname, '../frontend'))) {
 
     Page.addHook('afterCreate', cachePages);
     Page.addHook('afterDestroy', cachePages);
-    cachePages();
+    void cachePages();
     app.get('*', (req: Request, res: Response, next: NextFunction) => {
         if (!req.accepts('application/html')) {
             next();

@@ -10,6 +10,6 @@ const sequelize = new Sequelize({
 });
 
 sequelize.addModels([Container, Page]);
-sequelize.sync();
+void sequelize.sync();
 
 export default sequelize;
