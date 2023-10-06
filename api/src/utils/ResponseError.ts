@@ -1,4 +1,4 @@
-export default class ReponseError extends Error {
+export default class ResponseError extends Error {
     public static readonly type = 'ResponseError';
 
     public status: number;

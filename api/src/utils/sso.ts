@@ -2,7 +2,7 @@ import { type Request, type Response, type NextFunction } from 'express/index';
 
 import fetch from 'node-fetch';
 import { globalErrorHandler } from './express';
-import ReponseError from './ResponseError';
+import ResponseError from './ResponseError';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('../../config/config.json');
@@ -35,7 +35,7 @@ async function fetchUser (token: string): Promise<SSOUser | null> {
         })
     });
 
-    if (!res.ok) throw new ReponseError(401);
+    if (!res.ok) throw new ResponseError(401);
 
     const json = await res.json() as { data: { authenticate: SSOUser | null } };
 
@@ -45,7 +45,7 @@ async function fetchUser (token: string): Promise<SSOUser | null> {
 async function validateToken (token: string): Promise<void> {
     const user = await fetchUser(token);
 
-    if (user === null) throw new ReponseError(401);
+    if (user === null) throw new ResponseError(401);
 
     const groups = user.groups.map(g => g.tag);
     const admin = user.admin;
@@ -55,7 +55,7 @@ async function validateToken (token: string): Promise<void> {
         if (groups.includes(grp)) isInGroup = true;
     }
 
-    if (!admin && !isInGroup) throw new ReponseError(403);
+    if (!admin && !isInGroup) throw new ResponseError(403);
 }
 
 function extractToken (req: Request): string {

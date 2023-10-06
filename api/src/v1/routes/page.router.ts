@@ -3,7 +3,7 @@ import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express';
 import { Page } from '../../models';
 import { body, matchedData } from 'express-validator';
 import { ssoCheckAuthorized } from '../../utils/sso';
-import ReponseError from '../../utils/ResponseError';
+import ResponseError from '../../utils/ResponseError';
 
 const pageRouter = Router();
 
@@ -13,7 +13,7 @@ pageRouter.get('/*', wrapAsync(async (req, res) => {
     const page = await Page.findByPk(slug);
 
     if (page === null) {
-        throw new ReponseError(404, `Page with slug '${slug}' not found.`);
+        throw new ResponseError(404, `Page with slug '${slug}' not found.`);
     }
 
     res.header('Cache-Control', 'no-cache');
@@ -36,7 +36,7 @@ pageRouter.put('/*', [
     const page: Page | null = await Page.findByPk(slug);
 
     if (page === null) {
-        throw new ReponseError(404, `Page with slug '${slug}' not found.`);
+        throw new ResponseError(404, `Page with slug '${slug}' not found.`);
     }
 
     const updatedPage = await page.update(updateData);
@@ -68,7 +68,7 @@ pageRouter.delete('/*', [
     const page: Page | null = await Page.findByPk(slug);
 
     if (page === null) {
-        throw new ReponseError(404, `Container with slug '${slug}' not found.`);
+        throw new ResponseError(404, `Container with slug '${slug}' not found.`);
     }
 
     await page.destroy();
