@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { globalErrorHandler, wrapAsync } from '../../utils/express';
-import { UploadService } from '../../utils/UploadService';
-import { ssoCheckAuthorized } from '../../utils/sso';
-import ResponseError from '../../utils/ResponseError';
-import * as bodyParser from 'body-parser';
+import { globalErrorHandler, wrapAsync } from '../../utils/express.js';
+import { UploadService } from '../../utils/UploadService.js';
+import { ssoCheckAuthorized } from '../../utils/sso.js';
+import ResponseError from '../../utils/ResponseError.js';
+import bodyParser from 'body-parser';
 
 const uploadService = UploadService.getInstance();
 

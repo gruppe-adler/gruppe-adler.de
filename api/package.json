@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "lint": "eslint --ext .js,.ts ./src",
     "serve": "ts-node-dev --inspect --respawn --transpile-only ./src/index.ts",

@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { globalErrorHandler } from '../utils/express';
-import pageRouter from './routes/page.router';
-import containerRouter from './routes/container.router';
-import uploadRouter from './routes/upload.router';
-import eventsRouter from './routes/events.router';
+import { globalErrorHandler } from '../utils/express.js';
+import pageRouter from './routes/page.router.js';
+import containerRouter from './routes/container.router.js';
+import uploadRouter from './routes/upload.router.js';
+import eventsRouter from './routes/events.router.js';
 
 const v1Router = Router();
 

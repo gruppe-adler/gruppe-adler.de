@@ -1,6 +1,6 @@
 import { type Request, type Response, type NextFunction, type RequestHandler } from 'express';
 import { validationResult } from 'express-validator';
-import ResponseError from './ResponseError';
+import ResponseError from './ResponseError.js';
 
 type AsyncRequestHandler = (...params: Parameters<RequestHandler>) => Promise<ReturnType<RequestHandler>>;
 

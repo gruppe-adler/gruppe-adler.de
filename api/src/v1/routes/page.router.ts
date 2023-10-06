@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express';
-import { Page } from '../../models';
+import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express.js';
+import { Page } from '../../models/index.js';
 import { body, matchedData } from 'express-validator';
-import { ssoCheckAuthorized } from '../../utils/sso';
-import ResponseError from '../../utils/ResponseError';
+import { ssoCheckAuthorized } from '../../utils/sso.js';
+import ResponseError from '../../utils/ResponseError.js';
 
 const pageRouter = Router();
 

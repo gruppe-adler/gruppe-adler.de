@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { createGzip } from 'zlib';
-import { Page } from '../models';
+import { Page } from '../models/index.js';
 
 let cachedSitemap: Buffer;
 

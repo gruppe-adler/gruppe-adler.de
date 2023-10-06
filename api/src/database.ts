@@ -1,11 +1,11 @@
 import 'reflect-metadata';
-import { join } from 'path';
+import { fileURLToPath } from 'node:url';
 import { Sequelize } from 'sequelize-typescript';
-import { Container, Page } from './models';
+import { Container, Page } from './models/index.js';
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: join(__dirname, '../data/database.sqlite'),
+    storage: fileURLToPath(new URL('../data/database.sqlite', import.meta.url)),
     logging: false
 });
 

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { globalErrorHandler, wrapAsync } from '../../utils/express';
-import { ArmaEventsService } from '../../utils/EventsService';
+import { globalErrorHandler, wrapAsync } from '../../utils/express.js';
+import { ArmaEventsService } from '../../utils/EventsService.js';
 
 const armaEventService = ArmaEventsService.getInstance();
 

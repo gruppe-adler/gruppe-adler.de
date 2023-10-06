@@ -1,23 +1,27 @@
 import { join } from 'path';
-import { existsSync } from 'fs';
+import { fileURLToPath } from 'node:url';
+import { existsSync, readFileSync } from 'fs';
 
 // eslint-disable-next-line import/no-duplicates
-import * as express from 'express';
+import express from 'express';
 // eslint-disable-next-line import/no-duplicates
 import { type Request, type Response, type NextFunction } from 'express';
 
-import * as bodyParser from 'body-parser';
-import * as morgan from 'morgan';
-import * as cors from 'cors';
-import * as cookieParser from 'cookie-parser';
-import * as compression from 'compression';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
 
-import v1Router from './v1';
+import v1Router from './v1/index.js';
 
-import './database';
-import { getSitemap } from './utils/sitemap';
-import { wrapAsync } from './utils/express';
-import { Page } from './models';
+import './database.js';
+import { getSitemap } from './utils/sitemap.js';
+import { wrapAsync } from './utils/express.js';
+import { Page } from './models/index.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const app = express();
 
@@ -65,7 +69,7 @@ app.get('/sitemap.xml', wrapAsync(async (req, res) => {
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const assetsManifest: Record<string, string> = require(join(__dirname, '../frontend', 'assets-manifest.json'));
+    const assetsManifest: Record<string, string> = JSON.parse(readFileSync(join(__dirname, '../frontend', 'assets-manifest.json'), { encoding: 'utf-8' }));
 
     const cacheHeaders: Record<string, string | undefined> = {};
 
