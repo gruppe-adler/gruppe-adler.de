@@ -40,17 +40,17 @@ export default class Container extends Model<Container> {
     @Default(null)
     @AllowNull
     @Column(DataType.TEXT)
-    public headerColor: string|null;
+    public headerColor: string | null;
 
     @Default(null)
     @AllowNull
     @Column(DataType.TEXT)
-    public headerImage: string|null;
+    public headerImage: string | null;
 
     @Default(null)
     @AllowNull
     @Column(DataType.TEXT)
-    public pinnedImage: string|null;
+    public pinnedImage: string | null;
 
     @Default(0)
     @Column(DataType.INTEGER)
@@ -67,13 +67,13 @@ export default class Container extends Model<Container> {
     @AfterUpdate
     @AfterCreate
     @AfterDestroy
-    static updatePageUpdatedAt(instance: Container): Promise<void> {
-        return (Page.findByPk(instance.pageSlug) as Promise<Page|null>).then((page): Promise<void> => {
-            if (page === null) return Promise.resolve();
+    static async updatePageUpdatedAt (instance: Container): Promise<void> {
+        await (Page.findByPk(instance.pageSlug)).then(async (page): Promise<void> => {
+            if (page === null) { await Promise.resolve(); return; }
 
             page.changed('updatedAt', true);
 
-            return page.save();
+            return await page.save();
         });
     }
 }

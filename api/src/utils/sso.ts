@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express/index';
+import { type Request, type Response, type NextFunction } from 'express/index';
 
 import fetch from 'node-fetch';
 import { globalErrorHandler } from './express';
@@ -8,11 +8,11 @@ import ReponseError from './ResponseError';
 const config = require('../../config/config.json');
 
 interface SSOUser {
-    admin: boolean;
-    groups: { tag: string; }[];
+    admin: boolean
+    groups: Array<{ tag: string }>
 }
 
-async function fetchUser(token: string): Promise<SSOUser|null> {
+async function fetchUser (token: string): Promise<SSOUser | null> {
     const res = await fetch(`${config.sso.domain}/api/v1/graphql`, {
         method: 'POST',
         headers: {
@@ -37,7 +37,7 @@ async function fetchUser(token: string): Promise<SSOUser|null> {
 
     if (!res.ok) throw new ReponseError(401);
 
-    const json = await res.json() as { data: { authenticate: SSOUser|null } };
+    const json = await res.json() as { data: { authenticate: SSOUser | null } };
 
     return json.data.authenticate;
 }
@@ -58,7 +58,7 @@ async function validateToken (token: string) {
     if (!admin && !isInGroup) throw new ReponseError(403);
 }
 
-function extractToken(req: Request): string {
+function extractToken (req: Request): string {
     if (req.cookies[config.sso.cookiename]) {
         return req.cookies[config.sso.cookiename];
     }
@@ -73,7 +73,7 @@ function extractToken(req: Request): string {
     throw new Error('Couldn\'t find token to extract');
 }
 
-export async function ssoCheckAuthorized(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function ssoCheckAuthorized (req: Request, res: Response, next: NextFunction): Promise<void> {
     let token: string;
     try {
         token = extractToken(req);

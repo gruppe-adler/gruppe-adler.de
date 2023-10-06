@@ -3,7 +3,7 @@ import { SitemapStream, streamToPromise } from 'sitemap';
 import { createGzip } from 'zlib';
 import { Page } from '../models';
 
-let cachedSitemap: Buffer|null = null;
+let cachedSitemap: Buffer | null = null;
 
 const BUILD_TIME_PATH = '/build-date.txt';
 let buildTime = new Date(0);
@@ -22,11 +22,11 @@ Page.addHook('afterCreate', cacheSitemap);
 Page.addHook('afterDestroy', cacheSitemap);
 Page.addHook('afterUpdate', cacheSitemap);
 
-async function cacheSitemap(): Promise<void> {
+async function cacheSitemap (): Promise<void> {
     cachedSitemap = await generateSitemap();
 }
 
-async function generateSitemap(): Promise<Buffer> {
+async function generateSitemap (): Promise<Buffer> {
     const smStream = new SitemapStream({ hostname: 'https://gruppe-adler.de/' });
     const pipeline = smStream.pipe(createGzip());
 
@@ -43,10 +43,10 @@ async function generateSitemap(): Promise<Buffer> {
 
     const prom = streamToPromise(pipeline);
     smStream.end();
-    return prom;
+    return await prom;
 }
 
-export async function getSitemap(): Promise<Buffer> {
+export async function getSitemap (): Promise<Buffer> {
     await initialCachePromise;
     return cachedSitemap;
 }

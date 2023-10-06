@@ -4,7 +4,7 @@ import { existsSync } from 'fs';
 // eslint-disable-next-line import/no-duplicates
 import * as express from 'express';
 // eslint-disable-next-line import/no-duplicates
-import { Request, Response, NextFunction } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
@@ -64,9 +64,9 @@ app.get('/sitemap.xml', async (req, res) => {
 // frontend
 if (existsSync(join(__dirname, '../frontend'))) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const assetsManifest: { [originalFilePath: string]: string } = require(join(__dirname, '../frontend', 'assets-manifest.json'));
+    const assetsManifest: Record<string, string> = require(join(__dirname, '../frontend', 'assets-manifest.json'));
 
-    const cacheHeaders: { [path: string]: string|undefined } = {};
+    const cacheHeaders: Record<string, string | undefined> = {};
 
     for (const originalFilePath in assetsManifest) {
         if (Object.prototype.hasOwnProperty.call(assetsManifest, originalFilePath)) {

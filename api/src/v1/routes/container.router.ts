@@ -15,7 +15,7 @@ const defaultContainerRules = [
     body('index').optional().isInt().toInt()
 ];
 
-type OptionalContainerFields = Partial<Pick<Container, 'heading'|'footer'|'content'|'headerColor'|'headerImage'|'pinnedImage'|'index'>>;
+type OptionalContainerFields = Partial<Pick<Container, 'heading' | 'footer' | 'content' | 'headerColor' | 'headerImage' | 'pinnedImage' | 'index'>>;
 
 const containerRouter = Router();
 
@@ -41,7 +41,7 @@ containerRouter.put('/:id', [
 ], wrapAsync(async (req, res) => {
     const { id, ...updateData } = matchedData(req) as OptionalContainerFields & Partial<Pick<Container, 'pageSlug'>> & Pick<Container, 'id'>;
 
-    const container: Container|null = await Container.findByPk(id);
+    const container: Container | null = await Container.findByPk(id);
 
     if (container === null) {
         throw new ReponseError(404, `Container with id '${id}' not found.`);
@@ -59,7 +59,7 @@ containerRouter.delete('/:id', [
 ], wrapAsync(async (req, res) => {
     const { id } = matchedData(req) as { id: number };
 
-    const container: Container|null = await Container.findByPk(id);
+    const container: Container | null = await Container.findByPk(id);
 
     if (container === null) {
         throw new ReponseError(404, `Container with id '${id}' not found.`);
