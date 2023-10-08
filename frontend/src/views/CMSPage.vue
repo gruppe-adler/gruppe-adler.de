@@ -64,6 +64,7 @@ import MarkdownVue from '@/components/Markdown.vue';
 import { Page, loadPage, Container } from '@/services/page';
 import { headingToID } from '@/services/headingToID';
 import { MetaInfo, MetaPropertyName } from 'vue-meta';
+import ResponseError from '@/services/utils/ResponseError';
 
 @Component({
     components: {
@@ -123,7 +124,7 @@ export default class CMSPageVue extends Vue {
         try {
             this.page = await loadPage(this.$route.path);
         } catch (err) {
-            if (err.type === 'ResponseError') {
+            if (ResponseError.is(err)) {
                 if (err.response.status === 404) {
                     this.pageNotFound = true;
                     return;

@@ -1,4 +1,3 @@
-
 const canvas = document.createElement('canvas');
 const canvasCtx = canvas.getContext('2d');
 
