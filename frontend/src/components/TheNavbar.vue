@@ -13,6 +13,8 @@ import { GradNavbar, GradPathChangedEvent } from '@gruppe-adler/navbar-component
 
 customElements.define('grad-navbar', GradNavbar);
 
+let lastPath = '';
+
 @Component
 export default class TheNavbarVue extends Vue {
     private pageYOffset = 0; // for hiding nav bar when scrolling
@@ -27,7 +29,8 @@ export default class TheNavbarVue extends Vue {
     }
 
     private onPathChanged (event: GradPathChangedEvent) {
-        if (event.gradPath !== this.$route.path) {
+        if (event.gradPath !== lastPath && event.gradPath !== this.$route.path) {
+            lastPath = event.gradPath;
             this.$router.push(event.gradPath);
         }
 
