@@ -19,7 +19,7 @@ RUN [ "npm", "run", "build" ]
 
 ##########################################################################################
 
-FROM node:10 AS frontend-builder
+FROM node:20 AS frontend-builder
 
 # Create app directory
 WORKDIR /tmp/
