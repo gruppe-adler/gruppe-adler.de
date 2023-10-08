@@ -75,7 +75,7 @@ export default class PageVue extends Vue {
         title: '',
         description: '',
         priority: 0.5
-    }
+    };
 
     private created () {
         this.fetchPageData();
@@ -145,11 +145,9 @@ export default class PageVue extends Vue {
                 newContainer = await updateContainer(newValues);
             }
         } catch (err) {
-            if (err.type === 'ResponseError') {
-                const e = err as ResponseError;
-
+            if (ResponseError.is(err)) {
                 this.snackbarColor = 'rgb(201, 17, 6)';
-                this.snackbar = `Beim Speichern des Containers ist ein Fehler aufgetreten (${e.response.status} - ${e.response.statusText})`;
+                this.snackbar = `Beim Speichern des Containers ist ein Fehler aufgetreten (${err.response.status} - ${err.response.statusText})`;
                 return;
             }
 
@@ -169,11 +167,9 @@ export default class PageVue extends Vue {
             try {
                 await deleteContainer(container.id);
             } catch (err) {
-                if (err.type === 'ResponseError') {
-                    const e = err as ResponseError;
-
+                if (ResponseError.is(err)) {
                     this.snackbarColor = 'rgb(201, 17, 6)';
-                    this.snackbar = `Beim Löschen des Containers ist ein Fehler aufgetreten (${e.response.status} - ${e.response.statusText})`;
+                    this.snackbar = `Beim Löschen des Containers ist ein Fehler aufgetreten (${err.response.status} - ${err.response.statusText})`;
                     return;
                 }
 
@@ -208,11 +204,11 @@ export default class PageVue extends Vue {
                 priority: this.page.priority
             };
         } catch (err) {
-            if (err.type === 'ResponseError') {
+            if (ResponseError.is(err)) {
                 if (err.response.status === 404) {
                     this.newPage = true;
                     this.page = {
-                        slug: slug,
+                        slug,
                         containers: [],
                         ...this.values
                     };
@@ -233,11 +229,9 @@ export default class PageVue extends Vue {
         try {
             page = await createPage(this.page);
         } catch (err) {
-            if (err.type === 'ResponseError') {
-                const e = err as ResponseError;
-
+            if (ResponseError.is(err)) {
                 this.snackbarColor = 'rgb(201, 17, 6)';
-                this.snackbar = `Beim Speichern des Containers ist ein Fehler aufgetreten (${e.response.status} - ${e.response.statusText})`;
+                this.snackbar = `Beim Speichern des Containers ist ein Fehler aufgetreten (${err.response.status} - ${err.response.statusText})`;
                 return;
             }
 
@@ -276,11 +270,9 @@ export default class PageVue extends Vue {
 
             this.page = updatedPage;
         } catch (err) {
-            if (err.type === 'ResponseError') {
-                const e = err as ResponseError;
-
+            if (ResponseError.is(err)) {
                 this.snackbarColor = 'rgb(201, 17, 6)';
-                this.snackbar = `Beim Speichern der Einstellungen ist ein Fehler aufgetreten (${e.response.status} - ${e.response.statusText})`;
+                this.snackbar = `Beim Speichern der Einstellungen ist ein Fehler aufgetreten (${err.response.status} - ${err.response.statusText})`;
                 return;
             }
 

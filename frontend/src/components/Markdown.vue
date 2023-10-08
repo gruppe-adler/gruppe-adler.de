@@ -4,9 +4,9 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import marked from 'marked';
+import { marked, Renderer } from 'marked';
 
-const renderer = new marked.Renderer();
+const renderer = new Renderer();
 
 renderer.link = function (href, title, text) {
     let external = false;

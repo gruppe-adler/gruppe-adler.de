@@ -18,6 +18,8 @@ export default class TooltipVue extends Vue {
      * @author DerZade
      */
     @Watch('shown')
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     private fixClipping () {
         if (!this.shown) return;
 

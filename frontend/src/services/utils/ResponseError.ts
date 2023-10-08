@@ -7,4 +7,9 @@ export default class ResponseError extends Error {
 
         this.response = response;
     }
+
+    public static is (val: unknown): val is ResponseError {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return (val as any).type === 'ResponseError';
+    }
 }

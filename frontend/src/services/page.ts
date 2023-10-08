@@ -65,9 +65,10 @@ export async function createContainer (c: Container): Promise<Container> {
     }
     await Promise.all(promises);
 
-    delete c.id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...body } = c;
 
-    const newContainer = await fetchJSON<Container>(`${API_URL}/container`, { method: 'POST', body: JSON.stringify(c), headers: { 'Content-Type': 'application/json' } });
+    const newContainer = await fetchJSON<Container>(`${API_URL}/container`, { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' } });
 
     return newContainer;
 }
