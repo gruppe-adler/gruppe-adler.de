@@ -16,9 +16,9 @@ const footerItems: FooterItem[] = [
         url: 'https://www.youtube.com/user/gruppeadler'
     },
     {
-        name: 'Twitter',
-        image: 'twitter',
-        url: 'https://twitter.com/gruppe_adler'
+        name: 'Instagram',
+        image: 'instagram',
+        url: 'https://instagram.com/gruppe.adler'
     },
     {
         name: 'GitHub',
