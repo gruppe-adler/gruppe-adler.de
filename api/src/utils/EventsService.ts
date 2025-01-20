@@ -8,10 +8,67 @@ export interface ArmaEvent {
     attendance: [number, number]
 }
 
+const QUERY = `
+query GetCommunityEventsWithDetails($communityId: UUID!) {
+  events(
+    where: { community: { id: { eq: $communityId } } }
+    order: [
+      { date: DESC } # Sort by date in descending order
+    ]
+  ) {
+    nodes {
+      id
+      title
+      slug
+      community {
+        slug
+      }
+      date
+      attendingUsers: eventUsers(where: { status: { eq: attending } }) {
+        totalCount
+      }
+      potentiallyAttendingUsers: eventUsers(
+        where: { status: { eq: potentiallyAttending } }
+      ) {
+        totalCount
+      }
+    }
+  }
+}
+`;
+
+interface GetCommunityEventsWithDetailsQuery {
+    __typename?: 'Query'
+    events?: {
+        __typename?: 'EventsConnection'
+        nodes?: Array<{
+            __typename?: 'Event'
+            id: string
+            title: string
+            slug: string
+            date?: string | null
+            community: {
+                slug: string
+            }
+            attendingUsers?: {
+                __typename?: 'EventUsersConnection'
+                totalCount: number
+            } | null
+            potentiallyAttendingUsers?: {
+                __typename?: 'EventUsersConnection'
+                totalCount: number
+            } | null
+        }> | null
+    } | null
+};
+
+interface GetCommunityEventsWithDetailsQueryVariables {
+    communityId: string
+};
+
 export class ArmaEventsService {
-    private static readonly ATTENDANCE_PLUGIN_INTRODUCTION = 1483833600000;
-    private static readonly FORUM_URI = 'https://forum.gruppe-adler.de';
-    private static readonly TOPIC_TITLE_REGEX = /^\d{4}-\d{2}-\d{2}\s*,(\s*\w+\s*,)?\s*/i;
+    private static readonly ARMA_EVENTS_API_URL = 'https://api.arma.events/graphql/';
+    private static readonly ARMA_EVENTS_GRUPPE_ADLER_ID = 'f52e5ce0-928d-45a9-9381-6f93015950ee';
 
     private static instance: ArmaEventsService | null = null;
 
@@ -49,33 +106,39 @@ export class ArmaEventsService {
     }
 
     private async fetchEvents (): Promise<ArmaEvent[]> {
-        const response = await fetch(`${ArmaEventsService.FORUM_URI}/api/events/cid-3`);
+        const variables: GetCommunityEventsWithDetailsQueryVariables = { communityId: ArmaEventsService.ARMA_EVENTS_GRUPPE_ADLER_ID };
+        const response = await fetch(ArmaEventsService.ARMA_EVENTS_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query: QUERY, variables })
+        });
+
         if (!response.ok) {
-            throw new Error(`Error while trying to fetch events. Forum API responded with status code ${response.status}.`);
-        }
-        const { topics } = await response.json() as { topics: Array<{ slug: string, titleRaw: string, tid: number, deleted: 1 | 0, timestamp: number }> };
-
-        const rawEvents: Array<Omit<ArmaEvent, 'attendance'> & { tid: number }> = [];
-        for (const topic of topics) {
-            if (topic.timestamp < ArmaEventsService.ATTENDANCE_PLUGIN_INTRODUCTION) continue;
-            if (topic.deleted === 1) {
-                console.warn(`Skipping topic ${topic.titleRaw} (ID: ${topic.tid}), because it was deleted`);
-                continue;
-            }
-            if (!ArmaEventsService.TOPIC_TITLE_REGEX.test(topic.titleRaw)) {
-                console.warn(`Skipping topic ${topic.titleRaw} (ID: ${topic.tid}), because its title did not match the required pattern.`);
-                continue;
-            }
-
-            rawEvents.push({
-                date: new Date(topic.titleRaw.substr(0, 10)),
-                title: topic.titleRaw.replace(ArmaEventsService.TOPIC_TITLE_REGEX, ''),
-                url: `${ArmaEventsService.FORUM_URI}/topic/${topic.slug}`,
-                tid: topic.tid
-            });
+            throw new Error(`Error fetching data from arma.events! Status: ${response.status}`);
         }
 
-        // events sorted with event furthest back in past as first item
+        const result = await response.json() as {
+            data: GetCommunityEventsWithDetailsQuery
+            errors?: any
+        };
+
+        if (result.errors) {
+            console.error(result.errors);
+            throw new Error(`arma.events GraphQL error occurred! Error: ${JSON.stringify(result.errors)}`);
+        }
+
+        // Transform the data to fit ArmaEvent interface
+        const rawEvents = result.data.events?.nodes?.map((event): ArmaEvent => {
+            return {
+                date: new Date(event.date ?? 0),
+                title: event.title,
+                url: `https://arma.events/e/${event.community.slug}/${event.slug}`, // Construct URL using slug
+                attendance: [event.attendingUsers?.totalCount ?? 0, event.potentiallyAttendingUsers?.totalCount ?? 0]
+            };
+        }) ?? [];
+
         const sortedEvents = rawEvents.sort((a, b) => a.date.getTime() - b.date.getTime());
 
         // we only want one future event and a max of 10 events;
@@ -83,9 +146,7 @@ export class ArmaEventsService {
         const firstFutureEvent = sortedEvents.findIndex(e => ArmaEventsService.isInFuture(e.date)) + 1;
         const filteredEvents = sortedEvents.slice(0, firstFutureEvent > 0 ? firstFutureEvent : sortedEvents.length).reverse().slice(0, 10);
 
-        const promises = filteredEvents.map(async ({ tid, ...rest }) => await ArmaEventsService.fetchAttendance(tid).then((attendance): ArmaEvent => ({ ...rest, attendance })));
-
-        return await Promise.all(promises);
+        return filteredEvents;
     }
 
     /**
@@ -105,32 +166,5 @@ export class ArmaEventsService {
         dateCopy.setMilliseconds(0);
 
         return dateCopy.getTime() > (new Date()).getTime();
-    }
-
-    /**
-     * Fetch attendance for given topic id
-     * @param {number} tid Topic id
-     * @returns {[number, number]} [Number of firm commitments, Number of "maybes"]
-     */
-    private static async fetchAttendance (tid: number): Promise<[number, number]> {
-        const response = await fetch(`${ArmaEventsService.FORUM_URI}/api/attendance/${tid}`);
-
-        if (!response.ok) {
-            throw new Error(`Error while trying to fetch attendance for topic ${tid}. Forum API responded with status code ${response.status}.`);
-        }
-        const { attendants } = await response.json() as { attendants: Array<{ probability: 0 | 0.5 | 1 }> };
-
-        let firm = 0;
-        let maybe = 0;
-
-        for (const { probability } of attendants) {
-            if (probability === 0.5) {
-                maybe++;
-            } else if (probability === 1) {
-                firm++;
-            }
-        }
-
-        return [firm, maybe];
     }
 }
