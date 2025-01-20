@@ -40,11 +40,11 @@
         <a
             v-else-if="expanded || small"
             class="grad-arma-events__more"
-            href="https://forum.gruppe-adler.de/category/3"
+            href="https://arma.events/c/gruppe-adler/events"
             target="_blank"
             rel="noreferrer"
         >
-            Mehr Events im Forum
+            Mehr Events auf arma.events
         </a>
         <span v-else class="grad-arma-events__more" @click="expanded = true" tabindex="0" role="button">Mehr anzeigen</span>
     </Container>
