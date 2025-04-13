@@ -12,6 +12,7 @@ const QUERY = `
 query GetCommunityEventsWithDetails($communityId: UUID!) {
   events(
     where: { community: { id: { eq: $communityId } } }
+    first: 50
     order: [
       { date: DESC } # Sort by date in descending order
     ]
