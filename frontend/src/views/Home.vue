@@ -2,7 +2,7 @@
     <Content>
         <template>
             <section class="grad-blog__intro">
-                Wir sind ein deutscher Arma 3 Clan und spielen Milsim Coop sowie taktische TvT Missionen mit Mods wie ACE, TFAR und RHS.
+                Wir sind eine deutsche Arma Community (Arma 3 und Reforger) und spielen Milsim Coop sowie taktische TvT Missionen mit Mods wie ACE, TFAR und RHS.
                 <router-link to="/ueber-uns">
                     <span class="material-icons" aria-hidden="true">arrow_forward</span>
                     <span>Mehr lesen</span>
