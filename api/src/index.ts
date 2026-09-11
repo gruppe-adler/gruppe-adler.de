@@ -12,6 +12,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import session from 'express-session';
 
 import v1Router from './v1/index.js';
 
@@ -36,6 +37,19 @@ app.use(cors({
         /localhost$/i
     ]
 }));
+
+// sessions
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET ?? 'session-secret',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true
+        }
+    })
+);
 
 // body parser
 app.use(bodyParser.json());

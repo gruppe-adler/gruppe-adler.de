@@ -1,56 +1,49 @@
+import { API_URL } from '.';
 import { fetchJSON } from './utils';
+import ResponseError from './utils/ResponseError';
 
-const SSO_URL = 'https://sso.gruppe-adler.de';
-
-interface UserGroup {
-    id: number;
-    tag: string;
-    color: string;
-    label: string;
-    hidden: boolean;
+export interface AuthUser {
+    sub: string;
+    name?: string;
+    picture?: string;
+    roles: string[];
 }
 
-export interface SSOUser {
-    id: number;
-    username: string;
-    steamId: string;
-    avatar: string;
-    admin: boolean;
-    groups: UserGroup[];
-    primaryGroup: UserGroup;
+export async function authenticate (): Promise<AuthUser|null> {
+    try {
+        const res = await fetchJSON(`${API_URL}/auth/me`, {
+            method: 'GET',
+            credentials: 'include'
+        }) as {
+            authenticated: boolean;
+            user?: AuthUser;
+        };
+
+        if (!res.authenticated || !res.user) {
+            return null;
+        }
+
+        return res.user;
+    } catch (error) {
+        if (ResponseError.is(error) && error.response.status === 401) {
+            return null;
+        }
+
+        throw error;
+    }
 }
 
-export async function authenticate (): Promise<SSOUser|null> {
-    const res = await fetchJSON(`${SSO_URL}/api/v1/graphql`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            query: `
-            mutation {
-                authenticate {
-                    id
-                    username
-                    steamId
-                    avatar
-                    admin
-                    groups { ...fullGroup }
-                    primaryGroup { ...fullGroup }
-                }
-            }
-            fragment fullGroup on Group {
-                id
-                tag
-                color
-                label
-                hidden
-            }
-            `,
-            variables: {}
-        })
-    }) as { data: { authenticate: SSOUser|null } };
+export function login (): void {
+    const url = new URL(`${API_URL}/auth/login`, window.location.origin);
 
-    return res.data.authenticate;
+    url.searchParams.set(
+        'returnTo',
+        `${window.location.pathname}${window.location.search}${window.location.hash}`
+    );
+
+    window.location.assign(url.href);
+}
+
+export function logout (): void {
+    window.location.assign(`${API_URL}/auth/logout`);
 }

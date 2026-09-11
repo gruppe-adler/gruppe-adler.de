@@ -1,0 +1,9 @@
+{
+    "keycloak": {
+        "issuer": "https://kc.gruppe-adler.de/realms/gruppe-adler",
+        "clientId": "homepage",
+        "clientSecret": "secret",
+        "requiredRole": "adler"
+    },
+    "publicUrl": "http://localhost:9000"
+}

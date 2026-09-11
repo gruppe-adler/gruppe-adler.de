@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { globalErrorHandler, wrapAsync } from '../../utils/express.js';
 import { UploadService } from '../../utils/UploadService.js';
-import { ssoCheckAuthorized } from '../../utils/sso.js';
 import ResponseError from '../../utils/ResponseError.js';
 import bodyParser from 'body-parser';
+import { requireAuth } from './auth.router.js';
 
 const uploadService = UploadService.getInstance();
 
@@ -11,7 +11,7 @@ const uploadRouter = Router();
 
 uploadRouter.post('/', [
     bodyParser.raw({ type: 'image/*', limit: '20mb' }),
-    ssoCheckAuthorized
+    requireAuth
 ], wrapAsync(async (req, res) => {
     res.setHeader('Accept', UploadService.ALLOWED_MIME_TYPES.join(', '));
 
