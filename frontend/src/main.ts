@@ -5,7 +5,7 @@ import './plugins/globalDirectives';
 import './plugins/gtag';
 import './plugins/meta';
 import router from './plugins/router';
-import { SSOUser } from '@/services/sso';
+import { AuthUser } from './services/sso';
 
 Vue.config.productionTip = false;
 
@@ -17,14 +17,14 @@ Vue.config.ignoredElements = ['grad-navbar'];
 new Vue({
     router,
     render: h => h(App),
-    data: (): { user: SSOUser|null } => ({
+    data: (): { user: AuthUser|null } => ({
         user: null
     }),
     methods: {
         isLoggedIn (): boolean {
             return (this.user !== null);
         },
-        setUser (user: SSOUser|null = null): void {
+        setUser (user: AuthUser|null = null): void {
             this.user = user;
         }
     }
