@@ -6,8 +6,7 @@ import {
     randomPKCECodeVerifier,
     calculatePKCECodeChallenge,
     buildAuthorizationUrl,
-    authorizationCodeGrant,
-    buildEndSessionUrl
+    authorizationCodeGrant
 } from 'openid-client';
 import { wrapAsync } from '../../utils/express.js';
 import { readFileSync } from 'node:fs';
@@ -246,17 +245,6 @@ authRouter.get('/me', (req, res) => {
 });
 
 authRouter.get('/logout', wrapAsync(async (req, res) => {
-    const oidcConfig = await keycloakConfigPromise;
-
-    const logoutUrl = buildEndSessionUrl(oidcConfig, {
-        post_logout_redirect_uri: postLogoutRedirectUri,
-        ...(req.session.idToken
-            ? {
-                id_token_hint: req.session.idToken
-            }
-            : {})
-    });
-
     req.session.destroy((error) => {
         if (error) {
             res.status(500).json({
@@ -265,7 +253,7 @@ authRouter.get('/logout', wrapAsync(async (req, res) => {
             return;
         }
 
-        res.redirect(logoutUrl.href);
+        res.redirect(postLogoutRedirectUri);
     });
 }));
 
