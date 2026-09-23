@@ -5,7 +5,7 @@ import './plugins/globalDirectives';
 import './plugins/gtag';
 import './plugins/meta';
 import router from './plugins/router';
-import { AuthUser } from './services/sso';
+import type { AuthUser } from '@/services/sso';
 
 Vue.config.productionTip = false;
 
