@@ -2,8 +2,8 @@ import { Router } from 'express';
 import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express.js';
 import { param, body, matchedData } from 'express-validator';
 import { Container } from '../../models/index.js';
-import { ssoCheckAuthorized } from '../../utils/sso.js';
 import ResponseError from '../../utils/ResponseError.js';
+import { requireAuth } from './auth.router.js';
 
 const defaultContainerRules = [
     body('heading').optional().isString(),
@@ -20,7 +20,7 @@ type OptionalContainerFields = Partial<Pick<Container, 'heading' | 'footer' | 'c
 const containerRouter = Router();
 
 containerRouter.post('/', [
-    ssoCheckAuthorized,
+    requireAuth,
     ...defaultContainerRules,
     body('pageSlug').isString(),
     return422
@@ -33,7 +33,7 @@ containerRouter.post('/', [
 }));
 
 containerRouter.put('/:id', [
-    ssoCheckAuthorized,
+    requireAuth,
     param('id').isInt().toInt(),
     ...defaultContainerRules,
     body('pageSlug').optional().isString(),
@@ -53,7 +53,7 @@ containerRouter.put('/:id', [
 }));
 
 containerRouter.delete('/:id', [
-    ssoCheckAuthorized,
+    requireAuth,
     param('id').isInt().toInt(),
     return422
 ], wrapAsync(async (req, res) => {

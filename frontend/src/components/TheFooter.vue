@@ -58,8 +58,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
-import { authenticate } from '@/services/sso';
+import { Component, Vue } from 'vue-property-decorator';
+
+import {
+    authenticate,
+    login as startLogin,
+    logout as startLogout
+} from '@/services/sso';
 
 import footerItems from '@/assets/footerItems';
 
@@ -69,86 +74,37 @@ export default class TheFooterVue extends Vue {
 
     private loadingText = '';
 
-    private created () {
-        // preserve login when reloading the page
-        const item = sessionStorage.getItem('grad-homepage-was-logged-in');
-        if (!item) return;
-
-        sessionStorage.removeItem('grad-homepage-was-logged-in');
-
-        this.login(false);
+    private async created () {
+        await this.checkAuthentication();
     }
 
-    /**
-     * Checks if user was redirect to this page after SSO login and tries to authenticate
-     * against SSO
-     */
-    @Watch('$route')
-    private onRouteChanged () {
-        const item = sessionStorage.getItem('grad-homepage-redirected-from-login');
-        if (!item) return;
-
-        if (item === window.location.href) {
-            sessionStorage.removeItem('grad-homepage-redirected-from-login');
-            this.login(false);
-        }
-    }
-
-    private async logout () {
-        this.$root.$data.user = null;
-
-        const item = sessionStorage.getItem('grad-homepage-was-logged-in');
-        if (item) sessionStorage.removeItem('grad-homepage-was-logged-in');
-    }
-
-    /**
-     * Authenticates user against SSO api.
-     * @async
-     * @param {boolean?} [redirectToSSO] redirect user to sso if not logged in (default: true)
-     */
-    private async login (redirectToSSO = true) {
-        let user;
-
+    private async checkAuthentication () {
         const int = window.setInterval(this.loadingIndicator, 100);
 
         try {
-            user = await authenticate();
+            const user = await authenticate();
+
+            if (user) {
+                this.$root.$data.user = user;
+            } else {
+                this.$root.$data.user = null;
+            }
         } catch (err) {
+            console.error(err);
+            this.$root.$data.user = null;
+        } finally {
             window.clearInterval(int);
             this.loadingText = '';
-            console.error(err);
-            return;
         }
-        window.clearInterval(int);
-        this.loadingText = '';
+    }
 
-        // the user is logged in if we get a user from the authentication request
-        if (user) {
-            const groups = user.groups.map(g => g.tag);
-            const admin = user.admin;
-            let isInGroup = false;
+    private login () {
+        startLogin();
+    }
 
-            for (const grp of ['adler', 'fuehrung']) {
-                if (!groups.includes(grp)) isInGroup = true;
-            }
-
-            if (!admin && !isInGroup) return;
-
-            this.$root.$data.user = user;
-            sessionStorage.setItem('grad-homepage-was-logged-in', 'true');
-            return;
-        }
-
-        if (!redirectToSSO) return;
-
-        // save route user is currently on we will use this to detect that the user
-        // was redirected to this page after a successfull redirect
-        sessionStorage.setItem('grad-homepage-redirected-from-login', window.location.href);
-
-        // redirect to SSO
-        const url = new URL('https://sso.gruppe-adler.de');
-        url.searchParams.append('redirect_after_login', window.location.href);
-        window.location.replace(url.href);
+    private logout () {
+        this.$root.$data.user = null;
+        startLogout();
     }
 
     private loadingIndicator () {

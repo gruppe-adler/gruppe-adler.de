@@ -10,8 +10,8 @@ import { type Request, type Response, type NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import session from 'express-session';
 
 import v1Router from './v1/index.js';
 
@@ -19,11 +19,19 @@ import './database.js';
 import { getSitemap } from './utils/sitemap.js';
 import { wrapAsync } from './utils/express.js';
 import { Page } from './models/index.js';
+import { requireEnv } from './utils/env.js';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
+const sessionSecret = requireEnv('SESSION_SECRET');
+
 const app = express();
+
+// Behind a TLS-terminating reverse proxy (nginx/traefik) the connection to this
+// container is plain HTTP. Trust the first hop's X-Forwarded-* headers so that
+// req.secure is true and express-session will emit `secure` cookies.
+app.set('trust proxy', 1);
 
 // cors
 app.use(cors({
@@ -37,10 +45,21 @@ app.use(cors({
     ]
 }));
 
+// sessions
+app.use(
+    session({
+        secret: sessionSecret,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true
+        }
+    })
+);
+
 // body parser
 app.use(bodyParser.json());
-
-app.use(cookieParser());
 
 // logger
 app.use(morgan('short'));

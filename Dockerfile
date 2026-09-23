@@ -14,7 +14,7 @@ RUN npm ci
 # Bundle app source
 COPY ./api .
 
-# Compile 
+# Compile
 RUN [ "npm", "run", "build" ]
 
 ##########################################################################################
@@ -38,7 +38,7 @@ COPY ./frontend .
 # Build project
 ENV NODE_ENV production
 
-# Compile 
+# Compile
 RUN [ "npm", "run", "build" ]
 
 ##########################################################################################
@@ -54,7 +54,7 @@ COPY --from=frontend-builder /tmp/dist ./frontend/
 COPY --from=api-builder /tmp/build ./build/
 COPY --from=api-builder /tmp/package*.json ./
 
-# Install depencies
+# Install dependencies
 RUN npm ci --only=production
 
 RUN mkdir -p data
