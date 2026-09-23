@@ -6,9 +6,6 @@ declare module 'express-session' {
         oidcNonce?: string
         oidcCodeVerifier?: string
 
-        idToken?: string
-        accessToken?: string
-
         returnTo?: string
 
         user?: {
