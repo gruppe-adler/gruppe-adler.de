@@ -13,7 +13,7 @@ export interface Config {
 
 export const config = JSON.parse(
     readFileSync(
-        fileURLToPath(new URL('../config/config.json', import.meta.url)),
+        fileURLToPath(new URL('../../config/config.json', import.meta.url)),
         { encoding: 'utf-8' }
     )
 ) as Config;
