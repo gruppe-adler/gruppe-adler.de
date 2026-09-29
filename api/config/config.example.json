@@ -1,6 +1,6 @@
 {
     "keycloak": {
-        "issuer": "https://kc.gruppe-adler.de/realms/gruppe-adler",
+        "issuer": "https://auth.gruppe-adler.de/realms/grad",
         "clientId": "homepage",
         "clientSecret": "secret",
         "requiredRole": "adler"
