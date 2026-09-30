@@ -2,8 +2,8 @@ import { Router } from 'express';
 import { wrapAsync, globalErrorHandler, return422 } from '../../utils/express.js';
 import { Page } from '../../models/index.js';
 import { body, matchedData } from 'express-validator';
-import { ssoCheckAuthorized } from '../../utils/sso.js';
 import ResponseError from '../../utils/ResponseError.js';
+import { requireAuth } from './auth.router.js';
 
 const pageRouter = Router();
 
@@ -22,7 +22,7 @@ pageRouter.get('/*', wrapAsync(async (req, res) => {
 }));
 
 pageRouter.put('/*', [
-    ssoCheckAuthorized,
+    requireAuth,
     body('toc').optional().isBoolean().toBoolean(),
     body('description').optional(),
     body('title').optional(),
@@ -45,7 +45,7 @@ pageRouter.put('/*', [
 }));
 
 pageRouter.post('/', [
-    ssoCheckAuthorized,
+    requireAuth,
     body('slug').isString(),
     body('toc').optional().isBoolean().toBoolean(),
     body('description').optional(),
@@ -61,7 +61,7 @@ pageRouter.post('/', [
 }));
 
 pageRouter.delete('/*', [
-    ssoCheckAuthorized
+    requireAuth
 ], wrapAsync(async (req, res) => {
     const slug = req.path;
 

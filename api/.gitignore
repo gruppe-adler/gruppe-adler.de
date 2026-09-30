@@ -3,3 +3,5 @@ build/
 data/*
 
 !data/.gitkeep
+
+config/config.json

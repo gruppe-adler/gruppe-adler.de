@@ -1,6 +1,0 @@
-{
-    "sso": {
-        "cookiename": "gruppe-adler-sso-token",
-        "domain": "https://sso.gruppe-adler.de"
-    }
-}
